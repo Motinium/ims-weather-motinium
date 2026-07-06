@@ -90,7 +90,7 @@ class WeatherUpdateCoordinator(DataUpdateCoordinator[WeatherData]):
         current_weather = await loop.run_in_executor(
             None, self.weather.get_current_analysis
         )
-        weather_forecast = await loop.run_in_executor(None, self.weather.get_forecast)
+        weather_forecast = await self._fetch_forecast(loop)
         warnings = (
             await self._fetch_warnings(loop) if self._should_fetch_warnings() else []
         )
@@ -103,6 +103,28 @@ class WeatherUpdateCoordinator(DataUpdateCoordinator[WeatherData]):
 
         self._filter_future_forecast(weather_forecast)
         return WeatherData(current_weather, weather_forecast, images, warnings)
+
+    async def _fetch_forecast(self, loop: asyncio.AbstractEventLoop) -> Forecast:
+        """Fetch the IMS forecast.
+
+        Non-fatal: on any failure (timeout, network error, parse error, or an
+        HTTP error page such as a transient 404 that ``weatheril`` blindly
+        tries to JSON-decode) the last successfully fetched forecast is reused
+        so a misbehaving forecast endpoint cannot fail the whole update while
+        current-weather data is still fresh. On the very first refresh there is
+        no previous forecast to fall back on, so the error is re-raised and the
+        config entry setup retries as before.
+        """
+        try:
+            return await loop.run_in_executor(None, self.weather.get_forecast)
+        except Exception as error:  # noqa: BLE001 - intentional, see docstring
+            if self.data is not None:
+                _LOGGER.warning(
+                    "Failed to fetch IMS forecast; keeping the last known forecast: %s",
+                    error,
+                )
+                return self.data.forecast
+            raise
 
     async def _fetch_warnings(self, loop: asyncio.AbstractEventLoop) -> list[Warning]:
         """Fetch active IMS weather warnings.
