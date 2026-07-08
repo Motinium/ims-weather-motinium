@@ -370,12 +370,33 @@ def generate_single_warning_string(warning):
     return f"{warning.valid_from.strftime(DATETIME_FORMAT)} - {warning.valid_to.strftime(DATETIME_FORMAT)}\n{warning.text_full}"
 
 
-def generate_warnings_extra_state_attributes(warnings):
-    warnings_str = []
-    for warning in warnings:
-        warnings_str.append(generate_single_warning_string(warning))
+def generate_single_warning_detail(warning):
+    """Structured view of one warning for template/card use.
 
-    attributes = {"warnings": warnings_str}
+    Surfaces the fields ``weatheril`` already parses (severity, warning type,
+    covered regions) that the plain ``warnings`` string list drops, so a
+    Lovelace card can style and label warnings without guessing severity or
+    type from the free text. ``getattr`` guards keep it working across
+    weatheril versions that may not expose every field.
+    """
+    return {
+        "severity": getattr(warning, "severity", None),
+        "type": getattr(warning, "warning_type", None),
+        "region": getattr(warning, "region_name", None),
+        "regions": getattr(warning, "regions", None),
+        "valid_from": warning.valid_from.isoformat(),
+        "valid_to": warning.valid_to.isoformat(),
+        "text": warning.text_full,
+    }
+
+
+def generate_warnings_extra_state_attributes(warnings):
+    # ``warnings`` (list of strings) is kept for backward compatibility;
+    # ``warnings_data`` adds the structured fields for richer cards.
+    attributes = {
+        "warnings": [generate_single_warning_string(w) for w in warnings],
+        "warnings_data": [generate_single_warning_detail(w) for w in warnings],
+    }
     return attributes
 
 
