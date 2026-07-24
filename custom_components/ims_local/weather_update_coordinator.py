@@ -90,6 +90,12 @@ class WeatherUpdateCoordinator(DataUpdateCoordinator[WeatherData]):
         current_weather = await loop.run_in_executor(
             None, self.weather.get_current_analysis
         )
+        # weatheril swallows fetch errors and returns None instead of raising;
+        # fail the poll with a readable message (the coordinator keeps the
+        # previous data and retries) rather than a confusing AttributeError.
+        if current_weather is None:
+            raise UpdateFailed("IMS current analysis unavailable")
+
         weather_forecast = await self._fetch_forecast(loop)
         warnings = (
             await self._fetch_warnings(loop) if self._should_fetch_warnings() else []
@@ -107,24 +113,32 @@ class WeatherUpdateCoordinator(DataUpdateCoordinator[WeatherData]):
     async def _fetch_forecast(self, loop: asyncio.AbstractEventLoop) -> Forecast:
         """Fetch the IMS forecast.
 
-        Non-fatal: on any failure (timeout, network error, parse error, or an
-        HTTP error page such as a transient 404 that ``weatheril`` blindly
-        tries to JSON-decode) the last successfully fetched forecast is reused
-        so a misbehaving forecast endpoint cannot fail the whole update while
-        current-weather data is still fresh. On the very first refresh there is
-        no previous forecast to fall back on, so the error is re-raised and the
-        config entry setup retries as before.
+        Non-fatal: ``weatheril`` swallows fetch errors internally and returns
+        ``None`` (or an empty ``Forecast``) instead of raising, so an
+        exception, a ``None`` result and a forecast without days are all
+        treated as failures here. In that case the last successfully fetched
+        forecast is reused so a misbehaving forecast endpoint cannot fail the
+        whole update while current-weather data is still fresh. On the very
+        first refresh there is no previous forecast to fall back on, so the
+        failure is propagated and the config entry setup retries as before.
         """
+        error: Exception | None = None
+        forecast: Forecast | None = None
         try:
-            return await loop.run_in_executor(None, self.weather.get_forecast)
-        except Exception as error:  # noqa: BLE001 - intentional, see docstring
-            if self.data is not None:
-                _LOGGER.warning(
-                    "Failed to fetch IMS forecast; keeping the last known forecast: %s",
-                    error,
-                )
-                return self.data.forecast
-            raise
+            forecast = await loop.run_in_executor(None, self.weather.get_forecast)
+        except Exception as err:  # noqa: BLE001 - intentional, see docstring
+            error = err
+        if forecast is not None and getattr(forecast, "days", None):
+            return forecast
+        if self.data is not None:
+            _LOGGER.warning(
+                "Failed to fetch IMS forecast (%s); keeping the last known forecast",
+                error if error is not None else "empty response",
+            )
+            return self.data.forecast
+        if error is not None:
+            raise error
+        raise UpdateFailed("IMS forecast unavailable (weatheril returned no data)")
 
     async def _fetch_warnings(self, loop: asyncio.AbstractEventLoop) -> list[Warning]:
         """Fetch active IMS weather warnings.
