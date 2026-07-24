@@ -82,6 +82,8 @@ from .const import (
     FIELD_NAME_WARNING,
     TYPE_WEATHER_WARNINGS,
     TYPE_SEA_WARNINGS,
+    TYPE_DAILY_DIGEST,
+    DAILY_DIGEST_RULES,
     WARNING_SEVERITY_COLORS,
     DATETIME_FORMAT,
 )
@@ -107,6 +109,7 @@ sensor_keys.TYPE_PRECIPITATION_PROBABILITY = (
 sensor_keys.TYPE_WIND_DIRECTION = IMS_SENSOR_KEY_PREFIX + TYPE_WIND_DIRECTION
 sensor_keys.TYPE_WEATHER_WARNINGS = IMS_SENSOR_KEY_PREFIX + TYPE_WEATHER_WARNINGS
 sensor_keys.TYPE_SEA_WARNINGS = IMS_SENSOR_KEY_PREFIX + TYPE_SEA_WARNINGS
+sensor_keys.TYPE_DAILY_DIGEST = IMS_SENSOR_KEY_PREFIX + TYPE_DAILY_DIGEST
 sensor_keys.TYPE_WIND_SPEED = IMS_SENSOR_KEY_PREFIX + TYPE_WIND_SPEED
 sensor_keys.TYPE_FORECAST_TODAY = (
     IMS_SENSOR_KEY_PREFIX + TYPE_FORECAST_PREFIX + TYPE_FORECAST_TODAY
@@ -322,6 +325,15 @@ SENSOR_DESCRIPTIONS: list[ImsSensorEntityDescription] = [
         field_name=FIELD_NAME_WARNING,
     ),
     ImsSensorEntityDescription(
+        # Notable hours left in today's forecast (heat, UV, wind, dust, rain).
+        # Counts only values past the DAILY_DIGEST_RULES thresholds, so a
+        # normal day reads 0.
+        key=IMS_SENSOR_KEY_PREFIX + TYPE_DAILY_DIGEST,
+        name="IMS Daily Digest",
+        icon="mdi:text-box-outline",
+        forecast_mode=FORECAST_MODE.DAILY,
+    ),
+    ImsSensorEntityDescription(
         key=IMS_SENSOR_KEY_PREFIX + TYPE_FORECAST_PREFIX + TYPE_FORECAST_TODAY,
         name="IMS Forecast Today",
         icon="mdi:weather-sunny",
@@ -463,6 +475,62 @@ def generate_warnings_extra_state_attributes(warnings):
         "warnings_data": [generate_single_warning_detail(w) for w in warnings],
     }
     return attributes
+
+
+def _hourly_metric(hour, rule):
+    """Read the value a digest rule looks at from one Hourly entry."""
+    if rule["field"] is None:  # temperature: prefer the precise value
+        return hour.precise_temperature or hour.temperature
+    return getattr(hour, rule["field"], None)
+
+
+def generate_daily_digest(daily_forecast):
+    """Summarise the notable hours left in today's forecast.
+
+    Only values crossing the thresholds in DAILY_DIGEST_RULES are reported, so
+    an ordinary day yields an empty digest. Items carry the peak value and the
+    hour range rather than prose, so a card can render them in any language;
+    ``summary`` is a ready-made English one-liner per item.
+    """
+    items = []
+    hours = getattr(daily_forecast, "hours", None) or []
+
+    for rule in DAILY_DIGEST_RULES:
+        limit_above = rule.get("above")
+        limit_below = rule.get("below")
+        hits = []
+        for hour in hours:
+            value = _hourly_metric(hour, rule)
+            if value is None:
+                continue
+            if (limit_above is not None and value >= limit_above) or (
+                limit_below is not None and value <= limit_below
+            ):
+                hits.append((hour.hour, value))
+
+        if not hits:
+            continue
+
+        peak = max(h[1] for h in hits) if limit_above is not None else min(
+            h[1] for h in hits
+        )
+        first, last = hits[0][0], hits[-1][0]
+        window = first if first == last else f"{first}-{last}"
+        unit = HOURLY_UNITS.get(rule["metric"], "")
+        items.append(
+            {
+                "metric": rule["metric"],
+                "label": rule["label"],
+                "peak": peak,
+                "unit": unit,
+                "from": first,
+                "to": last,
+                "hours": [h[0] for h in hits],
+                "text": f"{rule['label']}: {peak}{' ' + unit if unit else ''} at {window}",
+            }
+        )
+
+    return items
 
 
 def generate_forecast_extra_state_attributes(daily_forecast):
@@ -669,6 +737,18 @@ class ImsSensor(ImsEntity, SensorEntity):
                 self._attr_extra_state_attributes = (
                     generate_warnings_extra_state_attributes(sea_warnings)
                 )
+
+            case sensor_keys.TYPE_DAILY_DIGEST:
+                # days[0] is today for the whole day: _filter_future_forecast
+                # drops past days, and past hours within today, so this covers
+                # "what is still to come today".
+                days = data.forecast.days if data.forecast else []
+                digest = generate_daily_digest(days[0]) if days else []
+                self._attr_native_value = len(digest)
+                self._attr_extra_state_attributes = {
+                    "items": digest,
+                    "summary": "; ".join(item["text"] for item in digest),
+                }
 
             case (
                 sensor_keys.TYPE_FORECAST_TODAY

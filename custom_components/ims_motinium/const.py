@@ -77,6 +77,7 @@ TYPE_CURRENT_UV_LEVEL = "current_uv_level"
 TYPE_DEW_POINT_TEMP = "dew_point_temp"
 TYPE_WEATHER_WARNINGS = "weather_warnings"
 TYPE_SEA_WARNINGS = "sea_warnings"
+TYPE_DAILY_DIGEST = "daily_digest"
 TYPE_FEELS_LIKE = "feels_like"
 TYPE_FORECAST_PREFIX = "forecast_"
 TYPE_FORECAST_TODAY = "today"
@@ -148,6 +149,30 @@ WARNING_SENSOR_KEYS: frozenset[str] = frozenset(
         IMS_SENSOR_KEY_PREFIX + TYPE_IS_ACTIVE_WEATHER_WARNING,
         IMS_SENSOR_KEY_PREFIX + TYPE_SEA_WARNINGS,
     }
+)
+
+# Rules for the daily digest sensor: which hourly values are worth calling out
+# for the rest of today. Each rule names the Hourly field, the direction and
+# the threshold. Thresholds are deliberately above ordinary conditions so a
+# normal day produces an empty digest — calibrated against a typical late-July
+# week in Akko, where temperature peaked at 30.5, gusts at 33, PM10 at 41,
+# heat_stress_level reached 4 in only 2 of 149 hours and UV passed 8 daily.
+# Humidity is intentionally absent: IMS already folds it into heat_stress_level.
+DAILY_DIGEST_RULES: tuple[dict, ...] = (
+    {"metric": "temperature", "field": None, "above": 35, "label": "High temperature"},
+    {"metric": "temperature", "field": None, "below": 8, "label": "Cold"},
+    {
+        "metric": "heat_stress_level",
+        "field": "heat_stress_level",
+        "above": 4,
+        "label": "Heat stress",
+    },
+    {"metric": "uv_index", "field": "u_v_index", "above": 8, "label": "Very high UV"},
+    {"metric": "gust_speed", "field": "gust_speed", "above": 50, "label": "Wind gusts"},
+    {"metric": "wind_speed", "field": "wind_speed", "above": 35, "label": "Strong wind"},
+    {"metric": "pm10", "field": "pm10", "above": 80, "label": "Dust (PM10)"},
+    {"metric": "rain_chance", "field": "rain_chance", "above": 40, "label": "Rain likely"},
+    {"metric": "rain", "field": "rain", "above": 1.0, "label": "Rainfall"},
 )
 
 # IMS ships its own hex colour per severity level; using it keeps cards in

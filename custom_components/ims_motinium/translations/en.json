@@ -213,6 +213,12 @@
             },
             "ims_sea_warnings_he": {
                 "name": "אזהרות ים"
+            },
+            "ims_daily_digest_en": {
+                "name": "Daily Digest"
+            },
+            "ims_daily_digest_he": {
+                "name": "תקציר יומי"
             }
         }
     }
