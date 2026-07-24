@@ -1,5 +1,7 @@
 homeassistant>=2025.4.0
 mypy>=1.0.0
 pip>=21.0
+pytest>=8.0.0
+pytz
+requests
 ruff>=0.5.6
-weatheril>=0.41.0
