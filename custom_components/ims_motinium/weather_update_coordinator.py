@@ -100,7 +100,10 @@ class WeatherUpdateCoordinator(DataUpdateCoordinator[WeatherData]):
         warnings = (
             await self._fetch_warnings(loop) if self._should_fetch_warnings() else []
         )
-        images = await self._fetch_radar_images(loop)
+        # Radar/satellite imagery is not consumed by any entity, so the extra
+        # HTTP round-trip is skipped. IMS also serves a 2-byte stub instead of
+        # the actual radar PNGs, so there is nothing to render even if it were.
+        images = None
 
         _LOGGER.debug(
             "Data fetched from IMS of %s",
@@ -161,25 +164,6 @@ class WeatherUpdateCoordinator(DataUpdateCoordinator[WeatherData]):
                 error,
             )
             return []
-
-    async def _fetch_radar_images(
-        self, loop: asyncio.AbstractEventLoop
-    ) -> RadarSatellite | None:
-        """Fetch IMS radar/satellite imagery.
-
-        Non-fatal: returns ``None`` on any failure (timeout, network error,
-        parse error, server outage) so a misbehaving radar endpoint cannot
-        prevent the rest of the update from completing. ``WeatherData.images``
-        is typed as ``RadarSatellite | None`` to reflect this.
-        """
-        try:
-            return await loop.run_in_executor(None, self.weather.get_radar_images)
-        except Exception as error:  # noqa: BLE001 - intentional, see docstring
-            _LOGGER.warning(
-                "Failed to fetch IMS radar/satellite imagery; continuing without it: %s",
-                error,
-            )
-            return None
 
     def _should_fetch_warnings(self) -> bool:
         """Return True if any enabled sensor consumes ``data.warnings``.
