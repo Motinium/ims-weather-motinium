@@ -1,0 +1,743 @@
+{
+ "data": {
+  "coast_warning": "Sea warning for Israel Coasts",
+  "days": [
+   "2026-07-24",
+   "2026-07-25",
+   "2026-07-26",
+   "2026-07-27"
+  ],
+  "disclaimer": "<ol dir=\"ltr\">\r\n\t<li>These are only the main weather events, however there may be additional weather&nbsp;phenomena not listed here that pose a danger.&nbsp;Use caution and take appropriate action given the conditions present. Follow the directions of the authorities, if provided.</li>\r\n\t<li>These are general guidelines only and do not cover all possible effects of the weather. Use caution and take appropriate action given the conditions present. Follow the directions of the authorities, if provided.</li>\r\n</ol>\r\n",
+  "fixed_colors": [
+   "#29d660",
+   "#29d660",
+   "#c1c100",
+   "#c1c100",
+   "#fecb31",
+   "#fecb31",
+   "#fe0104"
+  ],
+  "ims_warning_type": {
+   "10": {
+    "file_name": "forest_fire",
+    "for_app": "1",
+    "name": "Fire Danger",
+    "warning_type_id": "10"
+   },
+   "11": {
+    "file_name": "thunder_stormsif",
+    "for_app": "1",
+    "name": "Thunderstorms",
+    "warning_type_id": "11"
+   },
+   "12": {
+    "file_name": "fog",
+    "for_app": "1",
+    "name": "Reduced Visibility",
+    "warning_type_id": "12"
+   },
+   "13": {
+    "file_name": "wind",
+    "for_app": "0",
+    "name": "Turbulence",
+    "warning_type_id": "13"
+   },
+   "14": {
+    "file_name": "wind",
+    "for_app": "0",
+    "name": "Wind Shear",
+    "warning_type_id": "14"
+   },
+   "15": {
+    "file_name": "snow_ice",
+    "for_app": "0",
+    "name": "Aircraft Icing",
+    "warning_type_id": "15"
+   },
+   "16": {
+    "file_name": "forest_fire",
+    "for_app": "0",
+    "name": "Elevated Burning Index",
+    "warning_type_id": "16"
+   },
+   "2": {
+    "file_name": "wind",
+    "for_app": "1",
+    "name": "Strong Winds",
+    "warning_type_id": "2"
+   },
+   "3": {
+    "file_name": "coastal_event",
+    "for_app": "1",
+    "name": "High Sea Swimming Danger",
+    "warning_type_id": "3"
+   },
+   "33": {
+    "file_name": "extreme_high_temperature",
+    "for_app": "1",
+    "name": "Heat Wave",
+    "warning_type_id": "33"
+   },
+   "35": {
+    "file_name": "fog",
+    "for_app": "0",
+    "name": "Volcanic Ash",
+    "warning_type_id": "35"
+   },
+   "39": {
+    "file_name": "fog",
+    "for_app": "0",
+    "name": "Low Ceiling",
+    "warning_type_id": "39"
+   },
+   "4": {
+    "file_name": "coastal_event",
+    "for_app": "1",
+    "name": "High Sea",
+    "warning_type_id": "4"
+   },
+   "40": {
+    "file_name": "fog",
+    "for_app": "0",
+    "name": "Mountain Wave",
+    "warning_type_id": "40"
+   },
+   "41": {
+    "file_name": "fog",
+    "for_app": "0",
+    "name": "Radioactive or Chemical Cld",
+    "warning_type_id": "41"
+   },
+   "42": {
+    "file_name": "fog",
+    "for_app": "0",
+    "name": "Mountain Obscuration",
+    "warning_type_id": "42"
+   },
+   "5": {
+    "file_name": "flood",
+    "for_app": "1",
+    "name": "Flash Floods",
+    "warning_type_id": "5"
+   },
+   "51": {
+    "file_name": "",
+    "for_app": "1",
+    "name": "News Flash",
+    "warning_type_id": "51"
+   },
+   "53": {
+    "file_name": "precipitation",
+    "for_app": "1",
+    "name": "Significant Precipitation",
+    "warning_type_id": "53"
+   },
+   "54": {
+    "file_name": "extreme_high_temperature",
+    "for_app": "1",
+    "name": "Extreme Temperature",
+    "warning_type_id": "54"
+   },
+   "6": {
+    "file_name": "snow",
+    "for_app": "1",
+    "name": "Snow",
+    "warning_type_id": "6"
+   },
+   "7": {
+    "file_name": "rain_flood",
+    "for_app": "1",
+    "name": "Flooding",
+    "warning_type_id": "7"
+   },
+   "8": {
+    "file_name": "extreme_high_temperature",
+    "for_app": "1",
+    "name": "Heat Stress",
+    "warning_type_id": "8"
+   },
+   "9": {
+    "file_name": "snow_ice",
+    "for_app": "1",
+    "name": "Frost",
+    "warning_type_id": "9"
+   }
+  },
+  "labels": {
+   "today": "Today",
+   "tomorrow": "Tomorrow"
+  },
+  "parent_regions": {
+   "r-1": {
+    "child_reglist": {
+     "1": 76,
+     "10": 90,
+     "11": 92,
+     "12": 93,
+     "13": 94,
+     "14": 96,
+     "15": 97,
+     "16": 101,
+     "17": 103,
+     "18": 106,
+     "19": 109,
+     "2": 77,
+     "20": 112,
+     "21": 116,
+     "22": 117,
+     "23": 118,
+     "24": 115,
+     "25": 120,
+     "26": 122,
+     "27": 123,
+     "28": 124,
+     "29": 127,
+     "3": 80,
+     "30": 129,
+     "31": 130,
+     "32": 131,
+     "33": 132,
+     "34": 134,
+     "35": 135,
+     "36": 137,
+     "37": 138,
+     "38": 54,
+     "39": 55,
+     "4": 81,
+     "40": 56,
+     "5": 83,
+     "6": 84,
+     "7": 86,
+     "8": 87,
+     "9": 89
+    },
+    "name": "All of Israel",
+    "rid": "r-1"
+   },
+   "r-10": {
+    "child_reglist": {
+     "1": 54,
+     "2": 55,
+     "3": 56
+    },
+    "name": "Mediterranean Sea",
+    "rid": "r-10"
+   },
+   "r-100": {
+    "child_reglist": {
+     "1": 101,
+     "2": 103,
+     "3": 106
+    },
+    "name": "Centeral and South Coast",
+    "rid": "r-100"
+   },
+   "r-108": {
+    "child_reglist": {
+     "1": 109,
+     "2": 112
+    },
+    "name": "Judean Foothills",
+    "rid": "r-108"
+   },
+   "r-113": {
+    "child_reglist": {
+     "1": 116,
+     "2": 117,
+     "3": 118
+    },
+    "name": "Center Mountains",
+    "rid": "r-113"
+   },
+   "r-114": {
+    "child_reglist": {
+     "1": 116,
+     "2": 117
+    },
+    "name": "Samaria ",
+    "rid": "r-114"
+   },
+   "r-121": {
+    "child_reglist": {
+     "1": 122,
+     "2": 123,
+     "3": 124
+    },
+    "name": "Judea Desert & Dead Sea ",
+    "rid": "r-121"
+   },
+   "r-125": {
+    "child_reglist": {
+     "1": 127,
+     "2": 129,
+     "3": 130,
+     "4": 131,
+     "5": 132,
+     "6": 134,
+     "7": 135
+    },
+    "name": "Negev",
+    "rid": "r-125"
+   },
+   "r-126": {
+    "child_reglist": {
+     "1": 127,
+     "2": 129,
+     "3": 130
+    },
+    "name": "Northern Negev",
+    "rid": "r-126"
+   },
+   "r-133": {
+    "child_reglist": {
+     "1": 134,
+     "2": 135
+    },
+    "name": "Southern Negev & Eilat Mountai",
+    "rid": "r-133"
+   },
+   "r-136": {
+    "child_reglist": {
+     "1": 137,
+     "2": 138
+    },
+    "name": "Arava",
+    "rid": "r-136"
+   },
+   "r-2": {
+    "child_reglist": {
+     "1": 76,
+     "10": 90,
+     "11": 92,
+     "12": 93,
+     "13": 94,
+     "14": 96,
+     "15": 97,
+     "2": 77,
+     "3": 80,
+     "4": 81,
+     "5": 83,
+     "6": 84,
+     "7": 86,
+     "8": 87,
+     "9": 89
+    },
+    "name": "North ",
+    "rid": "r-2"
+   },
+   "r-3": {
+    "child_reglist": {
+     "1": 101,
+     "10": 120,
+     "11": 122,
+     "12": 123,
+     "13": 124,
+     "2": 103,
+     "3": 106,
+     "4": 109,
+     "5": 112,
+     "6": 116,
+     "7": 117,
+     "8": 118,
+     "9": 115
+    },
+    "name": "Center ",
+    "rid": "r-3"
+   },
+   "r-4": {
+    "child_reglist": {
+     "1": 127,
+     "2": 129,
+     "3": 130,
+     "4": 131,
+     "5": 132,
+     "6": 134,
+     "7": 135,
+     "8": 137,
+     "9": 138
+    },
+    "name": "South ",
+    "rid": "r-4"
+   },
+   "r-74": {
+    "child_reglist": {
+     "1": 76,
+     "2": 77,
+     "3": 80,
+     "4": 81,
+     "5": 83,
+     "6": 84
+    },
+    "name": "North Mountains",
+    "rid": "r-74"
+   },
+   "r-75": {
+    "child_reglist": {
+     "1": 76,
+     "2": 77
+    },
+    "name": "Golan Mountains",
+    "rid": "r-75"
+   },
+   "r-78": {
+    "child_reglist": {
+     "1": 80,
+     "2": 81,
+     "3": 83,
+     "4": 84
+    },
+    "name": "Galilee Mountains",
+    "rid": "r-78"
+   },
+   "r-79": {
+    "child_reglist": {
+     "1": 80,
+     "2": 81
+    },
+    "name": "Upper Galilee",
+    "rid": "r-79"
+   },
+   "r-82": {
+    "child_reglist": {
+     "1": 83,
+     "2": 84
+    },
+    "name": "Lower Galilee",
+    "rid": "r-82"
+   },
+   "r-85": {
+    "child_reglist": {
+     "1": 86,
+     "2": 87,
+     "3": 89,
+     "4": 90
+    },
+    "name": "North Valleys",
+    "rid": "r-85"
+   },
+   "r-91": {
+    "child_reglist": {
+     "1": 92,
+     "2": 93
+    },
+    "name": "Carmel",
+    "rid": "r-91"
+   },
+   "r-95": {
+    "child_reglist": {
+     "1": 94,
+     "2": 96,
+     "3": 97
+    },
+    "name": "North Coast",
+    "rid": "r-95"
+   }
+  },
+  "regions": {
+   "r-101": {
+    "is_sea": "0",
+    "name": "Northern Sharon",
+    "rid": "r-101"
+   },
+   "r-103": {
+    "is_sea": "0",
+    "name": "Gush Dan",
+    "rid": "r-103"
+   },
+   "r-106": {
+    "is_sea": "0",
+    "name": "Southern Coast",
+    "rid": "r-106"
+   },
+   "r-109": {
+    "is_sea": "0",
+    "name": "Judean foothills - North",
+    "rid": "r-109"
+   },
+   "r-112": {
+    "is_sea": "0",
+    "name": "Judean foothills - South",
+    "rid": "r-112"
+   },
+   "r-115": {
+    "is_sea": "0",
+    "name": "Northern Samaria",
+    "rid": "r-115"
+   },
+   "r-116": {
+    "is_sea": "0",
+    "name": "North Eastern Samaria",
+    "rid": "r-116"
+   },
+   "r-117": {
+    "is_sea": "0",
+    "name": "Southern Samaria",
+    "rid": "r-117"
+   },
+   "r-118": {
+    "is_sea": "0",
+    "name": "Judea Mountains",
+    "rid": "r-118"
+   },
+   "r-120": {
+    "is_sea": "0",
+    "name": "Jordan Valley",
+    "rid": "r-120"
+   },
+   "r-122": {
+    "is_sea": "0",
+    "name": "North Judea Desert & Dead Sea",
+    "rid": "r-122"
+   },
+   "r-123": {
+    "is_sea": "0",
+    "name": "Southern Judean Desert ",
+    "rid": "r-123"
+   },
+   "r-124": {
+    "is_sea": "0",
+    "name": "Judean Desert Margins",
+    "rid": "r-124"
+   },
+   "r-127": {
+    "is_sea": "0",
+    "name": "North Western Negev",
+    "rid": "r-127"
+   },
+   "r-129": {
+    "is_sea": "0",
+    "name": "North Eastern Negev",
+    "rid": "r-129"
+   },
+   "r-130": {
+    "is_sea": "0",
+    "name": "Western Negev",
+    "rid": "r-130"
+   },
+   "r-131": {
+    "is_sea": "0",
+    "name": "Negev Mountains",
+    "rid": "r-131"
+   },
+   "r-132": {
+    "is_sea": "0",
+    "name": "Eastern Negev",
+    "rid": "r-132"
+   },
+   "r-134": {
+    "is_sea": "0",
+    "name": "Southern Negev",
+    "rid": "r-134"
+   },
+   "r-135": {
+    "is_sea": "0",
+    "name": "Eilat Mountains",
+    "rid": "r-135"
+   },
+   "r-137": {
+    "is_sea": "0",
+    "name": "Northern Arava",
+    "rid": "r-137"
+   },
+   "r-138": {
+    "is_sea": "1",
+    "name": "Eilat Gulf & Southern Arava",
+    "rid": "r-138"
+   },
+   "r-139": {
+    "is_sea": "0",
+    "name": "Gaza",
+    "rid": "r-139"
+   },
+   "r-54": {
+    "is_sea": "1",
+    "name": "Sea (North)",
+    "rid": "r-54"
+   },
+   "r-55": {
+    "is_sea": "1",
+    "name": "Sea (Center)",
+    "rid": "r-55"
+   },
+   "r-56": {
+    "is_sea": "1",
+    "name": "Sea (South)",
+    "rid": "r-56"
+   },
+   "r-76": {
+    "is_sea": "0",
+    "name": "Northern Golan",
+    "rid": "r-76"
+   },
+   "r-77": {
+    "is_sea": "0",
+    "name": "Southern Golan",
+    "rid": "r-77"
+   },
+   "r-80": {
+    "is_sea": "0",
+    "name": "Eastern Upper Galilee",
+    "rid": "r-80"
+   },
+   "r-81": {
+    "is_sea": "0",
+    "name": "Western Upper Galilee",
+    "rid": "r-81"
+   },
+   "r-83": {
+    "is_sea": "0",
+    "name": "Eastern Lower Galilee",
+    "rid": "r-83"
+   },
+   "r-84": {
+    "is_sea": "0",
+    "name": "Western Lower Galilee",
+    "rid": "r-84"
+   },
+   "r-86": {
+    "is_sea": "0",
+    "name": "Beit Shean Valley",
+    "rid": "r-86"
+   },
+   "r-87": {
+    "is_sea": "0",
+    "name": "Hula Valley",
+    "rid": "r-87"
+   },
+   "r-89": {
+    "is_sea": "0",
+    "name": "Jezreel Valley",
+    "rid": "r-89"
+   },
+   "r-90": {
+    "is_sea": "1",
+    "name": "Kinarot Valley ",
+    "rid": "r-90"
+   },
+   "r-92": {
+    "is_sea": "0",
+    "name": "Carmel Mountain",
+    "rid": "r-92"
+   },
+   "r-93": {
+    "is_sea": "0",
+    "name": "Plain of Manasseh",
+    "rid": "r-93"
+   },
+   "r-94": {
+    "is_sea": "0",
+    "name": "Carmel Coast",
+    "rid": "r-94"
+   },
+   "r-96": {
+    "is_sea": "0",
+    "name": "Western Galilee Slopes",
+    "rid": "r-96"
+   },
+   "r-97": {
+    "is_sea": "0",
+    "name": "Zevulun Valley",
+    "rid": "r-97"
+   }
+  },
+  "severity_labels": [
+   "",
+   "",
+   "Yellow Early Warning",
+   "Yellow Warning",
+   "Orange Warning",
+   "Orange Early Warning",
+   "Red Warning"
+  ],
+  "warning_groups": {
+   "g-17": {
+    "gid": "17",
+    "id": "2",
+    "name": "Aviation"
+   },
+   "g-18": {
+    "gid": "18",
+    "id": "1",
+    "name": "General Public"
+   },
+   "g-27": {
+    "gid": "27",
+    "id": "3",
+    "name": "Seamanship"
+   },
+   "g-36": {
+    "gid": "36",
+    "id": "4",
+    "name": "Seamanship"
+   },
+   "g-50": {
+    "gid": "50",
+    "id": "3",
+    "name": "Agriculture"
+   },
+   "g-51": {
+    "gid": "51",
+    "id": "5",
+    "name": "New Flash"
+   },
+   "g-52": {
+    "gid": "52",
+    "id": "5",
+    "name": "New Flash"
+   },
+   "g-56": {
+    "gid": "56",
+    "id": "6",
+    "name": "Roads"
+   }
+  },
+  "warning_labels": [
+   "No Gale Warnings",
+   "Gale Warning",
+   "Storm Warning"
+  ],
+  "warning_severity": {
+   "0": {
+    "color": "#939598",
+    "severity_id": "0",
+    "severity_name": "Green"
+   },
+   "2": {
+    "color": "#FFD700",
+    "severity_id": "2",
+    "severity_name": "Yellow Early Warning"
+   },
+   "3": {
+    "color": "#FFD700",
+    "severity_id": "3",
+    "severity_name": "Yellow Warning"
+   },
+   "4": {
+    "color": "#FF8C00",
+    "severity_id": "4",
+    "severity_name": "Orange Warning"
+   },
+   "5": {
+    "color": "#FF8C00",
+    "severity_id": "5",
+    "severity_name": "Orange Early Warning"
+   },
+   "6": {
+    "color": "#fe0104",
+    "severity_id": "6",
+    "severity_name": "Red Early Warning"
+   },
+   "7": {
+    "color": "#fe0104",
+    "severity_id": "7",
+    "severity_name": "Red Warning"
+   },
+   "8": {
+    "color": "#B7B7B7",
+    "severity_id": "8",
+    "severity_name": "Gray"
+   }
+  }
+ },
+ "method": "GET"
+}

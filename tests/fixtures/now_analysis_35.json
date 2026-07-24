@@ -1,0 +1,36 @@
+{
+ "data": {
+  "35": {
+   "created": "2026-07-19 09:05:10",
+   "due_point_Temp": "20",
+   "feels_like": "30",
+   "forecast_hour": "21",
+   "forecast_time": "2026-07-24 21:20:00",
+   "gust_speed": "23",
+   "heat_stress": "25.6",
+   "heat_stress_level": "2",
+   "id": "13190388",
+   "lid": "35",
+   "main_hour": "1",
+   "max_temp": "28",
+   "min_temp": "28",
+   "modified": "2026-07-24 18:00:00",
+   "pm10": "34",
+   "rain": "0.00",
+   "rain_chance": "0",
+   "relative_humidity": "69",
+   "temperature": "28.0",
+   "type": "forecast",
+   "u_v_i_factor": "1",
+   "u_v_i_max": "0",
+   "u_v_index": "0",
+   "u_v_level": "L",
+   "wave_height": "1.1",
+   "weather_code": "1230",
+   "wind_chill": "31",
+   "wind_direction_id": "11",
+   "wind_speed": 15
+  }
+ },
+ "method": "GET"
+}

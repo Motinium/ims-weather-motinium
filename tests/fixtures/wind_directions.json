@@ -1,0 +1,73 @@
+{
+ "data": {
+  "1": {
+   "direction": "360",
+   "text": "N"
+  },
+  "10": {
+   "direction": "203",
+   "text": "SSW"
+  },
+  "11": {
+   "direction": "225",
+   "text": "SW"
+  },
+  "12": {
+   "direction": "248",
+   "text": "WSW"
+  },
+  "13": {
+   "direction": "270",
+   "text": "W"
+  },
+  "14": {
+   "direction": "293",
+   "text": "WNW"
+  },
+  "15": {
+   "direction": "315",
+   "text": "NW"
+  },
+  "16": {
+   "direction": "338",
+   "text": "NNW"
+  },
+  "17": {
+   "direction": "0",
+   "text": "N"
+  },
+  "2": {
+   "direction": "23",
+   "text": "NNE"
+  },
+  "3": {
+   "direction": "45",
+   "text": "NE"
+  },
+  "4": {
+   "direction": "68",
+   "text": "ENE"
+  },
+  "5": {
+   "direction": "90",
+   "text": "E"
+  },
+  "6": {
+   "direction": "113",
+   "text": "ESE"
+  },
+  "7": {
+   "direction": "135",
+   "text": "SE"
+  },
+  "8": {
+   "direction": "158",
+   "text": "SSE"
+  },
+  "9": {
+   "direction": "180",
+   "text": "S"
+  }
+ },
+ "method": "GET"
+}

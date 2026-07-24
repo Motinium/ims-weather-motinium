@@ -1,0 +1,2456 @@
+{
+ "data": {
+  "distinct_warnings": {
+   "17": {
+    "2026-07-24": {
+     "56864": {
+      "alert_id": "56864",
+      "full_en": " update: Yellow Warning of STRONG WINDS FOR AVIATION in Samaria, in Northern Samaria, in Jordan Valley, in Judea Desert and Dead Sea, in Northern Negev and in Negev Mountain on 24/07 from 18 until 22 LT.      ",
+      "full_he": " עדכון: אזהרה צהובה על רוחות חזקות לתעופה בשומרון, בצפון השומרון, בבקעת  הירדן, במדבר יהודה וים המלח, בצפון הנגב ובהר הנגב ב-24/07 מ-18 עד 22.   רוח מכיוון 280 בעוצמה 20 קשר, משבים עד 30 ",
+      "groups": [
+       "17"
+      ],
+      "regions": [
+       "115",
+       "116",
+       "120",
+       "117",
+       "124",
+       "122",
+       "123",
+       "127",
+       "129",
+       "130",
+       "131"
+      ],
+      "sent": "2026-07-24 18:41:00",
+      "severity_id": "3",
+      "text": "",
+      "text_full": "",
+      "valid_from": "2026-07-24 18:41:00",
+      "valid_from_unix": 1784907660,
+      "valid_to": "2026-07-24 22:00:00",
+      "warning_type_id": "2",
+      "wid": "135169"
+     },
+     "56865": {
+      "alert_id": "56865",
+      "full_en": " Yellow Warning of MOUNTAIN OBSCURATION in North Mountains from 24/07 22 until 25/07 02 LT.      ",
+      "full_he": " אזהרה צהובה על ערפילי הרים בהרי הצפון מ-24/07 ב-22 עד 25/07 ב-02 ",
+      "groups": [
+       "17",
+       "18",
+       "56"
+      ],
+      "regions": [
+       "76",
+       "80",
+       "81",
+       "77",
+       "84",
+       "83"
+      ],
+      "sent": "2026-07-24 20:44:00",
+      "severity_id": "3",
+      "text": "",
+      "text_full": "",
+      "valid_from": "2026-07-24 22:00:00",
+      "valid_from_unix": 1784919600,
+      "valid_to": "2026-07-25 02:00:00",
+      "warning_type_id": "42",
+      "wid": "135170"
+     }
+    },
+    "2026-07-25": {
+     "56865": {
+      "alert_id": "56865",
+      "full_en": " Yellow Warning of MOUNTAIN OBSCURATION in North Mountains from 24/07 22 until 25/07 02 LT.      ",
+      "full_he": " אזהרה צהובה על ערפילי הרים בהרי הצפון מ-24/07 ב-22 עד 25/07 ב-02 ",
+      "groups": [
+       "17",
+       "18",
+       "56"
+      ],
+      "regions": [
+       "76",
+       "80",
+       "81",
+       "77",
+       "84",
+       "83"
+      ],
+      "sent": "2026-07-24 20:44:00",
+      "severity_id": "3",
+      "text": "",
+      "text_full": "",
+      "valid_from": "2026-07-24 22:00:00",
+      "valid_from_unix": 1784919600,
+      "valid_to": "2026-07-25 02:00:00",
+      "warning_type_id": "42",
+      "wid": "135170"
+     }
+    }
+   },
+   "18": {
+    "2026-07-24": {
+     "56853": {
+      "alert_id": "56853",
+      "full_en": " Red Early Warning of HIGH SEA SWIMMING DANGER in Mediterranean Sea from 24/07 22 until 25/07 12 LT.    The state of sea is Moderate The significant wave height from 170 to 240 cm, Increasing.  ",
+      "full_he": " התראה מוקדמת אדומה על ים גבוה ומסוכן לרחצה בים התיכון מ-24/07 ב-22 עד 25/07 ב-12.   מצב הים גבה גלים גובה הגל הסיגניפיקנטי ינוע מ-170 עד 240 ס\"מ, במגמת עליה ",
+      "groups": [
+       "18",
+       "36"
+      ],
+      "many": true,
+      "regions": [
+       "54",
+       "55",
+       "56"
+      ],
+      "sent": "2026-07-24 09:53:00",
+      "severity_id": "6",
+      "text": "The state of sea is Moderate The significant wave height from 170 to 240 cm, Increasing.",
+      "text_full": "The state of sea is Moderate The significant wave height from 170 to 240 cm, Increasing.",
+      "valid_from": "2026-07-24 22:00:00",
+      "valid_from_unix": 1784919600,
+      "valid_to": "2026-07-25 12:00:00",
+      "warning_type_id": "3",
+      "wid": "135163"
+     },
+     "56865": {
+      "alert_id": "56865",
+      "full_en": " Yellow Warning of MOUNTAIN OBSCURATION in North Mountains from 24/07 22 until 25/07 02 LT.      ",
+      "full_he": " אזהרה צהובה על ערפילי הרים בהרי הצפון מ-24/07 ב-22 עד 25/07 ב-02 ",
+      "groups": [
+       "17",
+       "18",
+       "56"
+      ],
+      "regions": [
+       "76",
+       "80",
+       "81",
+       "77",
+       "84",
+       "83"
+      ],
+      "sent": "2026-07-24 20:44:00",
+      "severity_id": "3",
+      "text": "",
+      "text_full": "",
+      "valid_from": "2026-07-24 22:00:00",
+      "valid_from_unix": 1784919600,
+      "valid_to": "2026-07-25 02:00:00",
+      "warning_type_id": "42",
+      "wid": "135170"
+     }
+    },
+    "2026-07-25": {
+     "56853": {
+      "alert_id": "56853",
+      "full_en": " Red Early Warning of HIGH SEA SWIMMING DANGER in Mediterranean Sea from 24/07 22 until 25/07 12 LT.    The state of sea is Moderate The significant wave height from 170 to 240 cm, Increasing.  ",
+      "full_he": " התראה מוקדמת אדומה על ים גבוה ומסוכן לרחצה בים התיכון מ-24/07 ב-22 עד 25/07 ב-12.   מצב הים גבה גלים גובה הגל הסיגניפיקנטי ינוע מ-170 עד 240 ס\"מ, במגמת עליה ",
+      "groups": [
+       "18",
+       "36"
+      ],
+      "regions": [
+       "54",
+       "55",
+       "56"
+      ],
+      "sent": "2026-07-24 09:53:00",
+      "severity_id": "6",
+      "text": "The state of sea is Moderate The significant wave height from 170 to 240 cm, Increasing.",
+      "text_full": "The state of sea is Moderate The significant wave height from 170 to 240 cm, Increasing.",
+      "valid_from": "2026-07-24 22:00:00",
+      "valid_from_unix": 1784919600,
+      "valid_to": "2026-07-25 12:00:00",
+      "warning_type_id": "3",
+      "wid": "135163"
+     },
+     "56862": {
+      "alert_id": "56862",
+      "full_en": " Orange Early Warning of HEAT STRESS in Bet Shean Valley, in Kinarot Valley, in Jordan Valley and in Eilat Gulf and Southern Arava on 25/07 from 11 until 23 LT.      ",
+      "full_he": " התראה מוקדמת כתומה על עומס חום בעמק בית שאן, בבקעת כנרות, בבקעת  הירדן ובמפרץ אילת ודרום ערבה ב-25/07 מ-11 עד 23 ",
+      "groups": [
+       "18",
+       "50",
+       "56"
+      ],
+      "many": true,
+      "regions": [
+       "90",
+       "86",
+       "120",
+       "138"
+      ],
+      "sent": "2026-07-24 15:47:00",
+      "severity_id": "5",
+      "text": "",
+      "text_full": "",
+      "valid_from": "2026-07-25 11:00:00",
+      "valid_from_unix": 1784966400,
+      "valid_to": "2026-07-25 23:00:00",
+      "warning_type_id": "8",
+      "wid": "135167"
+     },
+     "56863": {
+      "alert_id": "56863",
+      "full_en": " Orange Early Warning of ELEVATED BURNING INDEX in Judean foothills - South, in Judea Mountains and in North Western Negev on 25/07 from 13 until 19 LT.      ",
+      "full_he": " התראה מוקדמת כתומה על אינדקס שריפות גבוה בדרום השפלה, בהרי יהודה ובצפון מערב הנגב ב-25/07 מ-13 עד 19 ",
+      "groups": [
+       "18",
+       "56"
+      ],
+      "regions": [
+       "112",
+       "118",
+       "127"
+      ],
+      "sent": "2026-07-24 16:23:00",
+      "severity_id": "5",
+      "text": "",
+      "text_full": "",
+      "valid_from": "2026-07-25 13:00:00",
+      "valid_from_unix": 1784973600,
+      "valid_to": "2026-07-25 19:00:00",
+      "warning_type_id": "16",
+      "wid": "135168"
+     },
+     "56865": {
+      "alert_id": "56865",
+      "full_en": " Yellow Warning of MOUNTAIN OBSCURATION in North Mountains from 24/07 22 until 25/07 02 LT.      ",
+      "full_he": " אזהרה צהובה על ערפילי הרים בהרי הצפון מ-24/07 ב-22 עד 25/07 ב-02 ",
+      "groups": [
+       "17",
+       "18",
+       "56"
+      ],
+      "regions": [
+       "76",
+       "80",
+       "81",
+       "77",
+       "84",
+       "83"
+      ],
+      "sent": "2026-07-24 20:44:00",
+      "severity_id": "3",
+      "text": "",
+      "text_full": "",
+      "valid_from": "2026-07-24 22:00:00",
+      "valid_from_unix": 1784919600,
+      "valid_to": "2026-07-25 02:00:00",
+      "warning_type_id": "42",
+      "wid": "135170"
+     }
+    },
+    "2026-07-26": {
+     "56861": {
+      "alert_id": "56861",
+      "full_en": " Orange Early Warning of HEAT STRESS in South Judea Desert and Dead Sea and in Northern Arava from 25/07 11 until 26/07 04 LT.      ",
+      "full_he": " התראה מוקדמת כתומה על עומס חום בדרום מדבר יהודה וים המלח ובצפון הערבה מ-25/07 ב-11 עד 26/07 ב-04 ",
+      "groups": [
+       "18",
+       "50",
+       "56"
+      ],
+      "regions": [
+       "123",
+       "137"
+      ],
+      "sent": "2026-07-24 15:47:00",
+      "severity_id": "5",
+      "text": "",
+      "text_full": "",
+      "valid_from": "2026-07-25 11:00:00",
+      "valid_from_unix": 1784966400,
+      "valid_to": "2026-07-26 04:00:00",
+      "warning_type_id": "8",
+      "wid": "135166"
+     }
+    }
+   },
+   "27": {
+    "2026-07-24": {
+     "56852": {
+      "alert_id": "56852",
+      "full_en": " Yellow Early Warning of HIGH SEA in Mediterranean Sea from 24/07 22 until 25/07 10 LT.    The state of sea is Moderate The significant wave height from 170 to 220 cm, Increasing.  ",
+      "full_he": " התראה מוקדמת צהובה על ים גבוה לספינות בים התיכון מ-24/07 ב-22 עד 25/07 ב-10.   מצב הים גבה גלים גובה הגל הסיגניפיקנטי ינוע מ-170 עד 220 ס\"מ, במגמת עליה ",
+      "groups": [
+       "27",
+       "36"
+      ],
+      "regions": [
+       "54",
+       "55",
+       "56"
+      ],
+      "sent": "2026-07-24 09:46:00",
+      "severity_id": "2",
+      "text": "The state of sea is Moderate The significant wave height from 170 to 220 cm, Increasing.",
+      "text_full": "The state of sea is Moderate The significant wave height from 170 to 220 cm, Increasing.",
+      "valid_from": "2026-07-24 22:00:00",
+      "valid_from_unix": 1784919600,
+      "valid_to": "2026-07-25 10:00:00",
+      "warning_type_id": "4",
+      "wid": "135162"
+     }
+    },
+    "2026-07-25": {
+     "56852": {
+      "alert_id": "56852",
+      "full_en": " Yellow Early Warning of HIGH SEA in Mediterranean Sea from 24/07 22 until 25/07 10 LT.    The state of sea is Moderate The significant wave height from 170 to 220 cm, Increasing.  ",
+      "full_he": " התראה מוקדמת צהובה על ים גבוה לספינות בים התיכון מ-24/07 ב-22 עד 25/07 ב-10.   מצב הים גבה גלים גובה הגל הסיגניפיקנטי ינוע מ-170 עד 220 ס\"מ, במגמת עליה ",
+      "groups": [
+       "27",
+       "36"
+      ],
+      "regions": [
+       "54",
+       "55",
+       "56"
+      ],
+      "sent": "2026-07-24 09:46:00",
+      "severity_id": "2",
+      "text": "The state of sea is Moderate The significant wave height from 170 to 220 cm, Increasing.",
+      "text_full": "The state of sea is Moderate The significant wave height from 170 to 220 cm, Increasing.",
+      "valid_from": "2026-07-24 22:00:00",
+      "valid_from_unix": 1784919600,
+      "valid_to": "2026-07-25 10:00:00",
+      "warning_type_id": "4",
+      "wid": "135162"
+     }
+    }
+   },
+   "36": {
+    "2026-07-24": {
+     "56852": {
+      "alert_id": "56852",
+      "full_en": " Yellow Early Warning of HIGH SEA in Mediterranean Sea from 24/07 22 until 25/07 10 LT.    The state of sea is Moderate The significant wave height from 170 to 220 cm, Increasing.  ",
+      "full_he": " התראה מוקדמת צהובה על ים גבוה לספינות בים התיכון מ-24/07 ב-22 עד 25/07 ב-10.   מצב הים גבה גלים גובה הגל הסיגניפיקנטי ינוע מ-170 עד 220 ס\"מ, במגמת עליה ",
+      "groups": [
+       "27",
+       "36"
+      ],
+      "regions": [
+       "54",
+       "55",
+       "56"
+      ],
+      "sent": "2026-07-24 09:46:00",
+      "severity_id": "2",
+      "text": "The state of sea is Moderate The significant wave height from 170 to 220 cm, Increasing.",
+      "text_full": "The state of sea is Moderate The significant wave height from 170 to 220 cm, Increasing.",
+      "valid_from": "2026-07-24 22:00:00",
+      "valid_from_unix": 1784919600,
+      "valid_to": "2026-07-25 10:00:00",
+      "warning_type_id": "4",
+      "wid": "135162"
+     },
+     "56853": {
+      "alert_id": "56853",
+      "full_en": " Red Early Warning of HIGH SEA SWIMMING DANGER in Mediterranean Sea from 24/07 22 until 25/07 12 LT.    The state of sea is Moderate The significant wave height from 170 to 240 cm, Increasing.  ",
+      "full_he": " התראה מוקדמת אדומה על ים גבוה ומסוכן לרחצה בים התיכון מ-24/07 ב-22 עד 25/07 ב-12.   מצב הים גבה גלים גובה הגל הסיגניפיקנטי ינוע מ-170 עד 240 ס\"מ, במגמת עליה ",
+      "groups": [
+       "18",
+       "36"
+      ],
+      "many": true,
+      "regions": [
+       "54",
+       "55",
+       "56"
+      ],
+      "sent": "2026-07-24 09:53:00",
+      "severity_id": "6",
+      "text": "The state of sea is Moderate The significant wave height from 170 to 240 cm, Increasing.",
+      "text_full": "The state of sea is Moderate The significant wave height from 170 to 240 cm, Increasing.",
+      "valid_from": "2026-07-24 22:00:00",
+      "valid_from_unix": 1784919600,
+      "valid_to": "2026-07-25 12:00:00",
+      "warning_type_id": "3",
+      "wid": "135163"
+     }
+    },
+    "2026-07-25": {
+     "56852": {
+      "alert_id": "56852",
+      "full_en": " Yellow Early Warning of HIGH SEA in Mediterranean Sea from 24/07 22 until 25/07 10 LT.    The state of sea is Moderate The significant wave height from 170 to 220 cm, Increasing.  ",
+      "full_he": " התראה מוקדמת צהובה על ים גבוה לספינות בים התיכון מ-24/07 ב-22 עד 25/07 ב-10.   מצב הים גבה גלים גובה הגל הסיגניפיקנטי ינוע מ-170 עד 220 ס\"מ, במגמת עליה ",
+      "groups": [
+       "27",
+       "36"
+      ],
+      "regions": [
+       "54",
+       "55",
+       "56"
+      ],
+      "sent": "2026-07-24 09:46:00",
+      "severity_id": "2",
+      "text": "The state of sea is Moderate The significant wave height from 170 to 220 cm, Increasing.",
+      "text_full": "The state of sea is Moderate The significant wave height from 170 to 220 cm, Increasing.",
+      "valid_from": "2026-07-24 22:00:00",
+      "valid_from_unix": 1784919600,
+      "valid_to": "2026-07-25 10:00:00",
+      "warning_type_id": "4",
+      "wid": "135162"
+     },
+     "56853": {
+      "alert_id": "56853",
+      "full_en": " Red Early Warning of HIGH SEA SWIMMING DANGER in Mediterranean Sea from 24/07 22 until 25/07 12 LT.    The state of sea is Moderate The significant wave height from 170 to 240 cm, Increasing.  ",
+      "full_he": " התראה מוקדמת אדומה על ים גבוה ומסוכן לרחצה בים התיכון מ-24/07 ב-22 עד 25/07 ב-12.   מצב הים גבה גלים גובה הגל הסיגניפיקנטי ינוע מ-170 עד 240 ס\"מ, במגמת עליה ",
+      "groups": [
+       "18",
+       "36"
+      ],
+      "regions": [
+       "54",
+       "55",
+       "56"
+      ],
+      "sent": "2026-07-24 09:53:00",
+      "severity_id": "6",
+      "text": "The state of sea is Moderate The significant wave height from 170 to 240 cm, Increasing.",
+      "text_full": "The state of sea is Moderate The significant wave height from 170 to 240 cm, Increasing.",
+      "valid_from": "2026-07-24 22:00:00",
+      "valid_from_unix": 1784919600,
+      "valid_to": "2026-07-25 12:00:00",
+      "warning_type_id": "3",
+      "wid": "135163"
+     }
+    }
+   },
+   "50": {
+    "2026-07-25": {
+     "56862": {
+      "alert_id": "56862",
+      "full_en": " Orange Early Warning of HEAT STRESS in Bet Shean Valley, in Kinarot Valley, in Jordan Valley and in Eilat Gulf and Southern Arava on 25/07 from 11 until 23 LT.      ",
+      "full_he": " התראה מוקדמת כתומה על עומס חום בעמק בית שאן, בבקעת כנרות, בבקעת  הירדן ובמפרץ אילת ודרום ערבה ב-25/07 מ-11 עד 23 ",
+      "groups": [
+       "18",
+       "50",
+       "56"
+      ],
+      "many": true,
+      "regions": [
+       "90",
+       "86",
+       "120",
+       "138"
+      ],
+      "sent": "2026-07-24 15:47:00",
+      "severity_id": "5",
+      "text": "",
+      "text_full": "",
+      "valid_from": "2026-07-25 11:00:00",
+      "valid_from_unix": 1784966400,
+      "valid_to": "2026-07-25 23:00:00",
+      "warning_type_id": "8",
+      "wid": "135167"
+     }
+    },
+    "2026-07-26": {
+     "56861": {
+      "alert_id": "56861",
+      "full_en": " Orange Early Warning of HEAT STRESS in South Judea Desert and Dead Sea and in Northern Arava from 25/07 11 until 26/07 04 LT.      ",
+      "full_he": " התראה מוקדמת כתומה על עומס חום בדרום מדבר יהודה וים המלח ובצפון הערבה מ-25/07 ב-11 עד 26/07 ב-04 ",
+      "groups": [
+       "18",
+       "50",
+       "56"
+      ],
+      "regions": [
+       "123",
+       "137"
+      ],
+      "sent": "2026-07-24 15:47:00",
+      "severity_id": "5",
+      "text": "",
+      "text_full": "",
+      "valid_from": "2026-07-25 11:00:00",
+      "valid_from_unix": 1784966400,
+      "valid_to": "2026-07-26 04:00:00",
+      "warning_type_id": "8",
+      "wid": "135166"
+     }
+    }
+   },
+   "56": {
+    "2026-07-24": {
+     "56865": {
+      "alert_id": "56865",
+      "full_en": " Yellow Warning of MOUNTAIN OBSCURATION in North Mountains from 24/07 22 until 25/07 02 LT.      ",
+      "full_he": " אזהרה צהובה על ערפילי הרים בהרי הצפון מ-24/07 ב-22 עד 25/07 ב-02 ",
+      "groups": [
+       "17",
+       "18",
+       "56"
+      ],
+      "regions": [
+       "76",
+       "80",
+       "81",
+       "77",
+       "84",
+       "83"
+      ],
+      "sent": "2026-07-24 20:44:00",
+      "severity_id": "3",
+      "text": "",
+      "text_full": "",
+      "valid_from": "2026-07-24 22:00:00",
+      "valid_from_unix": 1784919600,
+      "valid_to": "2026-07-25 02:00:00",
+      "warning_type_id": "42",
+      "wid": "135170"
+     }
+    },
+    "2026-07-25": {
+     "56862": {
+      "alert_id": "56862",
+      "full_en": " Orange Early Warning of HEAT STRESS in Bet Shean Valley, in Kinarot Valley, in Jordan Valley and in Eilat Gulf and Southern Arava on 25/07 from 11 until 23 LT.      ",
+      "full_he": " התראה מוקדמת כתומה על עומס חום בעמק בית שאן, בבקעת כנרות, בבקעת  הירדן ובמפרץ אילת ודרום ערבה ב-25/07 מ-11 עד 23 ",
+      "groups": [
+       "18",
+       "50",
+       "56"
+      ],
+      "many": true,
+      "regions": [
+       "90",
+       "86",
+       "120",
+       "138"
+      ],
+      "sent": "2026-07-24 15:47:00",
+      "severity_id": "5",
+      "text": "",
+      "text_full": "",
+      "valid_from": "2026-07-25 11:00:00",
+      "valid_from_unix": 1784966400,
+      "valid_to": "2026-07-25 23:00:00",
+      "warning_type_id": "8",
+      "wid": "135167"
+     },
+     "56863": {
+      "alert_id": "56863",
+      "full_en": " Orange Early Warning of ELEVATED BURNING INDEX in Judean foothills - South, in Judea Mountains and in North Western Negev on 25/07 from 13 until 19 LT.      ",
+      "full_he": " התראה מוקדמת כתומה על אינדקס שריפות גבוה בדרום השפלה, בהרי יהודה ובצפון מערב הנגב ב-25/07 מ-13 עד 19 ",
+      "groups": [
+       "18",
+       "56"
+      ],
+      "regions": [
+       "112",
+       "118",
+       "127"
+      ],
+      "sent": "2026-07-24 16:23:00",
+      "severity_id": "5",
+      "text": "",
+      "text_full": "",
+      "valid_from": "2026-07-25 13:00:00",
+      "valid_from_unix": 1784973600,
+      "valid_to": "2026-07-25 19:00:00",
+      "warning_type_id": "16",
+      "wid": "135168"
+     },
+     "56865": {
+      "alert_id": "56865",
+      "full_en": " Yellow Warning of MOUNTAIN OBSCURATION in North Mountains from 24/07 22 until 25/07 02 LT.      ",
+      "full_he": " אזהרה צהובה על ערפילי הרים בהרי הצפון מ-24/07 ב-22 עד 25/07 ב-02 ",
+      "groups": [
+       "17",
+       "18",
+       "56"
+      ],
+      "regions": [
+       "76",
+       "80",
+       "81",
+       "77",
+       "84",
+       "83"
+      ],
+      "sent": "2026-07-24 20:44:00",
+      "severity_id": "3",
+      "text": "",
+      "text_full": "",
+      "valid_from": "2026-07-24 22:00:00",
+      "valid_from_unix": 1784919600,
+      "valid_to": "2026-07-25 02:00:00",
+      "warning_type_id": "42",
+      "wid": "135170"
+     }
+    },
+    "2026-07-26": {
+     "56861": {
+      "alert_id": "56861",
+      "full_en": " Orange Early Warning of HEAT STRESS in South Judea Desert and Dead Sea and in Northern Arava from 25/07 11 until 26/07 04 LT.      ",
+      "full_he": " התראה מוקדמת כתומה על עומס חום בדרום מדבר יהודה וים המלח ובצפון הערבה מ-25/07 ב-11 עד 26/07 ב-04 ",
+      "groups": [
+       "18",
+       "50",
+       "56"
+      ],
+      "regions": [
+       "123",
+       "137"
+      ],
+      "sent": "2026-07-24 15:47:00",
+      "severity_id": "5",
+      "text": "",
+      "text_full": "",
+      "valid_from": "2026-07-25 11:00:00",
+      "valid_from_unix": 1784966400,
+      "valid_to": "2026-07-26 04:00:00",
+      "warning_type_id": "8",
+      "wid": "135166"
+     }
+    }
+   }
+  },
+  "full_warnings_data": {
+   "2026-07-24": {
+    "r-115": {
+     "135169": {
+      "alert_id": "56864",
+      "full_en": " update: Yellow Warning of STRONG WINDS FOR AVIATION in Samaria, in Northern Samaria, in Jordan Valley, in Judea Desert and Dead Sea, in Northern Negev and in Negev Mountain on 24/07 from 18 until 22 LT.      ",
+      "full_he": " עדכון: אזהרה צהובה על רוחות חזקות לתעופה בשומרון, בצפון השומרון, בבקעת  הירדן, במדבר יהודה וים המלח, בצפון הנגב ובהר הנגב ב-24/07 מ-18 עד 22.   רוח מכיוון 280 בעוצמה 20 קשר, משבים עד 30 ",
+      "groups": [
+       "17"
+      ],
+      "regions": [
+       "115",
+       "116",
+       "120",
+       "117",
+       "124",
+       "122",
+       "123",
+       "127",
+       "129",
+       "130",
+       "131"
+      ],
+      "sent": "2026-07-24 18:41:00",
+      "severity_id": "3",
+      "text": "",
+      "text_full": "",
+      "valid_from": "2026-07-24 18:41:00",
+      "valid_from_unix": 1784907660,
+      "valid_to": "2026-07-24 22:00:00",
+      "warning_type_id": "2",
+      "wid": "135169"
+     }
+    },
+    "r-116": {
+     "135169": {
+      "alert_id": "56864",
+      "full_en": " update: Yellow Warning of STRONG WINDS FOR AVIATION in Samaria, in Northern Samaria, in Jordan Valley, in Judea Desert and Dead Sea, in Northern Negev and in Negev Mountain on 24/07 from 18 until 22 LT.      ",
+      "full_he": " עדכון: אזהרה צהובה על רוחות חזקות לתעופה בשומרון, בצפון השומרון, בבקעת  הירדן, במדבר יהודה וים המלח, בצפון הנגב ובהר הנגב ב-24/07 מ-18 עד 22.   רוח מכיוון 280 בעוצמה 20 קשר, משבים עד 30 ",
+      "groups": [
+       "17"
+      ],
+      "regions": [
+       "115",
+       "116",
+       "120",
+       "117",
+       "124",
+       "122",
+       "123",
+       "127",
+       "129",
+       "130",
+       "131"
+      ],
+      "sent": "2026-07-24 18:41:00",
+      "severity_id": "3",
+      "text": "",
+      "text_full": "",
+      "valid_from": "2026-07-24 18:41:00",
+      "valid_from_unix": 1784907660,
+      "valid_to": "2026-07-24 22:00:00",
+      "warning_type_id": "2",
+      "wid": "135169"
+     }
+    },
+    "r-117": {
+     "135169": {
+      "alert_id": "56864",
+      "full_en": " update: Yellow Warning of STRONG WINDS FOR AVIATION in Samaria, in Northern Samaria, in Jordan Valley, in Judea Desert and Dead Sea, in Northern Negev and in Negev Mountain on 24/07 from 18 until 22 LT.      ",
+      "full_he": " עדכון: אזהרה צהובה על רוחות חזקות לתעופה בשומרון, בצפון השומרון, בבקעת  הירדן, במדבר יהודה וים המלח, בצפון הנגב ובהר הנגב ב-24/07 מ-18 עד 22.   רוח מכיוון 280 בעוצמה 20 קשר, משבים עד 30 ",
+      "groups": [
+       "17"
+      ],
+      "regions": [
+       "115",
+       "116",
+       "120",
+       "117",
+       "124",
+       "122",
+       "123",
+       "127",
+       "129",
+       "130",
+       "131"
+      ],
+      "sent": "2026-07-24 18:41:00",
+      "severity_id": "3",
+      "text": "",
+      "text_full": "",
+      "valid_from": "2026-07-24 18:41:00",
+      "valid_from_unix": 1784907660,
+      "valid_to": "2026-07-24 22:00:00",
+      "warning_type_id": "2",
+      "wid": "135169"
+     }
+    },
+    "r-120": {
+     "135169": {
+      "alert_id": "56864",
+      "full_en": " update: Yellow Warning of STRONG WINDS FOR AVIATION in Samaria, in Northern Samaria, in Jordan Valley, in Judea Desert and Dead Sea, in Northern Negev and in Negev Mountain on 24/07 from 18 until 22 LT.      ",
+      "full_he": " עדכון: אזהרה צהובה על רוחות חזקות לתעופה בשומרון, בצפון השומרון, בבקעת  הירדן, במדבר יהודה וים המלח, בצפון הנגב ובהר הנגב ב-24/07 מ-18 עד 22.   רוח מכיוון 280 בעוצמה 20 קשר, משבים עד 30 ",
+      "groups": [
+       "17"
+      ],
+      "regions": [
+       "115",
+       "116",
+       "120",
+       "117",
+       "124",
+       "122",
+       "123",
+       "127",
+       "129",
+       "130",
+       "131"
+      ],
+      "sent": "2026-07-24 18:41:00",
+      "severity_id": "3",
+      "text": "",
+      "text_full": "",
+      "valid_from": "2026-07-24 18:41:00",
+      "valid_from_unix": 1784907660,
+      "valid_to": "2026-07-24 22:00:00",
+      "warning_type_id": "2",
+      "wid": "135169"
+     }
+    },
+    "r-122": {
+     "135169": {
+      "alert_id": "56864",
+      "full_en": " update: Yellow Warning of STRONG WINDS FOR AVIATION in Samaria, in Northern Samaria, in Jordan Valley, in Judea Desert and Dead Sea, in Northern Negev and in Negev Mountain on 24/07 from 18 until 22 LT.      ",
+      "full_he": " עדכון: אזהרה צהובה על רוחות חזקות לתעופה בשומרון, בצפון השומרון, בבקעת  הירדן, במדבר יהודה וים המלח, בצפון הנגב ובהר הנגב ב-24/07 מ-18 עד 22.   רוח מכיוון 280 בעוצמה 20 קשר, משבים עד 30 ",
+      "groups": [
+       "17"
+      ],
+      "regions": [
+       "115",
+       "116",
+       "120",
+       "117",
+       "124",
+       "122",
+       "123",
+       "127",
+       "129",
+       "130",
+       "131"
+      ],
+      "sent": "2026-07-24 18:41:00",
+      "severity_id": "3",
+      "text": "",
+      "text_full": "",
+      "valid_from": "2026-07-24 18:41:00",
+      "valid_from_unix": 1784907660,
+      "valid_to": "2026-07-24 22:00:00",
+      "warning_type_id": "2",
+      "wid": "135169"
+     }
+    },
+    "r-123": {
+     "135169": {
+      "alert_id": "56864",
+      "full_en": " update: Yellow Warning of STRONG WINDS FOR AVIATION in Samaria, in Northern Samaria, in Jordan Valley, in Judea Desert and Dead Sea, in Northern Negev and in Negev Mountain on 24/07 from 18 until 22 LT.      ",
+      "full_he": " עדכון: אזהרה צהובה על רוחות חזקות לתעופה בשומרון, בצפון השומרון, בבקעת  הירדן, במדבר יהודה וים המלח, בצפון הנגב ובהר הנגב ב-24/07 מ-18 עד 22.   רוח מכיוון 280 בעוצמה 20 קשר, משבים עד 30 ",
+      "groups": [
+       "17"
+      ],
+      "regions": [
+       "115",
+       "116",
+       "120",
+       "117",
+       "124",
+       "122",
+       "123",
+       "127",
+       "129",
+       "130",
+       "131"
+      ],
+      "sent": "2026-07-24 18:41:00",
+      "severity_id": "3",
+      "text": "",
+      "text_full": "",
+      "valid_from": "2026-07-24 18:41:00",
+      "valid_from_unix": 1784907660,
+      "valid_to": "2026-07-24 22:00:00",
+      "warning_type_id": "2",
+      "wid": "135169"
+     }
+    },
+    "r-124": {
+     "135169": {
+      "alert_id": "56864",
+      "full_en": " update: Yellow Warning of STRONG WINDS FOR AVIATION in Samaria, in Northern Samaria, in Jordan Valley, in Judea Desert and Dead Sea, in Northern Negev and in Negev Mountain on 24/07 from 18 until 22 LT.      ",
+      "full_he": " עדכון: אזהרה צהובה על רוחות חזקות לתעופה בשומרון, בצפון השומרון, בבקעת  הירדן, במדבר יהודה וים המלח, בצפון הנגב ובהר הנגב ב-24/07 מ-18 עד 22.   רוח מכיוון 280 בעוצמה 20 קשר, משבים עד 30 ",
+      "groups": [
+       "17"
+      ],
+      "regions": [
+       "115",
+       "116",
+       "120",
+       "117",
+       "124",
+       "122",
+       "123",
+       "127",
+       "129",
+       "130",
+       "131"
+      ],
+      "sent": "2026-07-24 18:41:00",
+      "severity_id": "3",
+      "text": "",
+      "text_full": "",
+      "valid_from": "2026-07-24 18:41:00",
+      "valid_from_unix": 1784907660,
+      "valid_to": "2026-07-24 22:00:00",
+      "warning_type_id": "2",
+      "wid": "135169"
+     }
+    },
+    "r-127": {
+     "135169": {
+      "alert_id": "56864",
+      "full_en": " update: Yellow Warning of STRONG WINDS FOR AVIATION in Samaria, in Northern Samaria, in Jordan Valley, in Judea Desert and Dead Sea, in Northern Negev and in Negev Mountain on 24/07 from 18 until 22 LT.      ",
+      "full_he": " עדכון: אזהרה צהובה על רוחות חזקות לתעופה בשומרון, בצפון השומרון, בבקעת  הירדן, במדבר יהודה וים המלח, בצפון הנגב ובהר הנגב ב-24/07 מ-18 עד 22.   רוח מכיוון 280 בעוצמה 20 קשר, משבים עד 30 ",
+      "groups": [
+       "17"
+      ],
+      "regions": [
+       "115",
+       "116",
+       "120",
+       "117",
+       "124",
+       "122",
+       "123",
+       "127",
+       "129",
+       "130",
+       "131"
+      ],
+      "sent": "2026-07-24 18:41:00",
+      "severity_id": "3",
+      "text": "",
+      "text_full": "",
+      "valid_from": "2026-07-24 18:41:00",
+      "valid_from_unix": 1784907660,
+      "valid_to": "2026-07-24 22:00:00",
+      "warning_type_id": "2",
+      "wid": "135169"
+     }
+    },
+    "r-129": {
+     "135169": {
+      "alert_id": "56864",
+      "full_en": " update: Yellow Warning of STRONG WINDS FOR AVIATION in Samaria, in Northern Samaria, in Jordan Valley, in Judea Desert and Dead Sea, in Northern Negev and in Negev Mountain on 24/07 from 18 until 22 LT.      ",
+      "full_he": " עדכון: אזהרה צהובה על רוחות חזקות לתעופה בשומרון, בצפון השומרון, בבקעת  הירדן, במדבר יהודה וים המלח, בצפון הנגב ובהר הנגב ב-24/07 מ-18 עד 22.   רוח מכיוון 280 בעוצמה 20 קשר, משבים עד 30 ",
+      "groups": [
+       "17"
+      ],
+      "regions": [
+       "115",
+       "116",
+       "120",
+       "117",
+       "124",
+       "122",
+       "123",
+       "127",
+       "129",
+       "130",
+       "131"
+      ],
+      "sent": "2026-07-24 18:41:00",
+      "severity_id": "3",
+      "text": "",
+      "text_full": "",
+      "valid_from": "2026-07-24 18:41:00",
+      "valid_from_unix": 1784907660,
+      "valid_to": "2026-07-24 22:00:00",
+      "warning_type_id": "2",
+      "wid": "135169"
+     }
+    },
+    "r-130": {
+     "135169": {
+      "alert_id": "56864",
+      "full_en": " update: Yellow Warning of STRONG WINDS FOR AVIATION in Samaria, in Northern Samaria, in Jordan Valley, in Judea Desert and Dead Sea, in Northern Negev and in Negev Mountain on 24/07 from 18 until 22 LT.      ",
+      "full_he": " עדכון: אזהרה צהובה על רוחות חזקות לתעופה בשומרון, בצפון השומרון, בבקעת  הירדן, במדבר יהודה וים המלח, בצפון הנגב ובהר הנגב ב-24/07 מ-18 עד 22.   רוח מכיוון 280 בעוצמה 20 קשר, משבים עד 30 ",
+      "groups": [
+       "17"
+      ],
+      "regions": [
+       "115",
+       "116",
+       "120",
+       "117",
+       "124",
+       "122",
+       "123",
+       "127",
+       "129",
+       "130",
+       "131"
+      ],
+      "sent": "2026-07-24 18:41:00",
+      "severity_id": "3",
+      "text": "",
+      "text_full": "",
+      "valid_from": "2026-07-24 18:41:00",
+      "valid_from_unix": 1784907660,
+      "valid_to": "2026-07-24 22:00:00",
+      "warning_type_id": "2",
+      "wid": "135169"
+     }
+    },
+    "r-131": {
+     "135169": {
+      "alert_id": "56864",
+      "full_en": " update: Yellow Warning of STRONG WINDS FOR AVIATION in Samaria, in Northern Samaria, in Jordan Valley, in Judea Desert and Dead Sea, in Northern Negev and in Negev Mountain on 24/07 from 18 until 22 LT.      ",
+      "full_he": " עדכון: אזהרה צהובה על רוחות חזקות לתעופה בשומרון, בצפון השומרון, בבקעת  הירדן, במדבר יהודה וים המלח, בצפון הנגב ובהר הנגב ב-24/07 מ-18 עד 22.   רוח מכיוון 280 בעוצמה 20 קשר, משבים עד 30 ",
+      "groups": [
+       "17"
+      ],
+      "regions": [
+       "115",
+       "116",
+       "120",
+       "117",
+       "124",
+       "122",
+       "123",
+       "127",
+       "129",
+       "130",
+       "131"
+      ],
+      "sent": "2026-07-24 18:41:00",
+      "severity_id": "3",
+      "text": "",
+      "text_full": "",
+      "valid_from": "2026-07-24 18:41:00",
+      "valid_from_unix": 1784907660,
+      "valid_to": "2026-07-24 22:00:00",
+      "warning_type_id": "2",
+      "wid": "135169"
+     }
+    },
+    "r-54": {
+     "135161": {
+      "alert_id": "56851",
+      "full_en": " update: Orange Warning of HIGH SEA SWIMMING DANGER in Mediterranean Sea on 24/07 from 10 until 22 LT.    The state of sea is Slight to Moderate The significant wave height from 110 to 190 cm, Increasing.  ",
+      "full_he": " עדכון: אזהרה כתומה על ים גבוה ומסוכן לרחצה בים התיכון ב-24/07 מ-10 עד 22.   מצב הים גלי עד גבה גלים גובה הגל הסיגניפיקנטי ינוע מ-110 עד 190 ס\"מ, במגמת עליה ",
+      "groups": [
+       "18",
+       "36"
+      ],
+      "regions": [
+       "54",
+       "55",
+       "56"
+      ],
+      "sent": "2026-07-24 09:42:00",
+      "severity_id": "4",
+      "text": "The state of sea is Slight to Moderate The significant wave height from 110 to 190 cm, Increasing.",
+      "text_full": "The state of sea is Slight to Moderate The significant wave height from 110 to 190 cm, Increasing.",
+      "valid_from": "2026-07-24 10:00:00",
+      "valid_from_unix": 1784876400,
+      "valid_to": "2026-07-24 22:00:00",
+      "warning_type_id": "3",
+      "wid": "135161"
+     },
+     "135162": {
+      "alert_id": "56852",
+      "full_en": " Yellow Early Warning of HIGH SEA in Mediterranean Sea from 24/07 22 until 25/07 10 LT.    The state of sea is Moderate The significant wave height from 170 to 220 cm, Increasing.  ",
+      "full_he": " התראה מוקדמת צהובה על ים גבוה לספינות בים התיכון מ-24/07 ב-22 עד 25/07 ב-10.   מצב הים גבה גלים גובה הגל הסיגניפיקנטי ינוע מ-170 עד 220 ס\"מ, במגמת עליה ",
+      "groups": [
+       "27",
+       "36"
+      ],
+      "regions": [
+       "54",
+       "55",
+       "56"
+      ],
+      "sent": "2026-07-24 09:46:00",
+      "severity_id": "2",
+      "text": "The state of sea is Moderate The significant wave height from 170 to 220 cm, Increasing.",
+      "text_full": "The state of sea is Moderate The significant wave height from 170 to 220 cm, Increasing.",
+      "valid_from": "2026-07-24 22:00:00",
+      "valid_from_unix": 1784919600,
+      "valid_to": "2026-07-25 10:00:00",
+      "warning_type_id": "4",
+      "wid": "135162"
+     },
+     "135163": {
+      "alert_id": "56853",
+      "full_en": " Red Early Warning of HIGH SEA SWIMMING DANGER in Mediterranean Sea from 24/07 22 until 25/07 12 LT.    The state of sea is Moderate The significant wave height from 170 to 240 cm, Increasing.  ",
+      "full_he": " התראה מוקדמת אדומה על ים גבוה ומסוכן לרחצה בים התיכון מ-24/07 ב-22 עד 25/07 ב-12.   מצב הים גבה גלים גובה הגל הסיגניפיקנטי ינוע מ-170 עד 240 ס\"מ, במגמת עליה ",
+      "groups": [
+       "18",
+       "36"
+      ],
+      "regions": [
+       "54",
+       "55",
+       "56"
+      ],
+      "sent": "2026-07-24 09:53:00",
+      "severity_id": "6",
+      "text": "The state of sea is Moderate The significant wave height from 170 to 240 cm, Increasing.",
+      "text_full": "The state of sea is Moderate The significant wave height from 170 to 240 cm, Increasing.",
+      "valid_from": "2026-07-24 22:00:00",
+      "valid_from_unix": 1784919600,
+      "valid_to": "2026-07-25 12:00:00",
+      "warning_type_id": "3",
+      "wid": "135163"
+     }
+    },
+    "r-55": {
+     "135161": {
+      "alert_id": "56851",
+      "full_en": " update: Orange Warning of HIGH SEA SWIMMING DANGER in Mediterranean Sea on 24/07 from 10 until 22 LT.    The state of sea is Slight to Moderate The significant wave height from 110 to 190 cm, Increasing.  ",
+      "full_he": " עדכון: אזהרה כתומה על ים גבוה ומסוכן לרחצה בים התיכון ב-24/07 מ-10 עד 22.   מצב הים גלי עד גבה גלים גובה הגל הסיגניפיקנטי ינוע מ-110 עד 190 ס\"מ, במגמת עליה ",
+      "groups": [
+       "18",
+       "36"
+      ],
+      "regions": [
+       "54",
+       "55",
+       "56"
+      ],
+      "sent": "2026-07-24 09:42:00",
+      "severity_id": "4",
+      "text": "The state of sea is Slight to Moderate The significant wave height from 110 to 190 cm, Increasing.",
+      "text_full": "The state of sea is Slight to Moderate The significant wave height from 110 to 190 cm, Increasing.",
+      "valid_from": "2026-07-24 10:00:00",
+      "valid_from_unix": 1784876400,
+      "valid_to": "2026-07-24 22:00:00",
+      "warning_type_id": "3",
+      "wid": "135161"
+     },
+     "135162": {
+      "alert_id": "56852",
+      "full_en": " Yellow Early Warning of HIGH SEA in Mediterranean Sea from 24/07 22 until 25/07 10 LT.    The state of sea is Moderate The significant wave height from 170 to 220 cm, Increasing.  ",
+      "full_he": " התראה מוקדמת צהובה על ים גבוה לספינות בים התיכון מ-24/07 ב-22 עד 25/07 ב-10.   מצב הים גבה גלים גובה הגל הסיגניפיקנטי ינוע מ-170 עד 220 ס\"מ, במגמת עליה ",
+      "groups": [
+       "27",
+       "36"
+      ],
+      "regions": [
+       "54",
+       "55",
+       "56"
+      ],
+      "sent": "2026-07-24 09:46:00",
+      "severity_id": "2",
+      "text": "The state of sea is Moderate The significant wave height from 170 to 220 cm, Increasing.",
+      "text_full": "The state of sea is Moderate The significant wave height from 170 to 220 cm, Increasing.",
+      "valid_from": "2026-07-24 22:00:00",
+      "valid_from_unix": 1784919600,
+      "valid_to": "2026-07-25 10:00:00",
+      "warning_type_id": "4",
+      "wid": "135162"
+     },
+     "135163": {
+      "alert_id": "56853",
+      "full_en": " Red Early Warning of HIGH SEA SWIMMING DANGER in Mediterranean Sea from 24/07 22 until 25/07 12 LT.    The state of sea is Moderate The significant wave height from 170 to 240 cm, Increasing.  ",
+      "full_he": " התראה מוקדמת אדומה על ים גבוה ומסוכן לרחצה בים התיכון מ-24/07 ב-22 עד 25/07 ב-12.   מצב הים גבה גלים גובה הגל הסיגניפיקנטי ינוע מ-170 עד 240 ס\"מ, במגמת עליה ",
+      "groups": [
+       "18",
+       "36"
+      ],
+      "regions": [
+       "54",
+       "55",
+       "56"
+      ],
+      "sent": "2026-07-24 09:53:00",
+      "severity_id": "6",
+      "text": "The state of sea is Moderate The significant wave height from 170 to 240 cm, Increasing.",
+      "text_full": "The state of sea is Moderate The significant wave height from 170 to 240 cm, Increasing.",
+      "valid_from": "2026-07-24 22:00:00",
+      "valid_from_unix": 1784919600,
+      "valid_to": "2026-07-25 12:00:00",
+      "warning_type_id": "3",
+      "wid": "135163"
+     }
+    },
+    "r-56": {
+     "135161": {
+      "alert_id": "56851",
+      "full_en": " update: Orange Warning of HIGH SEA SWIMMING DANGER in Mediterranean Sea on 24/07 from 10 until 22 LT.    The state of sea is Slight to Moderate The significant wave height from 110 to 190 cm, Increasing.  ",
+      "full_he": " עדכון: אזהרה כתומה על ים גבוה ומסוכן לרחצה בים התיכון ב-24/07 מ-10 עד 22.   מצב הים גלי עד גבה גלים גובה הגל הסיגניפיקנטי ינוע מ-110 עד 190 ס\"מ, במגמת עליה ",
+      "groups": [
+       "18",
+       "36"
+      ],
+      "regions": [
+       "54",
+       "55",
+       "56"
+      ],
+      "sent": "2026-07-24 09:42:00",
+      "severity_id": "4",
+      "text": "The state of sea is Slight to Moderate The significant wave height from 110 to 190 cm, Increasing.",
+      "text_full": "The state of sea is Slight to Moderate The significant wave height from 110 to 190 cm, Increasing.",
+      "valid_from": "2026-07-24 10:00:00",
+      "valid_from_unix": 1784876400,
+      "valid_to": "2026-07-24 22:00:00",
+      "warning_type_id": "3",
+      "wid": "135161"
+     },
+     "135162": {
+      "alert_id": "56852",
+      "full_en": " Yellow Early Warning of HIGH SEA in Mediterranean Sea from 24/07 22 until 25/07 10 LT.    The state of sea is Moderate The significant wave height from 170 to 220 cm, Increasing.  ",
+      "full_he": " התראה מוקדמת צהובה על ים גבוה לספינות בים התיכון מ-24/07 ב-22 עד 25/07 ב-10.   מצב הים גבה גלים גובה הגל הסיגניפיקנטי ינוע מ-170 עד 220 ס\"מ, במגמת עליה ",
+      "groups": [
+       "27",
+       "36"
+      ],
+      "regions": [
+       "54",
+       "55",
+       "56"
+      ],
+      "sent": "2026-07-24 09:46:00",
+      "severity_id": "2",
+      "text": "The state of sea is Moderate The significant wave height from 170 to 220 cm, Increasing.",
+      "text_full": "The state of sea is Moderate The significant wave height from 170 to 220 cm, Increasing.",
+      "valid_from": "2026-07-24 22:00:00",
+      "valid_from_unix": 1784919600,
+      "valid_to": "2026-07-25 10:00:00",
+      "warning_type_id": "4",
+      "wid": "135162"
+     },
+     "135163": {
+      "alert_id": "56853",
+      "full_en": " Red Early Warning of HIGH SEA SWIMMING DANGER in Mediterranean Sea from 24/07 22 until 25/07 12 LT.    The state of sea is Moderate The significant wave height from 170 to 240 cm, Increasing.  ",
+      "full_he": " התראה מוקדמת אדומה על ים גבוה ומסוכן לרחצה בים התיכון מ-24/07 ב-22 עד 25/07 ב-12.   מצב הים גבה גלים גובה הגל הסיגניפיקנטי ינוע מ-170 עד 240 ס\"מ, במגמת עליה ",
+      "groups": [
+       "18",
+       "36"
+      ],
+      "regions": [
+       "54",
+       "55",
+       "56"
+      ],
+      "sent": "2026-07-24 09:53:00",
+      "severity_id": "6",
+      "text": "The state of sea is Moderate The significant wave height from 170 to 240 cm, Increasing.",
+      "text_full": "The state of sea is Moderate The significant wave height from 170 to 240 cm, Increasing.",
+      "valid_from": "2026-07-24 22:00:00",
+      "valid_from_unix": 1784919600,
+      "valid_to": "2026-07-25 12:00:00",
+      "warning_type_id": "3",
+      "wid": "135163"
+     }
+    },
+    "r-76": {
+     "135170": {
+      "alert_id": "56865",
+      "full_en": " Yellow Warning of MOUNTAIN OBSCURATION in North Mountains from 24/07 22 until 25/07 02 LT.      ",
+      "full_he": " אזהרה צהובה על ערפילי הרים בהרי הצפון מ-24/07 ב-22 עד 25/07 ב-02 ",
+      "groups": [
+       "17",
+       "18",
+       "56"
+      ],
+      "regions": [
+       "76",
+       "80",
+       "81",
+       "77",
+       "84",
+       "83"
+      ],
+      "sent": "2026-07-24 20:44:00",
+      "severity_id": "3",
+      "text": "",
+      "text_full": "",
+      "valid_from": "2026-07-24 22:00:00",
+      "valid_from_unix": 1784919600,
+      "valid_to": "2026-07-25 02:00:00",
+      "warning_type_id": "42",
+      "wid": "135170"
+     }
+    },
+    "r-77": {
+     "135170": {
+      "alert_id": "56865",
+      "full_en": " Yellow Warning of MOUNTAIN OBSCURATION in North Mountains from 24/07 22 until 25/07 02 LT.      ",
+      "full_he": " אזהרה צהובה על ערפילי הרים בהרי הצפון מ-24/07 ב-22 עד 25/07 ב-02 ",
+      "groups": [
+       "17",
+       "18",
+       "56"
+      ],
+      "regions": [
+       "76",
+       "80",
+       "81",
+       "77",
+       "84",
+       "83"
+      ],
+      "sent": "2026-07-24 20:44:00",
+      "severity_id": "3",
+      "text": "",
+      "text_full": "",
+      "valid_from": "2026-07-24 22:00:00",
+      "valid_from_unix": 1784919600,
+      "valid_to": "2026-07-25 02:00:00",
+      "warning_type_id": "42",
+      "wid": "135170"
+     }
+    },
+    "r-80": {
+     "135170": {
+      "alert_id": "56865",
+      "full_en": " Yellow Warning of MOUNTAIN OBSCURATION in North Mountains from 24/07 22 until 25/07 02 LT.      ",
+      "full_he": " אזהרה צהובה על ערפילי הרים בהרי הצפון מ-24/07 ב-22 עד 25/07 ב-02 ",
+      "groups": [
+       "17",
+       "18",
+       "56"
+      ],
+      "regions": [
+       "76",
+       "80",
+       "81",
+       "77",
+       "84",
+       "83"
+      ],
+      "sent": "2026-07-24 20:44:00",
+      "severity_id": "3",
+      "text": "",
+      "text_full": "",
+      "valid_from": "2026-07-24 22:00:00",
+      "valid_from_unix": 1784919600,
+      "valid_to": "2026-07-25 02:00:00",
+      "warning_type_id": "42",
+      "wid": "135170"
+     }
+    },
+    "r-81": {
+     "135170": {
+      "alert_id": "56865",
+      "full_en": " Yellow Warning of MOUNTAIN OBSCURATION in North Mountains from 24/07 22 until 25/07 02 LT.      ",
+      "full_he": " אזהרה צהובה על ערפילי הרים בהרי הצפון מ-24/07 ב-22 עד 25/07 ב-02 ",
+      "groups": [
+       "17",
+       "18",
+       "56"
+      ],
+      "regions": [
+       "76",
+       "80",
+       "81",
+       "77",
+       "84",
+       "83"
+      ],
+      "sent": "2026-07-24 20:44:00",
+      "severity_id": "3",
+      "text": "",
+      "text_full": "",
+      "valid_from": "2026-07-24 22:00:00",
+      "valid_from_unix": 1784919600,
+      "valid_to": "2026-07-25 02:00:00",
+      "warning_type_id": "42",
+      "wid": "135170"
+     }
+    },
+    "r-83": {
+     "135170": {
+      "alert_id": "56865",
+      "full_en": " Yellow Warning of MOUNTAIN OBSCURATION in North Mountains from 24/07 22 until 25/07 02 LT.      ",
+      "full_he": " אזהרה צהובה על ערפילי הרים בהרי הצפון מ-24/07 ב-22 עד 25/07 ב-02 ",
+      "groups": [
+       "17",
+       "18",
+       "56"
+      ],
+      "regions": [
+       "76",
+       "80",
+       "81",
+       "77",
+       "84",
+       "83"
+      ],
+      "sent": "2026-07-24 20:44:00",
+      "severity_id": "3",
+      "text": "",
+      "text_full": "",
+      "valid_from": "2026-07-24 22:00:00",
+      "valid_from_unix": 1784919600,
+      "valid_to": "2026-07-25 02:00:00",
+      "warning_type_id": "42",
+      "wid": "135170"
+     }
+    },
+    "r-84": {
+     "135170": {
+      "alert_id": "56865",
+      "full_en": " Yellow Warning of MOUNTAIN OBSCURATION in North Mountains from 24/07 22 until 25/07 02 LT.      ",
+      "full_he": " אזהרה צהובה על ערפילי הרים בהרי הצפון מ-24/07 ב-22 עד 25/07 ב-02 ",
+      "groups": [
+       "17",
+       "18",
+       "56"
+      ],
+      "regions": [
+       "76",
+       "80",
+       "81",
+       "77",
+       "84",
+       "83"
+      ],
+      "sent": "2026-07-24 20:44:00",
+      "severity_id": "3",
+      "text": "",
+      "text_full": "",
+      "valid_from": "2026-07-24 22:00:00",
+      "valid_from_unix": 1784919600,
+      "valid_to": "2026-07-25 02:00:00",
+      "warning_type_id": "42",
+      "wid": "135170"
+     }
+    }
+   },
+   "2026-07-25": {
+    "r-106": {
+     "135165": {
+      "alert_id": "56860",
+      "full_en": " Yellow Early Warning of HEAT STRESS in Southern Golan, in Izrael Valley, in Zevulun Valley, in Southern Coast, in Judean Foothills and in North Eastern Samaria on 25/07 from 12 until 17 LT.      ",
+      "full_he": " התראה מוקדמת צהובה על עומס חום בדרום הגולן, בעמק יזרעאל, בעמק זבולון, בדרום מישור החוף, בשפלה ובצפון מזרח השומרון ב-25/07 מ-12 עד 17 ",
+      "groups": [
+       "18",
+       "50",
+       "56"
+      ],
+      "regions": [
+       "77",
+       "97",
+       "89",
+       "116",
+       "109",
+       "106",
+       "112"
+      ],
+      "sent": "2026-07-24 15:47:00",
+      "severity_id": "2",
+      "text": "",
+      "text_full": "",
+      "valid_from": "2026-07-25 12:00:00",
+      "valid_from_unix": 1784970000,
+      "valid_to": "2026-07-25 17:00:00",
+      "warning_type_id": "8",
+      "wid": "135165"
+     }
+    },
+    "r-109": {
+     "135165": {
+      "alert_id": "56860",
+      "full_en": " Yellow Early Warning of HEAT STRESS in Southern Golan, in Izrael Valley, in Zevulun Valley, in Southern Coast, in Judean Foothills and in North Eastern Samaria on 25/07 from 12 until 17 LT.      ",
+      "full_he": " התראה מוקדמת צהובה על עומס חום בדרום הגולן, בעמק יזרעאל, בעמק זבולון, בדרום מישור החוף, בשפלה ובצפון מזרח השומרון ב-25/07 מ-12 עד 17 ",
+      "groups": [
+       "18",
+       "50",
+       "56"
+      ],
+      "regions": [
+       "77",
+       "97",
+       "89",
+       "116",
+       "109",
+       "106",
+       "112"
+      ],
+      "sent": "2026-07-24 15:47:00",
+      "severity_id": "2",
+      "text": "",
+      "text_full": "",
+      "valid_from": "2026-07-25 12:00:00",
+      "valid_from_unix": 1784970000,
+      "valid_to": "2026-07-25 17:00:00",
+      "warning_type_id": "8",
+      "wid": "135165"
+     }
+    },
+    "r-112": {
+     "135165": {
+      "alert_id": "56860",
+      "full_en": " Yellow Early Warning of HEAT STRESS in Southern Golan, in Izrael Valley, in Zevulun Valley, in Southern Coast, in Judean Foothills and in North Eastern Samaria on 25/07 from 12 until 17 LT.      ",
+      "full_he": " התראה מוקדמת צהובה על עומס חום בדרום הגולן, בעמק יזרעאל, בעמק זבולון, בדרום מישור החוף, בשפלה ובצפון מזרח השומרון ב-25/07 מ-12 עד 17 ",
+      "groups": [
+       "18",
+       "50",
+       "56"
+      ],
+      "regions": [
+       "77",
+       "97",
+       "89",
+       "116",
+       "109",
+       "106",
+       "112"
+      ],
+      "sent": "2026-07-24 15:47:00",
+      "severity_id": "2",
+      "text": "",
+      "text_full": "",
+      "valid_from": "2026-07-25 12:00:00",
+      "valid_from_unix": 1784970000,
+      "valid_to": "2026-07-25 17:00:00",
+      "warning_type_id": "8",
+      "wid": "135165"
+     },
+     "135168": {
+      "alert_id": "56863",
+      "full_en": " Orange Early Warning of ELEVATED BURNING INDEX in Judean foothills - South, in Judea Mountains and in North Western Negev on 25/07 from 13 until 19 LT.      ",
+      "full_he": " התראה מוקדמת כתומה על אינדקס שריפות גבוה בדרום השפלה, בהרי יהודה ובצפון מערב הנגב ב-25/07 מ-13 עד 19 ",
+      "groups": [
+       "18",
+       "56"
+      ],
+      "regions": [
+       "112",
+       "118",
+       "127"
+      ],
+      "sent": "2026-07-24 16:23:00",
+      "severity_id": "5",
+      "text": "",
+      "text_full": "",
+      "valid_from": "2026-07-25 13:00:00",
+      "valid_from_unix": 1784973600,
+      "valid_to": "2026-07-25 19:00:00",
+      "warning_type_id": "16",
+      "wid": "135168"
+     }
+    },
+    "r-116": {
+     "135165": {
+      "alert_id": "56860",
+      "full_en": " Yellow Early Warning of HEAT STRESS in Southern Golan, in Izrael Valley, in Zevulun Valley, in Southern Coast, in Judean Foothills and in North Eastern Samaria on 25/07 from 12 until 17 LT.      ",
+      "full_he": " התראה מוקדמת צהובה על עומס חום בדרום הגולן, בעמק יזרעאל, בעמק זבולון, בדרום מישור החוף, בשפלה ובצפון מזרח השומרון ב-25/07 מ-12 עד 17 ",
+      "groups": [
+       "18",
+       "50",
+       "56"
+      ],
+      "regions": [
+       "77",
+       "97",
+       "89",
+       "116",
+       "109",
+       "106",
+       "112"
+      ],
+      "sent": "2026-07-24 15:47:00",
+      "severity_id": "2",
+      "text": "",
+      "text_full": "",
+      "valid_from": "2026-07-25 12:00:00",
+      "valid_from_unix": 1784970000,
+      "valid_to": "2026-07-25 17:00:00",
+      "warning_type_id": "8",
+      "wid": "135165"
+     }
+    },
+    "r-118": {
+     "135168": {
+      "alert_id": "56863",
+      "full_en": " Orange Early Warning of ELEVATED BURNING INDEX in Judean foothills - South, in Judea Mountains and in North Western Negev on 25/07 from 13 until 19 LT.      ",
+      "full_he": " התראה מוקדמת כתומה על אינדקס שריפות גבוה בדרום השפלה, בהרי יהודה ובצפון מערב הנגב ב-25/07 מ-13 עד 19 ",
+      "groups": [
+       "18",
+       "56"
+      ],
+      "regions": [
+       "112",
+       "118",
+       "127"
+      ],
+      "sent": "2026-07-24 16:23:00",
+      "severity_id": "5",
+      "text": "",
+      "text_full": "",
+      "valid_from": "2026-07-25 13:00:00",
+      "valid_from_unix": 1784973600,
+      "valid_to": "2026-07-25 19:00:00",
+      "warning_type_id": "16",
+      "wid": "135168"
+     }
+    },
+    "r-120": {
+     "135167": {
+      "alert_id": "56862",
+      "full_en": " Orange Early Warning of HEAT STRESS in Bet Shean Valley, in Kinarot Valley, in Jordan Valley and in Eilat Gulf and Southern Arava on 25/07 from 11 until 23 LT.      ",
+      "full_he": " התראה מוקדמת כתומה על עומס חום בעמק בית שאן, בבקעת כנרות, בבקעת  הירדן ובמפרץ אילת ודרום ערבה ב-25/07 מ-11 עד 23 ",
+      "groups": [
+       "18",
+       "50",
+       "56"
+      ],
+      "regions": [
+       "90",
+       "86",
+       "120",
+       "138"
+      ],
+      "sent": "2026-07-24 15:47:00",
+      "severity_id": "5",
+      "text": "",
+      "text_full": "",
+      "valid_from": "2026-07-25 11:00:00",
+      "valid_from_unix": 1784966400,
+      "valid_to": "2026-07-25 23:00:00",
+      "warning_type_id": "8",
+      "wid": "135167"
+     }
+    },
+    "r-122": {
+     "135164": {
+      "alert_id": "56859",
+      "full_en": " Yellow Early Warning of HEAT STRESS in Eastern Lower Galilee, in Hula Valley, in North Judea Desert and Dead Sea, in Northern Negev, in Eastern Negev and in Southern Negev and Eilat Mountai on 25/07 from 12 until 21 LT.      ",
+      "full_he": " התראה מוקדמת צהובה על עומס חום בגליל תחתון מזרחי, בעמק החולה, בצפון מדבר יהודה וים המלח, בצפון הנגב, במזרח הנגב ובדרום הנגב והרי אילת ב-25/07 מ-12 עד 21 ",
+      "groups": [
+       "18",
+       "50",
+       "56"
+      ],
+      "regions": [
+       "87",
+       "83",
+       "122",
+       "127",
+       "129",
+       "130",
+       "132",
+       "134",
+       "135"
+      ],
+      "sent": "2026-07-24 15:46:00",
+      "severity_id": "2",
+      "text": "",
+      "text_full": "",
+      "valid_from": "2026-07-25 12:00:00",
+      "valid_from_unix": 1784970000,
+      "valid_to": "2026-07-25 21:00:00",
+      "warning_type_id": "8",
+      "wid": "135164"
+     }
+    },
+    "r-123": {
+     "135166": {
+      "alert_id": "56861",
+      "full_en": " Orange Early Warning of HEAT STRESS in South Judea Desert and Dead Sea and in Northern Arava from 25/07 11 until 26/07 04 LT.      ",
+      "full_he": " התראה מוקדמת כתומה על עומס חום בדרום מדבר יהודה וים המלח ובצפון הערבה מ-25/07 ב-11 עד 26/07 ב-04 ",
+      "groups": [
+       "18",
+       "50",
+       "56"
+      ],
+      "regions": [
+       "123",
+       "137"
+      ],
+      "sent": "2026-07-24 15:47:00",
+      "severity_id": "5",
+      "text": "",
+      "text_full": "",
+      "valid_from": "2026-07-25 11:00:00",
+      "valid_from_unix": 1784966400,
+      "valid_to": "2026-07-26 04:00:00",
+      "warning_type_id": "8",
+      "wid": "135166"
+     }
+    },
+    "r-127": {
+     "135164": {
+      "alert_id": "56859",
+      "full_en": " Yellow Early Warning of HEAT STRESS in Eastern Lower Galilee, in Hula Valley, in North Judea Desert and Dead Sea, in Northern Negev, in Eastern Negev and in Southern Negev and Eilat Mountai on 25/07 from 12 until 21 LT.      ",
+      "full_he": " התראה מוקדמת צהובה על עומס חום בגליל תחתון מזרחי, בעמק החולה, בצפון מדבר יהודה וים המלח, בצפון הנגב, במזרח הנגב ובדרום הנגב והרי אילת ב-25/07 מ-12 עד 21 ",
+      "groups": [
+       "18",
+       "50",
+       "56"
+      ],
+      "regions": [
+       "87",
+       "83",
+       "122",
+       "127",
+       "129",
+       "130",
+       "132",
+       "134",
+       "135"
+      ],
+      "sent": "2026-07-24 15:46:00",
+      "severity_id": "2",
+      "text": "",
+      "text_full": "",
+      "valid_from": "2026-07-25 12:00:00",
+      "valid_from_unix": 1784970000,
+      "valid_to": "2026-07-25 21:00:00",
+      "warning_type_id": "8",
+      "wid": "135164"
+     },
+     "135168": {
+      "alert_id": "56863",
+      "full_en": " Orange Early Warning of ELEVATED BURNING INDEX in Judean foothills - South, in Judea Mountains and in North Western Negev on 25/07 from 13 until 19 LT.      ",
+      "full_he": " התראה מוקדמת כתומה על אינדקס שריפות גבוה בדרום השפלה, בהרי יהודה ובצפון מערב הנגב ב-25/07 מ-13 עד 19 ",
+      "groups": [
+       "18",
+       "56"
+      ],
+      "regions": [
+       "112",
+       "118",
+       "127"
+      ],
+      "sent": "2026-07-24 16:23:00",
+      "severity_id": "5",
+      "text": "",
+      "text_full": "",
+      "valid_from": "2026-07-25 13:00:00",
+      "valid_from_unix": 1784973600,
+      "valid_to": "2026-07-25 19:00:00",
+      "warning_type_id": "16",
+      "wid": "135168"
+     }
+    },
+    "r-129": {
+     "135164": {
+      "alert_id": "56859",
+      "full_en": " Yellow Early Warning of HEAT STRESS in Eastern Lower Galilee, in Hula Valley, in North Judea Desert and Dead Sea, in Northern Negev, in Eastern Negev and in Southern Negev and Eilat Mountai on 25/07 from 12 until 21 LT.      ",
+      "full_he": " התראה מוקדמת צהובה על עומס חום בגליל תחתון מזרחי, בעמק החולה, בצפון מדבר יהודה וים המלח, בצפון הנגב, במזרח הנגב ובדרום הנגב והרי אילת ב-25/07 מ-12 עד 21 ",
+      "groups": [
+       "18",
+       "50",
+       "56"
+      ],
+      "regions": [
+       "87",
+       "83",
+       "122",
+       "127",
+       "129",
+       "130",
+       "132",
+       "134",
+       "135"
+      ],
+      "sent": "2026-07-24 15:46:00",
+      "severity_id": "2",
+      "text": "",
+      "text_full": "",
+      "valid_from": "2026-07-25 12:00:00",
+      "valid_from_unix": 1784970000,
+      "valid_to": "2026-07-25 21:00:00",
+      "warning_type_id": "8",
+      "wid": "135164"
+     }
+    },
+    "r-130": {
+     "135164": {
+      "alert_id": "56859",
+      "full_en": " Yellow Early Warning of HEAT STRESS in Eastern Lower Galilee, in Hula Valley, in North Judea Desert and Dead Sea, in Northern Negev, in Eastern Negev and in Southern Negev and Eilat Mountai on 25/07 from 12 until 21 LT.      ",
+      "full_he": " התראה מוקדמת צהובה על עומס חום בגליל תחתון מזרחי, בעמק החולה, בצפון מדבר יהודה וים המלח, בצפון הנגב, במזרח הנגב ובדרום הנגב והרי אילת ב-25/07 מ-12 עד 21 ",
+      "groups": [
+       "18",
+       "50",
+       "56"
+      ],
+      "regions": [
+       "87",
+       "83",
+       "122",
+       "127",
+       "129",
+       "130",
+       "132",
+       "134",
+       "135"
+      ],
+      "sent": "2026-07-24 15:46:00",
+      "severity_id": "2",
+      "text": "",
+      "text_full": "",
+      "valid_from": "2026-07-25 12:00:00",
+      "valid_from_unix": 1784970000,
+      "valid_to": "2026-07-25 21:00:00",
+      "warning_type_id": "8",
+      "wid": "135164"
+     }
+    },
+    "r-132": {
+     "135164": {
+      "alert_id": "56859",
+      "full_en": " Yellow Early Warning of HEAT STRESS in Eastern Lower Galilee, in Hula Valley, in North Judea Desert and Dead Sea, in Northern Negev, in Eastern Negev and in Southern Negev and Eilat Mountai on 25/07 from 12 until 21 LT.      ",
+      "full_he": " התראה מוקדמת צהובה על עומס חום בגליל תחתון מזרחי, בעמק החולה, בצפון מדבר יהודה וים המלח, בצפון הנגב, במזרח הנגב ובדרום הנגב והרי אילת ב-25/07 מ-12 עד 21 ",
+      "groups": [
+       "18",
+       "50",
+       "56"
+      ],
+      "regions": [
+       "87",
+       "83",
+       "122",
+       "127",
+       "129",
+       "130",
+       "132",
+       "134",
+       "135"
+      ],
+      "sent": "2026-07-24 15:46:00",
+      "severity_id": "2",
+      "text": "",
+      "text_full": "",
+      "valid_from": "2026-07-25 12:00:00",
+      "valid_from_unix": 1784970000,
+      "valid_to": "2026-07-25 21:00:00",
+      "warning_type_id": "8",
+      "wid": "135164"
+     }
+    },
+    "r-134": {
+     "135164": {
+      "alert_id": "56859",
+      "full_en": " Yellow Early Warning of HEAT STRESS in Eastern Lower Galilee, in Hula Valley, in North Judea Desert and Dead Sea, in Northern Negev, in Eastern Negev and in Southern Negev and Eilat Mountai on 25/07 from 12 until 21 LT.      ",
+      "full_he": " התראה מוקדמת צהובה על עומס חום בגליל תחתון מזרחי, בעמק החולה, בצפון מדבר יהודה וים המלח, בצפון הנגב, במזרח הנגב ובדרום הנגב והרי אילת ב-25/07 מ-12 עד 21 ",
+      "groups": [
+       "18",
+       "50",
+       "56"
+      ],
+      "regions": [
+       "87",
+       "83",
+       "122",
+       "127",
+       "129",
+       "130",
+       "132",
+       "134",
+       "135"
+      ],
+      "sent": "2026-07-24 15:46:00",
+      "severity_id": "2",
+      "text": "",
+      "text_full": "",
+      "valid_from": "2026-07-25 12:00:00",
+      "valid_from_unix": 1784970000,
+      "valid_to": "2026-07-25 21:00:00",
+      "warning_type_id": "8",
+      "wid": "135164"
+     }
+    },
+    "r-135": {
+     "135164": {
+      "alert_id": "56859",
+      "full_en": " Yellow Early Warning of HEAT STRESS in Eastern Lower Galilee, in Hula Valley, in North Judea Desert and Dead Sea, in Northern Negev, in Eastern Negev and in Southern Negev and Eilat Mountai on 25/07 from 12 until 21 LT.      ",
+      "full_he": " התראה מוקדמת צהובה על עומס חום בגליל תחתון מזרחי, בעמק החולה, בצפון מדבר יהודה וים המלח, בצפון הנגב, במזרח הנגב ובדרום הנגב והרי אילת ב-25/07 מ-12 עד 21 ",
+      "groups": [
+       "18",
+       "50",
+       "56"
+      ],
+      "regions": [
+       "87",
+       "83",
+       "122",
+       "127",
+       "129",
+       "130",
+       "132",
+       "134",
+       "135"
+      ],
+      "sent": "2026-07-24 15:46:00",
+      "severity_id": "2",
+      "text": "",
+      "text_full": "",
+      "valid_from": "2026-07-25 12:00:00",
+      "valid_from_unix": 1784970000,
+      "valid_to": "2026-07-25 21:00:00",
+      "warning_type_id": "8",
+      "wid": "135164"
+     }
+    },
+    "r-137": {
+     "135166": {
+      "alert_id": "56861",
+      "full_en": " Orange Early Warning of HEAT STRESS in South Judea Desert and Dead Sea and in Northern Arava from 25/07 11 until 26/07 04 LT.      ",
+      "full_he": " התראה מוקדמת כתומה על עומס חום בדרום מדבר יהודה וים המלח ובצפון הערבה מ-25/07 ב-11 עד 26/07 ב-04 ",
+      "groups": [
+       "18",
+       "50",
+       "56"
+      ],
+      "regions": [
+       "123",
+       "137"
+      ],
+      "sent": "2026-07-24 15:47:00",
+      "severity_id": "5",
+      "text": "",
+      "text_full": "",
+      "valid_from": "2026-07-25 11:00:00",
+      "valid_from_unix": 1784966400,
+      "valid_to": "2026-07-26 04:00:00",
+      "warning_type_id": "8",
+      "wid": "135166"
+     }
+    },
+    "r-138": {
+     "135167": {
+      "alert_id": "56862",
+      "full_en": " Orange Early Warning of HEAT STRESS in Bet Shean Valley, in Kinarot Valley, in Jordan Valley and in Eilat Gulf and Southern Arava on 25/07 from 11 until 23 LT.      ",
+      "full_he": " התראה מוקדמת כתומה על עומס חום בעמק בית שאן, בבקעת כנרות, בבקעת  הירדן ובמפרץ אילת ודרום ערבה ב-25/07 מ-11 עד 23 ",
+      "groups": [
+       "18",
+       "50",
+       "56"
+      ],
+      "regions": [
+       "90",
+       "86",
+       "120",
+       "138"
+      ],
+      "sent": "2026-07-24 15:47:00",
+      "severity_id": "5",
+      "text": "",
+      "text_full": "",
+      "valid_from": "2026-07-25 11:00:00",
+      "valid_from_unix": 1784966400,
+      "valid_to": "2026-07-25 23:00:00",
+      "warning_type_id": "8",
+      "wid": "135167"
+     }
+    },
+    "r-54": {
+     "135162": {
+      "alert_id": "56852",
+      "full_en": " Yellow Early Warning of HIGH SEA in Mediterranean Sea from 24/07 22 until 25/07 10 LT.    The state of sea is Moderate The significant wave height from 170 to 220 cm, Increasing.  ",
+      "full_he": " התראה מוקדמת צהובה על ים גבוה לספינות בים התיכון מ-24/07 ב-22 עד 25/07 ב-10.   מצב הים גבה גלים גובה הגל הסיגניפיקנטי ינוע מ-170 עד 220 ס\"מ, במגמת עליה ",
+      "groups": [
+       "27",
+       "36"
+      ],
+      "regions": [
+       "54",
+       "55",
+       "56"
+      ],
+      "sent": "2026-07-24 09:46:00",
+      "severity_id": "2",
+      "text": "The state of sea is Moderate The significant wave height from 170 to 220 cm, Increasing.",
+      "text_full": "The state of sea is Moderate The significant wave height from 170 to 220 cm, Increasing.",
+      "valid_from": "2026-07-24 22:00:00",
+      "valid_from_unix": 1784919600,
+      "valid_to": "2026-07-25 10:00:00",
+      "warning_type_id": "4",
+      "wid": "135162"
+     },
+     "135163": {
+      "alert_id": "56853",
+      "full_en": " Red Early Warning of HIGH SEA SWIMMING DANGER in Mediterranean Sea from 24/07 22 until 25/07 12 LT.    The state of sea is Moderate The significant wave height from 170 to 240 cm, Increasing.  ",
+      "full_he": " התראה מוקדמת אדומה על ים גבוה ומסוכן לרחצה בים התיכון מ-24/07 ב-22 עד 25/07 ב-12.   מצב הים גבה גלים גובה הגל הסיגניפיקנטי ינוע מ-170 עד 240 ס\"מ, במגמת עליה ",
+      "groups": [
+       "18",
+       "36"
+      ],
+      "regions": [
+       "54",
+       "55",
+       "56"
+      ],
+      "sent": "2026-07-24 09:53:00",
+      "severity_id": "6",
+      "text": "The state of sea is Moderate The significant wave height from 170 to 240 cm, Increasing.",
+      "text_full": "The state of sea is Moderate The significant wave height from 170 to 240 cm, Increasing.",
+      "valid_from": "2026-07-24 22:00:00",
+      "valid_from_unix": 1784919600,
+      "valid_to": "2026-07-25 12:00:00",
+      "warning_type_id": "3",
+      "wid": "135163"
+     }
+    },
+    "r-55": {
+     "135162": {
+      "alert_id": "56852",
+      "full_en": " Yellow Early Warning of HIGH SEA in Mediterranean Sea from 24/07 22 until 25/07 10 LT.    The state of sea is Moderate The significant wave height from 170 to 220 cm, Increasing.  ",
+      "full_he": " התראה מוקדמת צהובה על ים גבוה לספינות בים התיכון מ-24/07 ב-22 עד 25/07 ב-10.   מצב הים גבה גלים גובה הגל הסיגניפיקנטי ינוע מ-170 עד 220 ס\"מ, במגמת עליה ",
+      "groups": [
+       "27",
+       "36"
+      ],
+      "regions": [
+       "54",
+       "55",
+       "56"
+      ],
+      "sent": "2026-07-24 09:46:00",
+      "severity_id": "2",
+      "text": "The state of sea is Moderate The significant wave height from 170 to 220 cm, Increasing.",
+      "text_full": "The state of sea is Moderate The significant wave height from 170 to 220 cm, Increasing.",
+      "valid_from": "2026-07-24 22:00:00",
+      "valid_from_unix": 1784919600,
+      "valid_to": "2026-07-25 10:00:00",
+      "warning_type_id": "4",
+      "wid": "135162"
+     },
+     "135163": {
+      "alert_id": "56853",
+      "full_en": " Red Early Warning of HIGH SEA SWIMMING DANGER in Mediterranean Sea from 24/07 22 until 25/07 12 LT.    The state of sea is Moderate The significant wave height from 170 to 240 cm, Increasing.  ",
+      "full_he": " התראה מוקדמת אדומה על ים גבוה ומסוכן לרחצה בים התיכון מ-24/07 ב-22 עד 25/07 ב-12.   מצב הים גבה גלים גובה הגל הסיגניפיקנטי ינוע מ-170 עד 240 ס\"מ, במגמת עליה ",
+      "groups": [
+       "18",
+       "36"
+      ],
+      "regions": [
+       "54",
+       "55",
+       "56"
+      ],
+      "sent": "2026-07-24 09:53:00",
+      "severity_id": "6",
+      "text": "The state of sea is Moderate The significant wave height from 170 to 240 cm, Increasing.",
+      "text_full": "The state of sea is Moderate The significant wave height from 170 to 240 cm, Increasing.",
+      "valid_from": "2026-07-24 22:00:00",
+      "valid_from_unix": 1784919600,
+      "valid_to": "2026-07-25 12:00:00",
+      "warning_type_id": "3",
+      "wid": "135163"
+     }
+    },
+    "r-56": {
+     "135162": {
+      "alert_id": "56852",
+      "full_en": " Yellow Early Warning of HIGH SEA in Mediterranean Sea from 24/07 22 until 25/07 10 LT.    The state of sea is Moderate The significant wave height from 170 to 220 cm, Increasing.  ",
+      "full_he": " התראה מוקדמת צהובה על ים גבוה לספינות בים התיכון מ-24/07 ב-22 עד 25/07 ב-10.   מצב הים גבה גלים גובה הגל הסיגניפיקנטי ינוע מ-170 עד 220 ס\"מ, במגמת עליה ",
+      "groups": [
+       "27",
+       "36"
+      ],
+      "regions": [
+       "54",
+       "55",
+       "56"
+      ],
+      "sent": "2026-07-24 09:46:00",
+      "severity_id": "2",
+      "text": "The state of sea is Moderate The significant wave height from 170 to 220 cm, Increasing.",
+      "text_full": "The state of sea is Moderate The significant wave height from 170 to 220 cm, Increasing.",
+      "valid_from": "2026-07-24 22:00:00",
+      "valid_from_unix": 1784919600,
+      "valid_to": "2026-07-25 10:00:00",
+      "warning_type_id": "4",
+      "wid": "135162"
+     },
+     "135163": {
+      "alert_id": "56853",
+      "full_en": " Red Early Warning of HIGH SEA SWIMMING DANGER in Mediterranean Sea from 24/07 22 until 25/07 12 LT.    The state of sea is Moderate The significant wave height from 170 to 240 cm, Increasing.  ",
+      "full_he": " התראה מוקדמת אדומה על ים גבוה ומסוכן לרחצה בים התיכון מ-24/07 ב-22 עד 25/07 ב-12.   מצב הים גבה גלים גובה הגל הסיגניפיקנטי ינוע מ-170 עד 240 ס\"מ, במגמת עליה ",
+      "groups": [
+       "18",
+       "36"
+      ],
+      "regions": [
+       "54",
+       "55",
+       "56"
+      ],
+      "sent": "2026-07-24 09:53:00",
+      "severity_id": "6",
+      "text": "The state of sea is Moderate The significant wave height from 170 to 240 cm, Increasing.",
+      "text_full": "The state of sea is Moderate The significant wave height from 170 to 240 cm, Increasing.",
+      "valid_from": "2026-07-24 22:00:00",
+      "valid_from_unix": 1784919600,
+      "valid_to": "2026-07-25 12:00:00",
+      "warning_type_id": "3",
+      "wid": "135163"
+     }
+    },
+    "r-76": {
+     "135170": {
+      "alert_id": "56865",
+      "full_en": " Yellow Warning of MOUNTAIN OBSCURATION in North Mountains from 24/07 22 until 25/07 02 LT.      ",
+      "full_he": " אזהרה צהובה על ערפילי הרים בהרי הצפון מ-24/07 ב-22 עד 25/07 ב-02 ",
+      "groups": [
+       "17",
+       "18",
+       "56"
+      ],
+      "regions": [
+       "76",
+       "80",
+       "81",
+       "77",
+       "84",
+       "83"
+      ],
+      "sent": "2026-07-24 20:44:00",
+      "severity_id": "3",
+      "text": "",
+      "text_full": "",
+      "valid_from": "2026-07-24 22:00:00",
+      "valid_from_unix": 1784919600,
+      "valid_to": "2026-07-25 02:00:00",
+      "warning_type_id": "42",
+      "wid": "135170"
+     }
+    },
+    "r-77": {
+     "135165": {
+      "alert_id": "56860",
+      "full_en": " Yellow Early Warning of HEAT STRESS in Southern Golan, in Izrael Valley, in Zevulun Valley, in Southern Coast, in Judean Foothills and in North Eastern Samaria on 25/07 from 12 until 17 LT.      ",
+      "full_he": " התראה מוקדמת צהובה על עומס חום בדרום הגולן, בעמק יזרעאל, בעמק זבולון, בדרום מישור החוף, בשפלה ובצפון מזרח השומרון ב-25/07 מ-12 עד 17 ",
+      "groups": [
+       "18",
+       "50",
+       "56"
+      ],
+      "regions": [
+       "77",
+       "97",
+       "89",
+       "116",
+       "109",
+       "106",
+       "112"
+      ],
+      "sent": "2026-07-24 15:47:00",
+      "severity_id": "2",
+      "text": "",
+      "text_full": "",
+      "valid_from": "2026-07-25 12:00:00",
+      "valid_from_unix": 1784970000,
+      "valid_to": "2026-07-25 17:00:00",
+      "warning_type_id": "8",
+      "wid": "135165"
+     },
+     "135170": {
+      "alert_id": "56865",
+      "full_en": " Yellow Warning of MOUNTAIN OBSCURATION in North Mountains from 24/07 22 until 25/07 02 LT.      ",
+      "full_he": " אזהרה צהובה על ערפילי הרים בהרי הצפון מ-24/07 ב-22 עד 25/07 ב-02 ",
+      "groups": [
+       "17",
+       "18",
+       "56"
+      ],
+      "regions": [
+       "76",
+       "80",
+       "81",
+       "77",
+       "84",
+       "83"
+      ],
+      "sent": "2026-07-24 20:44:00",
+      "severity_id": "3",
+      "text": "",
+      "text_full": "",
+      "valid_from": "2026-07-24 22:00:00",
+      "valid_from_unix": 1784919600,
+      "valid_to": "2026-07-25 02:00:00",
+      "warning_type_id": "42",
+      "wid": "135170"
+     }
+    },
+    "r-80": {
+     "135170": {
+      "alert_id": "56865",
+      "full_en": " Yellow Warning of MOUNTAIN OBSCURATION in North Mountains from 24/07 22 until 25/07 02 LT.      ",
+      "full_he": " אזהרה צהובה על ערפילי הרים בהרי הצפון מ-24/07 ב-22 עד 25/07 ב-02 ",
+      "groups": [
+       "17",
+       "18",
+       "56"
+      ],
+      "regions": [
+       "76",
+       "80",
+       "81",
+       "77",
+       "84",
+       "83"
+      ],
+      "sent": "2026-07-24 20:44:00",
+      "severity_id": "3",
+      "text": "",
+      "text_full": "",
+      "valid_from": "2026-07-24 22:00:00",
+      "valid_from_unix": 1784919600,
+      "valid_to": "2026-07-25 02:00:00",
+      "warning_type_id": "42",
+      "wid": "135170"
+     }
+    },
+    "r-81": {
+     "135170": {
+      "alert_id": "56865",
+      "full_en": " Yellow Warning of MOUNTAIN OBSCURATION in North Mountains from 24/07 22 until 25/07 02 LT.      ",
+      "full_he": " אזהרה צהובה על ערפילי הרים בהרי הצפון מ-24/07 ב-22 עד 25/07 ב-02 ",
+      "groups": [
+       "17",
+       "18",
+       "56"
+      ],
+      "regions": [
+       "76",
+       "80",
+       "81",
+       "77",
+       "84",
+       "83"
+      ],
+      "sent": "2026-07-24 20:44:00",
+      "severity_id": "3",
+      "text": "",
+      "text_full": "",
+      "valid_from": "2026-07-24 22:00:00",
+      "valid_from_unix": 1784919600,
+      "valid_to": "2026-07-25 02:00:00",
+      "warning_type_id": "42",
+      "wid": "135170"
+     }
+    },
+    "r-83": {
+     "135164": {
+      "alert_id": "56859",
+      "full_en": " Yellow Early Warning of HEAT STRESS in Eastern Lower Galilee, in Hula Valley, in North Judea Desert and Dead Sea, in Northern Negev, in Eastern Negev and in Southern Negev and Eilat Mountai on 25/07 from 12 until 21 LT.      ",
+      "full_he": " התראה מוקדמת צהובה על עומס חום בגליל תחתון מזרחי, בעמק החולה, בצפון מדבר יהודה וים המלח, בצפון הנגב, במזרח הנגב ובדרום הנגב והרי אילת ב-25/07 מ-12 עד 21 ",
+      "groups": [
+       "18",
+       "50",
+       "56"
+      ],
+      "regions": [
+       "87",
+       "83",
+       "122",
+       "127",
+       "129",
+       "130",
+       "132",
+       "134",
+       "135"
+      ],
+      "sent": "2026-07-24 15:46:00",
+      "severity_id": "2",
+      "text": "",
+      "text_full": "",
+      "valid_from": "2026-07-25 12:00:00",
+      "valid_from_unix": 1784970000,
+      "valid_to": "2026-07-25 21:00:00",
+      "warning_type_id": "8",
+      "wid": "135164"
+     },
+     "135170": {
+      "alert_id": "56865",
+      "full_en": " Yellow Warning of MOUNTAIN OBSCURATION in North Mountains from 24/07 22 until 25/07 02 LT.      ",
+      "full_he": " אזהרה צהובה על ערפילי הרים בהרי הצפון מ-24/07 ב-22 עד 25/07 ב-02 ",
+      "groups": [
+       "17",
+       "18",
+       "56"
+      ],
+      "regions": [
+       "76",
+       "80",
+       "81",
+       "77",
+       "84",
+       "83"
+      ],
+      "sent": "2026-07-24 20:44:00",
+      "severity_id": "3",
+      "text": "",
+      "text_full": "",
+      "valid_from": "2026-07-24 22:00:00",
+      "valid_from_unix": 1784919600,
+      "valid_to": "2026-07-25 02:00:00",
+      "warning_type_id": "42",
+      "wid": "135170"
+     }
+    },
+    "r-84": {
+     "135170": {
+      "alert_id": "56865",
+      "full_en": " Yellow Warning of MOUNTAIN OBSCURATION in North Mountains from 24/07 22 until 25/07 02 LT.      ",
+      "full_he": " אזהרה צהובה על ערפילי הרים בהרי הצפון מ-24/07 ב-22 עד 25/07 ב-02 ",
+      "groups": [
+       "17",
+       "18",
+       "56"
+      ],
+      "regions": [
+       "76",
+       "80",
+       "81",
+       "77",
+       "84",
+       "83"
+      ],
+      "sent": "2026-07-24 20:44:00",
+      "severity_id": "3",
+      "text": "",
+      "text_full": "",
+      "valid_from": "2026-07-24 22:00:00",
+      "valid_from_unix": 1784919600,
+      "valid_to": "2026-07-25 02:00:00",
+      "warning_type_id": "42",
+      "wid": "135170"
+     }
+    },
+    "r-86": {
+     "135167": {
+      "alert_id": "56862",
+      "full_en": " Orange Early Warning of HEAT STRESS in Bet Shean Valley, in Kinarot Valley, in Jordan Valley and in Eilat Gulf and Southern Arava on 25/07 from 11 until 23 LT.      ",
+      "full_he": " התראה מוקדמת כתומה על עומס חום בעמק בית שאן, בבקעת כנרות, בבקעת  הירדן ובמפרץ אילת ודרום ערבה ב-25/07 מ-11 עד 23 ",
+      "groups": [
+       "18",
+       "50",
+       "56"
+      ],
+      "regions": [
+       "90",
+       "86",
+       "120",
+       "138"
+      ],
+      "sent": "2026-07-24 15:47:00",
+      "severity_id": "5",
+      "text": "",
+      "text_full": "",
+      "valid_from": "2026-07-25 11:00:00",
+      "valid_from_unix": 1784966400,
+      "valid_to": "2026-07-25 23:00:00",
+      "warning_type_id": "8",
+      "wid": "135167"
+     }
+    },
+    "r-87": {
+     "135164": {
+      "alert_id": "56859",
+      "full_en": " Yellow Early Warning of HEAT STRESS in Eastern Lower Galilee, in Hula Valley, in North Judea Desert and Dead Sea, in Northern Negev, in Eastern Negev and in Southern Negev and Eilat Mountai on 25/07 from 12 until 21 LT.      ",
+      "full_he": " התראה מוקדמת צהובה על עומס חום בגליל תחתון מזרחי, בעמק החולה, בצפון מדבר יהודה וים המלח, בצפון הנגב, במזרח הנגב ובדרום הנגב והרי אילת ב-25/07 מ-12 עד 21 ",
+      "groups": [
+       "18",
+       "50",
+       "56"
+      ],
+      "regions": [
+       "87",
+       "83",
+       "122",
+       "127",
+       "129",
+       "130",
+       "132",
+       "134",
+       "135"
+      ],
+      "sent": "2026-07-24 15:46:00",
+      "severity_id": "2",
+      "text": "",
+      "text_full": "",
+      "valid_from": "2026-07-25 12:00:00",
+      "valid_from_unix": 1784970000,
+      "valid_to": "2026-07-25 21:00:00",
+      "warning_type_id": "8",
+      "wid": "135164"
+     }
+    },
+    "r-89": {
+     "135165": {
+      "alert_id": "56860",
+      "full_en": " Yellow Early Warning of HEAT STRESS in Southern Golan, in Izrael Valley, in Zevulun Valley, in Southern Coast, in Judean Foothills and in North Eastern Samaria on 25/07 from 12 until 17 LT.      ",
+      "full_he": " התראה מוקדמת צהובה על עומס חום בדרום הגולן, בעמק יזרעאל, בעמק זבולון, בדרום מישור החוף, בשפלה ובצפון מזרח השומרון ב-25/07 מ-12 עד 17 ",
+      "groups": [
+       "18",
+       "50",
+       "56"
+      ],
+      "regions": [
+       "77",
+       "97",
+       "89",
+       "116",
+       "109",
+       "106",
+       "112"
+      ],
+      "sent": "2026-07-24 15:47:00",
+      "severity_id": "2",
+      "text": "",
+      "text_full": "",
+      "valid_from": "2026-07-25 12:00:00",
+      "valid_from_unix": 1784970000,
+      "valid_to": "2026-07-25 17:00:00",
+      "warning_type_id": "8",
+      "wid": "135165"
+     }
+    },
+    "r-90": {
+     "135167": {
+      "alert_id": "56862",
+      "full_en": " Orange Early Warning of HEAT STRESS in Bet Shean Valley, in Kinarot Valley, in Jordan Valley and in Eilat Gulf and Southern Arava on 25/07 from 11 until 23 LT.      ",
+      "full_he": " התראה מוקדמת כתומה על עומס חום בעמק בית שאן, בבקעת כנרות, בבקעת  הירדן ובמפרץ אילת ודרום ערבה ב-25/07 מ-11 עד 23 ",
+      "groups": [
+       "18",
+       "50",
+       "56"
+      ],
+      "regions": [
+       "90",
+       "86",
+       "120",
+       "138"
+      ],
+      "sent": "2026-07-24 15:47:00",
+      "severity_id": "5",
+      "text": "",
+      "text_full": "",
+      "valid_from": "2026-07-25 11:00:00",
+      "valid_from_unix": 1784966400,
+      "valid_to": "2026-07-25 23:00:00",
+      "warning_type_id": "8",
+      "wid": "135167"
+     }
+    },
+    "r-97": {
+     "135165": {
+      "alert_id": "56860",
+      "full_en": " Yellow Early Warning of HEAT STRESS in Southern Golan, in Izrael Valley, in Zevulun Valley, in Southern Coast, in Judean Foothills and in North Eastern Samaria on 25/07 from 12 until 17 LT.      ",
+      "full_he": " התראה מוקדמת צהובה על עומס חום בדרום הגולן, בעמק יזרעאל, בעמק זבולון, בדרום מישור החוף, בשפלה ובצפון מזרח השומרון ב-25/07 מ-12 עד 17 ",
+      "groups": [
+       "18",
+       "50",
+       "56"
+      ],
+      "regions": [
+       "77",
+       "97",
+       "89",
+       "116",
+       "109",
+       "106",
+       "112"
+      ],
+      "sent": "2026-07-24 15:47:00",
+      "severity_id": "2",
+      "text": "",
+      "text_full": "",
+      "valid_from": "2026-07-25 12:00:00",
+      "valid_from_unix": 1784970000,
+      "valid_to": "2026-07-25 17:00:00",
+      "warning_type_id": "8",
+      "wid": "135165"
+     }
+    }
+   },
+   "2026-07-26": {
+    "r-123": {
+     "135166": {
+      "alert_id": "56861",
+      "full_en": " Orange Early Warning of HEAT STRESS in South Judea Desert and Dead Sea and in Northern Arava from 25/07 11 until 26/07 04 LT.      ",
+      "full_he": " התראה מוקדמת כתומה על עומס חום בדרום מדבר יהודה וים המלח ובצפון הערבה מ-25/07 ב-11 עד 26/07 ב-04 ",
+      "groups": [
+       "18",
+       "50",
+       "56"
+      ],
+      "regions": [
+       "123",
+       "137"
+      ],
+      "sent": "2026-07-24 15:47:00",
+      "severity_id": "5",
+      "text": "",
+      "text_full": "",
+      "valid_from": "2026-07-25 11:00:00",
+      "valid_from_unix": 1784966400,
+      "valid_to": "2026-07-26 04:00:00",
+      "warning_type_id": "8",
+      "wid": "135166"
+     }
+    },
+    "r-137": {
+     "135166": {
+      "alert_id": "56861",
+      "full_en": " Orange Early Warning of HEAT STRESS in South Judea Desert and Dead Sea and in Northern Arava from 25/07 11 until 26/07 04 LT.      ",
+      "full_he": " התראה מוקדמת כתומה על עומס חום בדרום מדבר יהודה וים המלח ובצפון הערבה מ-25/07 ב-11 עד 26/07 ב-04 ",
+      "groups": [
+       "18",
+       "50",
+       "56"
+      ],
+      "regions": [
+       "123",
+       "137"
+      ],
+      "sent": "2026-07-24 15:47:00",
+      "severity_id": "5",
+      "text": "",
+      "text_full": "",
+      "valid_from": "2026-07-25 11:00:00",
+      "valid_from_unix": 1784966400,
+      "valid_to": "2026-07-26 04:00:00",
+      "warning_type_id": "8",
+      "wid": "135166"
+     }
+    }
+   }
+  }
+ },
+ "method": "GET"
+}

@@ -1,0 +1,212 @@
+{
+ "data": {
+  "1010": {
+   "desc": "Sandstorms",
+   "desc_en": "Sandstorms",
+   "display": "1",
+   "id": "5",
+   "ims_order": "5",
+   "night": "1",
+   "weather_code": "1010"
+  },
+  "1020": {
+   "desc": "Thunderstorms",
+   "desc_en": "Thunderstorms",
+   "display": "1",
+   "id": "17",
+   "ims_order": "17",
+   "night": "0",
+   "weather_code": "1020"
+  },
+  "1060": {
+   "desc": "Snow",
+   "desc_en": "Snow",
+   "display": "1",
+   "id": "22",
+   "ims_order": "22",
+   "night": "0",
+   "weather_code": "1060"
+  },
+  "1070": {
+   "desc": "Light snow",
+   "desc_en": "Light snow",
+   "display": "1",
+   "id": "21",
+   "ims_order": "21",
+   "night": "0",
+   "weather_code": "1070"
+  },
+  "1080": {
+   "desc": "Sleet",
+   "desc_en": "Sleet",
+   "display": "1",
+   "id": "20",
+   "ims_order": "20",
+   "night": "0",
+   "weather_code": "1080"
+  },
+  "1140": {
+   "desc": "Rainy",
+   "desc_en": "Rainy",
+   "display": "1",
+   "id": "16",
+   "ims_order": "16",
+   "night": "0",
+   "weather_code": "1140"
+  },
+  "1160": {
+   "desc": "Fog",
+   "desc_en": "Fog",
+   "display": "1",
+   "id": "6",
+   "ims_order": "6",
+   "night": "0",
+   "weather_code": "1160"
+  },
+  "1220": {
+   "desc": "Partly cloudy",
+   "desc_en": "Partly cloudy",
+   "display": "1",
+   "id": "2",
+   "ims_order": "2",
+   "night": "1",
+   "weather_code": "1220"
+  },
+  "1230": {
+   "desc": "Cloudy",
+   "desc_en": "Cloudy",
+   "display": "1",
+   "id": "3",
+   "ims_order": "3",
+   "night": "0",
+   "weather_code": "1230"
+  },
+  "1250": {
+   "desc": "Clear",
+   "desc_en": "Clear",
+   "display": "1",
+   "id": "1",
+   "ims_order": "1",
+   "night": "1",
+   "weather_code": "1250"
+  },
+  "1260": {
+   "desc": "Windy",
+   "desc_en": "Windy",
+   "display": "1",
+   "id": "19",
+   "ims_order": "19",
+   "night": "0",
+   "weather_code": "1260"
+  },
+  "1270": {
+   "desc": "Muggy",
+   "desc_en": "Muggy",
+   "display": "1",
+   "id": "9",
+   "ims_order": "9",
+   "night": "0",
+   "weather_code": "1270"
+  },
+  "1300": {
+   "desc": "Frost",
+   "desc_en": "Frost",
+   "display": "1",
+   "id": "12",
+   "ims_order": "12",
+   "night": "0",
+   "weather_code": "1300"
+  },
+  "1310": {
+   "desc": "Hot",
+   "desc_en": "Hot",
+   "display": "0",
+   "id": "7",
+   "ims_order": "7",
+   "night": "0",
+   "weather_code": "1310"
+  },
+  "1320": {
+   "desc": "Cold",
+   "desc_en": "Cold",
+   "display": "0",
+   "id": "10",
+   "ims_order": "10",
+   "night": "0",
+   "weather_code": "1320"
+  },
+  "1510": {
+   "desc": "Stormy",
+   "desc_en": "Stormy",
+   "display": "1",
+   "id": "18",
+   "ims_order": "18",
+   "night": "0",
+   "weather_code": "1510"
+  },
+  "1520": {
+   "desc": "Heavy snow",
+   "desc_en": "Heavy snow",
+   "display": "1",
+   "id": "23",
+   "ims_order": "23",
+   "night": "0",
+   "weather_code": "1520"
+  },
+  "1530": {
+   "desc": "Partly cloudy, possible rain",
+   "desc_en": "Partly cloudy, possible rain",
+   "display": "1",
+   "id": "13",
+   "ims_order": "13",
+   "night": "1",
+   "weather_code": "1530"
+  },
+  "1540": {
+   "desc": "Cloudy, possible rain",
+   "desc_en": "Cloudy, possible rain",
+   "display": "1",
+   "id": "14",
+   "ims_order": "14",
+   "night": "0",
+   "weather_code": "1540"
+  },
+  "1560": {
+   "desc": "Cloudy, light rain",
+   "desc_en": "Cloudy, light rain",
+   "display": "0",
+   "id": "15",
+   "ims_order": "15",
+   "night": "0",
+   "weather_code": "1560"
+  },
+  "1570": {
+   "desc": "Dust",
+   "desc_en": "Dust",
+   "display": "1",
+   "id": "4",
+   "ims_order": "4",
+   "night": "1",
+   "weather_code": "1570"
+  },
+  "1580": {
+   "desc": "Extremely hot",
+   "desc_en": "Extremely hot",
+   "display": "1",
+   "id": "8",
+   "ims_order": "8",
+   "night": "0",
+   "weather_code": "1580"
+  },
+  "1590": {
+   "desc": "Extremely  cold",
+   "desc_en": "Extremely  cold",
+   "display": "1",
+   "id": "11",
+   "ims_order": "11",
+   "night": "0",
+   "weather_code": "1590"
+  }
+ },
+ "method": "GET"
+}

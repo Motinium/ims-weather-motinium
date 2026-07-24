@@ -1,0 +1,325 @@
+{
+ "data": [
+  {
+   "is_isr": "1",
+   "lat": "33.19",
+   "lon": "35.75",
+   "name": "Northern Golan",
+   "rid": "r-76",
+   "short_name": null
+  },
+  {
+   "is_isr": "1",
+   "lat": "33.11",
+   "lon": "35.61",
+   "name": "Hula Valley",
+   "rid": "r-87",
+   "short_name": null
+  },
+  {
+   "is_isr": "1",
+   "lat": "33.04",
+   "lon": "35.5",
+   "name": "Eastern Upper Galilee",
+   "rid": "r-80",
+   "short_name": null
+  },
+  {
+   "is_isr": "1",
+   "lat": "33.01",
+   "lon": "35.3",
+   "name": "Western Upper Galilee",
+   "rid": "r-81",
+   "short_name": null
+  },
+  {
+   "is_isr": "1",
+   "lat": "33.01",
+   "lon": "35.14",
+   "name": "Western Galilee Slopes",
+   "rid": "r-96",
+   "short_name": null
+  },
+  {
+   "is_isr": "1",
+   "lat": "32.9",
+   "lon": "35.74",
+   "name": "Southern Golan",
+   "rid": "r-77",
+   "short_name": null
+  },
+  {
+   "is_isr": "1",
+   "lat": "32.83",
+   "lon": "35.11",
+   "name": "Zevulun Valley",
+   "rid": "r-97",
+   "short_name": null
+  },
+  {
+   "is_isr": "1",
+   "lat": "32.81",
+   "lon": "35.3",
+   "name": "Western Lower Galilee",
+   "rid": "r-84",
+   "short_name": null
+  },
+  {
+   "is_isr": "1",
+   "lat": "32.74",
+   "lon": "35.45",
+   "name": "Eastern Lower Galilee",
+   "rid": "r-83",
+   "short_name": null
+  },
+  {
+   "is_isr": "1",
+   "lat": "30",
+   "lon": "35.59",
+   "name": "Kinarot Valley ",
+   "rid": "r-90",
+   "short_name": null
+  },
+  {
+   "is_isr": "1",
+   "lat": "32.72",
+   "lon": "35.02",
+   "name": "Carmel Mountain",
+   "rid": "r-92",
+   "short_name": null
+  },
+  {
+   "is_isr": "1",
+   "lat": "32.69",
+   "lon": "34.95",
+   "name": "Carmel Coast",
+   "rid": "r-94",
+   "short_name": null
+  },
+  {
+   "is_isr": "1",
+   "lat": "32.63",
+   "lon": "35.23",
+   "name": "Jezreel Valley",
+   "rid": "r-89",
+   "short_name": null
+  },
+  {
+   "is_isr": "1",
+   "lat": "32.58",
+   "lon": "35.07",
+   "name": "Plain of Manasseh",
+   "rid": "r-93",
+   "short_name": null
+  },
+  {
+   "is_isr": "1",
+   "lat": "32.51",
+   "lon": "35.48",
+   "name": "Beit Shean Valley",
+   "rid": "r-86",
+   "short_name": null
+  },
+  {
+   "is_isr": "1",
+   "lat": "32.41",
+   "lon": "34.96",
+   "name": "Northern Sharon",
+   "rid": "r-101",
+   "short_name": null
+  },
+  {
+   "is_isr": "1",
+   "lat": "32.38",
+   "lon": "35.14",
+   "name": "Northern Samaria",
+   "rid": "r-115",
+   "short_name": null
+  },
+  {
+   "is_isr": "1",
+   "lat": "32.31",
+   "lon": "35.4",
+   "name": "North Eastern Samaria",
+   "rid": "r-116",
+   "short_name": null
+  },
+  {
+   "is_isr": "1",
+   "lat": "32.12",
+   "lon": "35.49",
+   "name": "Jordan Valley",
+   "rid": "r-120",
+   "short_name": null
+  },
+  {
+   "is_isr": "1",
+   "lat": "32.12",
+   "lon": "34.87",
+   "name": "Gush Dan",
+   "rid": "r-103",
+   "short_name": null
+  },
+  {
+   "is_isr": "1",
+   "lat": "32.04",
+   "lon": "35.19",
+   "name": "Southern Samaria",
+   "rid": "r-117",
+   "short_name": null
+  },
+  {
+   "is_isr": "1",
+   "lat": "31.99",
+   "lon": "34.95",
+   "name": "Judean foothills - North",
+   "rid": "r-109",
+   "short_name": null
+  },
+  {
+   "is_isr": "1",
+   "lat": "31.78",
+   "lon": "34.7",
+   "name": "Southern Coast",
+   "rid": "r-106",
+   "short_name": null
+  },
+  {
+   "is_isr": "1",
+   "lat": "31.66",
+   "lon": "34.85",
+   "name": "Judean foothills - South",
+   "rid": "r-112",
+   "short_name": null
+  },
+  {
+   "is_isr": "1",
+   "lat": "31.6",
+   "lon": "35.04",
+   "name": "Judea Mountains",
+   "rid": "r-118",
+   "short_name": null
+  },
+  {
+   "is_isr": "1",
+   "lat": "31.64",
+   "lon": "35.21",
+   "name": "Judean Desert Margins",
+   "rid": "r-124",
+   "short_name": null
+  },
+  {
+   "is_isr": "1",
+   "lat": "31.65",
+   "lon": "35.36",
+   "name": "North Judea Desert & Dead Sea",
+   "rid": "r-122",
+   "short_name": null
+  },
+  {
+   "is_isr": "1",
+   "lat": "31.26",
+   "lon": "35.35",
+   "name": "Southern Judean Desert ",
+   "rid": "r-123",
+   "short_name": null
+  },
+  {
+   "is_isr": "1",
+   "lat": "31.25",
+   "lon": "34.73",
+   "name": "North Western Negev",
+   "rid": "r-127",
+   "short_name": null
+  },
+  {
+   "is_isr": "1",
+   "lat": "31.06",
+   "lon": "35.13",
+   "name": "North Eastern Negev",
+   "rid": "r-129",
+   "short_name": null
+  },
+  {
+   "is_isr": "1",
+   "lat": "31.02",
+   "lon": "34.46",
+   "name": "Western Negev",
+   "rid": "r-130",
+   "short_name": null
+  },
+  {
+   "is_isr": "1",
+   "lat": "30.84",
+   "lon": "35.24",
+   "name": "Northern Arava",
+   "rid": "r-137",
+   "short_name": null
+  },
+  {
+   "is_isr": "1",
+   "lat": "30.66",
+   "lon": "34.67",
+   "name": "Negev Mountains",
+   "rid": "r-131",
+   "short_name": null
+  },
+  {
+   "is_isr": "1",
+   "lat": "30.6",
+   "lon": "35",
+   "name": "Eastern Negev",
+   "rid": "r-132",
+   "short_name": null
+  },
+  {
+   "is_isr": "1",
+   "lat": "30.16",
+   "lon": "34.88",
+   "name": "Southern Negev",
+   "rid": "r-134",
+   "short_name": null
+  },
+  {
+   "is_isr": "1",
+   "lat": "29.96",
+   "lon": "35.07",
+   "name": "Eilat Gulf & Southern Arava",
+   "rid": "r-138",
+   "short_name": null
+  },
+  {
+   "is_isr": "1",
+   "lat": "29.7",
+   "lon": "34.91",
+   "name": "Eilat Mountains",
+   "rid": "r-135",
+   "short_name": null
+  },
+  {
+   "is_isr": "1",
+   "lat": "32.86",
+   "lon": "34.86",
+   "name": "Sea (North)",
+   "rid": "r-54",
+   "short_name": null
+  },
+  {
+   "is_isr": "1",
+   "lat": "32.23",
+   "lon": "34.7",
+   "name": "Sea (Center)",
+   "rid": "r-55",
+   "short_name": null
+  },
+  {
+   "is_isr": "1",
+   "lat": "31.76",
+   "lon": "34.5",
+   "name": "Sea (South)",
+   "rid": "r-56",
+   "short_name": null
+  }
+ ],
+ "method": "GET"
+}
