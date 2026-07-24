@@ -6,6 +6,8 @@
     "documentation": "https://github.com/Motinium/ims-weather",
     "iot_class": "cloud_polling",
     "issue_tracker": "https://github.com/Motinium/ims-weather/issues",
-    "requirements": ["weatheril>=0.41.0"],
-    "version": "0.1.41.04"
+    "requirements": [
+        "weatheril-motinium @ https://github.com/Motinium/py-weatheril-motinium/archive/refs/tags/0.41.0-fork.2.zip"
+    ],
+    "version": "0.1.41.05"
 }
