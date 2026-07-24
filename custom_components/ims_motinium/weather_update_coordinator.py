@@ -11,7 +11,7 @@ from typing import Any
 import homeassistant.util.dt as dt_util
 
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
-from weatheril import WeatherIL, Forecast, Weather, RadarSatellite, Warning
+from .weatheril import WeatherIL, Forecast, Weather, RadarSatellite, Warning
 
 from .const import (
     DOMAIN,

@@ -135,7 +135,7 @@ FIELD_NAME_WIND_CHILL = "wind_chill"
 FIELD_NAME_WIND_DIRECTION_ID = "wind_direction_id"
 FIELD_NAME_WIND_SPEED = "wind_speed"
 
-LANGUAGES = ["en", "he"]
+LANGUAGES = ["en"]
 
 IMS_SENSOR_KEY_PREFIX = "ims_"
 
