@@ -9,15 +9,14 @@ from dataclasses import dataclass
 from typing import Any
 
 import homeassistant.util.dt as dt_util
-
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
-from .weatheril import WeatherIL, Forecast, Weather, RadarSatellite, Warning
 
 from .const import (
     DOMAIN,
     IMS_TIMEZONE,
     WARNING_SENSOR_KEYS,
 )
+from .weatheril import Forecast, RadarSatellite, Warning, Weather, WeatherIL
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -137,7 +136,7 @@ class WeatherUpdateCoordinator(DataUpdateCoordinator[WeatherData]):
         forecast: Forecast | None = None
         try:
             forecast = await loop.run_in_executor(None, self.weather.get_forecast)
-        except Exception as err:  # noqa: BLE001 - intentional, see docstring
+        except Exception as err:
             error = err
         if forecast is not None and getattr(forecast, "days", None):
             return forecast
@@ -166,7 +165,7 @@ class WeatherUpdateCoordinator(DataUpdateCoordinator[WeatherData]):
         """
         try:
             return await loop.run_in_executor(None, self.weather.get_warnings)
-        except Exception as error:  # noqa: BLE001 - intentional, see docstring
+        except Exception as error:
             _LOGGER.warning(
                 "Failed to fetch IMS weather warnings; continuing with no active warnings: %s",
                 error,
@@ -186,7 +185,7 @@ class WeatherUpdateCoordinator(DataUpdateCoordinator[WeatherData]):
         """
         try:
             return await loop.run_in_executor(None, self.weather.get_sea_warnings)
-        except Exception as error:  # noqa: BLE001 - intentional, see docstring
+        except Exception as error:
             _LOGGER.warning(
                 "Failed to fetch IMS sea warnings; continuing with none: %s",
                 error,

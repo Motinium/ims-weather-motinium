@@ -3,11 +3,10 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from datetime import datetime
 from json import JSONEncoder
-from typing import Optional
 
 from .utils import (
-    get_location_name_by_id,
     get_day_of_the_week,
+    get_location_name_by_id,
     get_weather_description_by_code,
     get_wind_direction,
 )
@@ -23,7 +22,7 @@ class Daily:
     language: str
     date: datetime
     lid: str
-    weather_code: Optional[int]
+    weather_code: int | None
     minimum_temperature: int
     maximum_temperature: int
     maximum_uvi: int
@@ -46,24 +45,24 @@ class Hourly:
     hour: str
     forecast_time: datetime
     created: datetime
-    temperature: Optional[int]
-    precise_temperature: Optional[float]
-    weather_code: Optional[int]
-    heat_stress: Optional[float]
-    heat_stress_level: Optional[int]
-    pm10: Optional[int]
-    relative_humidity: Optional[int]
-    rain: Optional[float]
-    rain_chance: Optional[float]
-    wind_speed: Optional[int]
-    wind_direction_id: Optional[int]
-    wind_chill: Optional[int]
+    temperature: int | None
+    precise_temperature: float | None
+    weather_code: int | None
+    heat_stress: float | None
+    heat_stress_level: int | None
+    pm10: int | None
+    relative_humidity: int | None
+    rain: float | None
+    rain_chance: float | None
+    wind_speed: int | None
+    wind_direction_id: int | None
+    wind_chill: int | None
     weather: str = field(init=False)
     wind_direction: str = field(init=False)
-    wave_height: Optional[float]
-    u_v_index: Optional[int]
-    u_v_i_max: Optional[int]
-    gust_speed: Optional[int]
+    wave_height: float | None
+    u_v_index: int | None
+    u_v_i_max: int | None
+    gust_speed: int | None
 
     def __post_init__(self):
         self.weather = get_weather_description_by_code(self.language, self.weather_code)

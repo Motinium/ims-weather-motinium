@@ -1,45 +1,44 @@
 """Config flow for IMS Weather."""
 
 import logging
+import socket
 from datetime import timedelta
+from math import atan2, cos, radians, sin, sqrt
 
 import aiohttp
+import homeassistant.helpers.config_validation as cv
 import voluptuous as vol
-from math import radians, sin, cos, sqrt, atan2
-import socket
-
 from homeassistant import config_entries
 from homeassistant.const import (
     CONF_MODE,
-    CONF_NAME,
     CONF_MONITORED_CONDITIONS,
+    CONF_NAME,
 )
 from homeassistant.core import callback
-import homeassistant.helpers.config_validation as cv
 from homeassistant.helpers import selector
 
+from .binary_sensor import BINARY_SENSOR_DESCRIPTIONS_KEYS
 from .const import (
+    CONF_CITY,
     CONF_DIGEST_RULES,
     CONF_DIGEST_THRESHOLD_PREFIX,
+    CONF_IMAGES_PATH,
+    CONF_LANGUAGE,
+    CONF_UPDATE_INTERVAL,
+    CONFIG_FLOW_VERSION,
     DAILY_DIGEST_RULES,
     DEFAULT_DIGEST_RULES,
-    CONF_CITY,
-    CONF_LANGUAGE,
-    CONF_IMAGES_PATH,
-    CONFIG_FLOW_VERSION,
-    CONF_UPDATE_INTERVAL,
-    DEFAULT_IMAGE_PATH,
     DEFAULT_FORECAST_MODE,
+    DEFAULT_IMAGE_PATH,
     DEFAULT_LANGUAGE,
     DEFAULT_NAME,
     DEFAULT_UPDATE_INTERVAL,
     DOMAIN,
     FORECAST_MODES,
-    IMS_PLATFORMS,
     IMS_PLATFORM,
+    IMS_PLATFORMS,
 )
 from .sensor import SENSOR_DESCRIPTIONS_KEYS
-from .binary_sensor import BINARY_SENSOR_DESCRIPTIONS_KEYS
 
 ATTRIBUTION = "Powered by IMS Weather"
 _LOGGER = logging.getLogger(__name__)
@@ -62,7 +61,6 @@ class IMSWeatherConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: i
     async def async_step_user(self, user_input=None):
         """Handle a flow initialized by the user."""
         errors = {}
-        global cities_data
 
         # Step 1: Fetch the cities from an external URL based on the user's locale
         cities = await _get_localized_cities(self.hass)
@@ -189,11 +187,14 @@ supported_ims_languages = ["en", "he", "ar"]
 async def _is_ims_api_online(hass, language, city):
     forecast_url = "https://ims.gov.il/" + language + "/forecast_data/" + str(city)
 
-    async with aiohttp.ClientSession(
-        connector=aiohttp.TCPConnector(family=socket.AF_INET), raise_for_status=False
-    ) as session:
-        async with session.get(forecast_url) as resp:
-            status = resp.status
+    async with (
+        aiohttp.ClientSession(
+            connector=aiohttp.TCPConnector(family=socket.AF_INET),
+            raise_for_status=False,
+        ) as session,
+        session.get(forecast_url) as resp,
+    ):
+        status = resp.status
 
     return 200 <= status < 300
 
@@ -209,16 +210,18 @@ async def _get_localized_cities(hass):
     locations_info_url = "https://ims.gov.il/" + lang + "/locations_info"
 
     try:
-        async with aiohttp.ClientSession() as session:
-            async with session.get(locations_info_url) as response:
-                if response.status == 200:
-                    # Return the JSON data
-                    cities_json = await response.json()
-                    cities_data = cities_json.get("data", {})
-                else:
-                    # Handle HTTP errors
-                    _handle_http_error(response.status)
-                    return None
+        async with (
+            aiohttp.ClientSession() as session,
+            session.get(locations_info_url) as response,
+        ):
+            if response.status == 200:
+                # Return the JSON data
+                cities_json = await response.json()
+                cities_data = cities_json.get("data", {})
+            else:
+                # Handle HTTP errors
+                _handle_http_error(response.status)
+                return None
     except aiohttp.ClientError as e:
         # Handle connection issues, timeouts, etc.
         _handle_http_error(e)
@@ -256,7 +259,7 @@ def _find_closest_city(cities, ha_latitude, ha_longitude):
     closest_city = None
     closest_distance = float("inf")
 
-    for city_id, city in cities.items():
+    for city in cities.values():
         city_lat = float(city["lat"])
         city_lon = float(city["lon"])
         dist = distance(ha_latitude, ha_longitude, city_lat, city_lon)

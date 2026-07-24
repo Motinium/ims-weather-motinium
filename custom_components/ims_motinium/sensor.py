@@ -1,6 +1,6 @@
-from typing import Any
 import logging
 import types
+from typing import Any
 
 from homeassistant.components.sensor import (
     SensorDeviceClass,
@@ -23,15 +23,19 @@ from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
 from . import ImsEntity, ImsSensorEntityDescription
-from .weather_update_coordinator import WeatherData, WeatherUpdateCoordinator
 from .const import (
+    CONF_DIGEST_RULES,
+    CONF_DIGEST_THRESHOLD_PREFIX,
+    DAILY_DIGEST_RULES,
+    DATETIME_FORMAT,
+    DEFAULT_DIGEST_RULES,
     DOMAIN,
     ENTRY_WEATHER_COORDINATOR,
     FIELD_NAME_DEW_POINT_TEMP,
     FIELD_NAME_FEELS_LIKE,
     FIELD_NAME_FORECAST_TIME,
-    FIELD_NAME_HUMIDITY,
     FIELD_NAME_GUST_SPEED,
+    FIELD_NAME_HUMIDITY,
     FIELD_NAME_LAST_MODIFIED,
     FIELD_NAME_LOCATION,
     FIELD_NAME_PM10,
@@ -41,6 +45,7 @@ from .const import (
     FIELD_NAME_UV_INDEX,
     FIELD_NAME_UV_INDEX_MAX,
     FIELD_NAME_UV_LEVEL,
+    FIELD_NAME_WARNING,
     FIELD_NAME_WIND_DIRECTION_ID,
     FIELD_NAME_WIND_SPEED,
     FORECAST_MODE,
@@ -50,6 +55,7 @@ from .const import (
     TYPE_CITY,
     TYPE_CURRENT_UV_INDEX,
     TYPE_CURRENT_UV_LEVEL,
+    TYPE_DAILY_DIGEST,
     TYPE_DEW_POINT_TEMP,
     TYPE_FEELS_LIKE,
     TYPE_FORECAST_DAY1,
@@ -69,7 +75,9 @@ from .const import (
     TYPE_PM10,
     TYPE_PRECIPITATION,
     TYPE_PRECIPITATION_PROBABILITY,
+    TYPE_SEA_WARNINGS,
     TYPE_TEMPERATURE,
+    TYPE_WEATHER_WARNINGS,
     TYPE_WIND_DIRECTION,
     TYPE_WIND_SPEED,
     UV_LEVEL_EXTREME,
@@ -77,20 +85,12 @@ from .const import (
     UV_LEVEL_LOW,
     UV_LEVEL_MODERATE,
     UV_LEVEL_VHIGH,
+    WARNING_SEVERITY_COLORS,
     WEATHER_CODE_TO_ICON,
     WIND_DIRECTIONS,
-    FIELD_NAME_WARNING,
-    TYPE_WEATHER_WARNINGS,
-    TYPE_SEA_WARNINGS,
-    TYPE_DAILY_DIGEST,
-    DAILY_DIGEST_RULES,
-    DEFAULT_DIGEST_RULES,
-    CONF_DIGEST_RULES,
-    CONF_DIGEST_THRESHOLD_PREFIX,
-    WARNING_SEVERITY_COLORS,
-    DATETIME_FORMAT,
 )
 from .utils import get_hourly_weather_icon
+from .weather_update_coordinator import WeatherData, WeatherUpdateCoordinator
 
 sensor_keys = types.SimpleNamespace()
 sensor_keys.TYPE_CURRENT_UV_INDEX = IMS_SENSOR_KEY_PREFIX + TYPE_CURRENT_UV_INDEX
@@ -436,9 +436,7 @@ async def async_setup_entry(
     for condition in conditions:
         if condition in SENSOR_DESCRIPTIONS_KEYS:
             description = SENSOR_DESCRIPTIONS_DICT[condition]
-            sensors.append(
-                ImsSensor(weather_coordinator, description, digest_config)
-            )
+            sensors.append(ImsSensor(weather_coordinator, description, digest_config))
 
     async_add_entities(sensors, update_before_add=True)
 
@@ -585,7 +583,11 @@ def generate_forecast_extra_state_attributes(daily_forecast, extended=False):
     # When IMS computed this forecast run. Only the hourly entries carry it,
     # so take the first available one; it is the same across the run.
     forecast_created = next(
-        (hour.created for hour in daily_forecast.hours if getattr(hour, "created", None)),
+        (
+            hour.created
+            for hour in daily_forecast.hours
+            if getattr(hour, "created", None)
+        ),
         None,
     )
     if forecast_created:
@@ -621,23 +623,27 @@ def generate_forecast_extra_state_attributes(daily_forecast, extended=False):
             # values (units are declared once in HOURLY_UNITS) because the
             # nested {value, unit} form roughly triples the size of a 24-hour
             # day, and these attributes go to the recorder on every poll.
-            for name, value in (
-                ("humidity", hour.relative_humidity),
-                ("rain", hour.rain),
-                ("rain_chance", hour.rain_chance),
-                ("wind_speed", hour.wind_speed),
-                ("wind_direction", hour.wind_direction),
-                ("gust_speed", hour.gust_speed),
-                ("wind_chill", hour.wind_chill),
-                ("heat_stress", hour.heat_stress),
-                ("heat_stress_level", hour.heat_stress_level),
-                ("uv_index", hour.u_v_index),
-                ("uv_index_max", hour.u_v_i_max),
-                ("pm10", hour.pm10),
-                ("wave_height", hour.wave_height),
-            ):
-                if value is not None:
-                    hourly[name] = value
+            hourly.update(
+                {
+                    name: value
+                    for name, value in (
+                        ("humidity", hour.relative_humidity),
+                        ("rain", hour.rain),
+                        ("rain_chance", hour.rain_chance),
+                        ("wind_speed", hour.wind_speed),
+                        ("wind_direction", hour.wind_direction),
+                        ("gust_speed", hour.gust_speed),
+                        ("wind_chill", hour.wind_chill),
+                        ("heat_stress", hour.heat_stress),
+                        ("heat_stress_level", hour.heat_stress_level),
+                        ("uv_index", hour.u_v_index),
+                        ("uv_index_max", hour.u_v_i_max),
+                        ("pm10", hour.pm10),
+                        ("wave_height", hour.wave_height),
+                    )
+                    if value is not None
+                }
+            )
 
         attributes[hour.hour] = hourly
 
@@ -678,13 +684,14 @@ class ImsSensor(ImsEntity, SensorEntity):
                 )
                 self._attr_native_value = None
                 return
-        elif self.entity_description.forecast_mode == FORECAST_MODE.CURRENT:
-            if not data or not data.current_weather:
-                _LOGGER.warning(
-                    "For %s - no data.current_weather", self.entity_description.key
-                )
-                self._attr_native_value = None
-                return
+        elif self.entity_description.forecast_mode == FORECAST_MODE.CURRENT and (
+            not data or not data.current_weather
+        ):
+            _LOGGER.warning(
+                "For %s - no data.current_weather", self.entity_description.key
+            )
+            self._attr_native_value = None
+            return
 
         # After these checks, data is guaranteed to be not None
         assert data is not None

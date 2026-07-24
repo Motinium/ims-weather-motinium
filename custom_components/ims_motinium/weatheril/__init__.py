@@ -8,19 +8,19 @@ from .consts import (
     FORECAST_URL,
     IMS_API_URL_BASE,
     RADAR_SATELLITE_URL,
-    WARNINGS_URL,
     TIMEZONE,
+    WARNINGS_URL,
 )
-from .forecast import Forecast, Daily, Hourly
+from .forecast import Daily, Forecast, Hourly
 from .radar_satellite import RadarSatellite
-from .warning import Warning
 from .utils import (
-    get_region_by_id,
-    get_value,
+    _get_warning_metadata,
     fetch_data,
     get_location_info_by_id,
-    _get_warning_metadata,
+    get_region_by_id,
+    get_value,
 )
+from .warning import Warning
 from .weather import Weather
 
 logger = logging.getLogger(__name__)
@@ -125,8 +125,8 @@ class WeatherIL:
                 logger.error('No "' + self.location + '" in current analysis response')
                 logger.debug("Response: " + analysis_data)
                 return None
-        except Exception as e:
-            logger.exception("Error getting current analysis. " + str(e))
+        except Exception:
+            logger.exception("Error getting current analysis")
             return None
 
     def get_forecast(self):
@@ -140,7 +140,7 @@ class WeatherIL:
             days = []
             forecast_data = self._forecast_data
             logger.debug("Got forecast for location " + str(self.location))
-            for key in forecast_data.keys():
+            for key in forecast_data:
                 hours = self._get_hourly_forecast(
                     get_value(forecast_data, key, HOURLY_KEY, dict)
                 )
@@ -178,8 +178,8 @@ class WeatherIL:
                 days.append(daily)
             return Forecast(days)
 
-        except Exception as e:
-            logger.exception("Error getting forecast data. " + str(e))
+        except Exception:
+            logger.exception("Error getting forecast data")
             return None
 
     def _get_hourly_forecast(self, data):
@@ -191,8 +191,8 @@ class WeatherIL:
             logger.debug("No hourly forecast data for this day")
             return hours
         try:
-            for key in data.keys():
-                hours.append(
+            for key in data:
+                hours.append(  # noqa: PERF401 - multi-line constructor reads better as a loop
                     Hourly(
                         language=self.language,
                         hour=key,
@@ -233,12 +233,12 @@ class WeatherIL:
                         u_v_i_max=get_value(data, key, "u_v_i_max", int),
                     )
                 )
-            return hours
         except Exception as e:
             # An empty list, not None: Daily.hours is typed as a list and
             # callers iterate it without a None check.
             logger.error("Error getting hourly forecast. " + str(e))
             return []
+        return hours
 
     def _get_images_list(self, data, *keys):
         current = data
@@ -283,10 +283,9 @@ class WeatherIL:
                 f"Got: {len(rs.imsradar_images)} IMS radar images; "
                 f"{len(rs.middle_east_satellite_images)} Middle East satellite images"
             )
-            return rs
         except Exception as e:
             logger.error("Error getting images. " + str(e))
-            return rs
+        return rs
 
     def _is_cache_fresh(self, last_fetch):
         """
@@ -331,9 +330,7 @@ class WeatherIL:
         """
         Get the all warning data
         """
-        if self._full_warnings_data and self._is_cache_fresh(
-            self._warnings_last_fetch
-        ):
+        if self._full_warnings_data and self._is_cache_fresh(self._warnings_last_fetch):
             return
 
         url = WARNINGS_URL.format(language=self.language)
@@ -360,7 +357,7 @@ class WeatherIL:
         # warnings metadata, which is cached after the first call.
         try:
             metadata = _get_warning_metadata(self.language) or {}
-        except Exception as e:  # noqa: BLE001 - metadata is optional here
+        except Exception as e:
             logger.error("Could not read warning metadata for sea regions: " + str(e))
             return []
 
@@ -448,7 +445,7 @@ class WeatherIL:
                 )
                 regional_alerts = daily_warnings.get("r-" + rid, {})
                 for alert in regional_alerts.values():
-                    warnings.append(
+                    warnings.append(  # noqa: PERF401 - multi-line constructor reads better as a loop
                         Warning(
                             language=self.language,
                             location_id=int(self.location),

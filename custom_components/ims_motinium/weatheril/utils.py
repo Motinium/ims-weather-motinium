@@ -2,7 +2,6 @@ import json
 import logging
 import threading
 from datetime import datetime
-from typing import Type, Optional
 
 import requests
 
@@ -11,11 +10,11 @@ from .consts import (
     EN_WEATHER_CODES,
     EN_WIND_DIRECTIONS,
     LOCATIONS_INFO_URL,
+    REGIONS_URL,
     WARNINGS_METADTA_URL,
     WEATHER_CODES_URL,
     WIND_DIRECTIONS_URL,
 )
-from .consts import REGIONS_URL
 
 logger = logging.getLogger(__name__)
 
@@ -160,7 +159,7 @@ def _get_regions(language) -> dict | None:
         return {v["rid"]: v for v in data["data"]}
     except Exception as e:
         logger.error("Error getting Regions info.. " + str(e))
-        raise e
+        raise
 
 
 def _get_warning_metadata(language) -> dict | None:
@@ -173,7 +172,7 @@ def _get_warning_metadata(language) -> dict | None:
         return data["data"]
     except Exception as e:
         logger.error("Error getting Warning Metadata... " + str(e))
-        raise e
+        raise
 
 
 def _load_warning_maps(language) -> None:
@@ -199,8 +198,7 @@ def _load_warning_maps(language) -> None:
             return
 
         _warning_type_map = {
-            int(v["warning_type_id"]): v
-            for v in metadata["ims_warning_type"].values()
+            int(v["warning_type_id"]): v for v in metadata["ims_warning_type"].values()
         }
         _warning_group_map = dict(metadata["warning_groups"].items())
         _warning_severity_map = {
@@ -248,8 +246,8 @@ def get_day_of_the_week(language: str, date: datetime):
 def get_value(
     data: dict,
     key: str,
-    inner_dict_key: Optional[str],
-    data_type: Type = dict,
+    inner_dict_key: str | None,
+    data_type: type = dict,
     default_value=None,
     custom_empty_value=None,
 ):
@@ -298,7 +296,7 @@ def fetch_data(url: str) -> dict:
         return json.loads(response.text)
     except Exception as e:
         logger.error("Error getting data. " + str(e))
-        return dict()
+        return {}
 
 
 def get_data(current_data, url, last_fetch_time, cache_expiration_in_sec) -> dict:

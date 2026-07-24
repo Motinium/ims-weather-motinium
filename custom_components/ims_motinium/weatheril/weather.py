@@ -2,7 +2,6 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from datetime import datetime
-from typing import Optional
 
 from .utils import (
     get_location_name_by_id,
@@ -28,18 +27,18 @@ class Weather:
     forecast_time: datetime
     u_v_index: int
     u_v_level: str
-    u_v_i_max: Optional[int]
-    u_v_i_factor: Optional[float]
-    min_temp: Optional[int]
-    max_temp: Optional[int]
+    u_v_i_max: int | None
+    u_v_i_factor: float | None
+    min_temp: int | None
+    max_temp: int | None
     pm10: int
     json: str
-    weather_code: Optional[int]
+    weather_code: int | None
     wave_height: float
     location: str = field(init=False)
     description: str = field(init=False)
     wind_direction: int = field(init=False)
-    gust_speed: Optional[int]
+    gust_speed: int | None
     modified_at: datetime
 
     def __post_init__(self):

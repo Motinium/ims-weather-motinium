@@ -64,8 +64,8 @@ def _fake_fetch_data(url):
 def weather(monkeypatch):
     """A WeatherIL wired to the fixtures instead of the network."""
     _install_stub_package()
-    from ims_motinium.weatheril import utils as weatheril_utils
     from ims_motinium import weatheril as weatheril_pkg
+    from ims_motinium.weatheril import utils as weatheril_utils
 
     # Lookup tables are module-level and cached for the process; clear them so
     # each test starts from the fixtures rather than a previous test's data.

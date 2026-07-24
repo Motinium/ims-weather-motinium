@@ -8,8 +8,8 @@ import pytest
 
 pytest.importorskip("homeassistant", reason="Home Assistant is not installed")
 
-from ims_motinium.const import DAILY_DIGEST_RULES  # noqa: E402
-from ims_motinium.sensor import generate_daily_digest  # noqa: E402
+from ims_motinium.const import DAILY_DIGEST_RULES
+from ims_motinium.sensor import generate_daily_digest
 
 
 class _Hour:

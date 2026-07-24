@@ -5,11 +5,11 @@ from datetime import datetime
 
 from .consts import TIMEZONE
 from .utils import (
-    get_warning_severity_by_id,
-    get_warning_type_by_id,
+    get_location_info_by_id,
     get_region_by_id,
     get_warning_group_by_id,
-    get_location_info_by_id,
+    get_warning_severity_by_id,
+    get_warning_type_by_id,
 )
 
 
@@ -66,23 +66,15 @@ class Warning:
             else self.valid_to
         )
 
-        self.groups = list(
-            map(
-                lambda gid: get_warning_group_by_id(self.language, "g-" + str(gid))[
-                    "name"
-                ],
-                self.groups,
-            )
-        )
+        self.groups = [
+            get_warning_group_by_id(self.language, "g-" + str(gid))["name"]
+            for gid in self.groups
+        ]
 
-        self.regions = list(
-            map(
-                lambda rid: get_region_by_id(self.language, "r-" + str(rid)).get(
-                    "name", ""
-                ),
-                self.regions,
-            )
-        )
+        self.regions = [
+            get_region_by_id(self.language, "r-" + str(rid)).get("name", "")
+            for rid in self.regions
+        ]
 
         if not self.text_full:
             self.text_full = (

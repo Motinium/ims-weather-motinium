@@ -1,0 +1,54 @@
+[tool.ruff]
+target-version = "py313"
+
+[tool.ruff.lint]
+# Pinned explicitly: ruff's implicit default set grows between releases, and
+# the workflow installs the latest, so without this the build breaks on its own
+# whenever a new rule group is enabled upstream.
+select = [
+    "E4",   # pycodestyle: imports
+    "E7",
+    "E9",
+    "F",    # pyflakes
+    "I",    # import sorting
+    "UP",   # pyupgrade
+    "SIM",  # simplifications
+    "C4",   # comprehensions
+    "PERF", # obvious performance traps
+    "PLW",  # pylint warnings
+    "PYI",  # typing style
+    "RUF",  # ruff's own
+    "TRY",  # exception handling
+]
+
+ignore = [
+    # IMS serves naive local timestamps that are localized on the spot with
+    # pytz, and datetime.now() is only ever used for elapsed-time arithmetic
+    # against another naive now(). Requiring tz-aware calls here would mean
+    # writing the conversion twice.
+    "DTZ005",
+    "DTZ007",
+    # Catching Exception is deliberate throughout: a partial or malformed IMS
+    # response must degrade to "no data" rather than break the update. Each
+    # site says so in its docstring.
+    "BLE001",
+    # Logging the message and re-raising is the pattern used to keep context
+    # while letting Home Assistant's coordinator decide what to do.
+    "TRY400",
+    # The message is the point: "IMS current analysis unavailable" reads better
+    # in the log than a bespoke exception class per failure mode.
+    "TRY003",
+    # Module-level caches behind a lock are how the lookup tables are shared,
+    # and the city list in the config flow predates this fork.
+    "PLW0603",
+    # Israeli place names carry typographic apostrophes: Ben-Gurion's Tomb,
+    # Me'arat Soreq. They come from IMS and are spelled correctly.
+    "RUF001",
+]
+
+[tool.ruff.lint.per-file-ignores]
+# pytest.importorskip has to run before the imports it guards.
+"tests/*" = ["E402"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["custom_components"]
