@@ -29,13 +29,13 @@ _session = requests.Session()
 # and overwriting each other.
 _cache_lock = threading.RLock()
 
-_weather_code_map = {}
-_locations_map = {}
-_wind_direction_map = {}
-_regions_map = {}
-_warning_type_map = {}
-_warning_group_map = {}
-_warning_severity_map = {}
+_weather_code_map: dict = {}
+_locations_map: dict = {}
+_wind_direction_map: dict = {}
+_regions_map: dict = {}
+_warning_type_map: dict = {}
+_warning_group_map: dict = {}
+_warning_severity_map: dict = {}
 
 
 def get_weather_description_by_code(language: str, code: int | None) -> str:
@@ -144,7 +144,7 @@ def get_region_by_id(language: str, region_id: str) -> dict:
     if not _regions_map:
         with _cache_lock:
             if not _regions_map:
-                _regions_map = _get_regions(language)
+                _regions_map = _get_regions(language) or {}
     if not _regions_map:
         return {}
     return _regions_map.get(region_id, {})
@@ -263,11 +263,12 @@ def get_value(
     :return: data[key][dict_key] or data[key] or default_value
     """
     value = None
-    if key in data:
+    if data and key in data:
+        entry = data.get(key)
         if inner_dict_key is None:
-            value = data.get(key)
-        elif isinstance(data.get(key), dict) and inner_dict_key in data.get(key):
-            value = data.get(key).get(inner_dict_key)
+            value = entry
+        elif isinstance(entry, dict):
+            value = entry.get(inner_dict_key)
 
     if value is None:
         return default_value
