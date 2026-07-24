@@ -27,7 +27,7 @@
     },
     "options": {
         "step": {
-            "init": {
+            "settings": {
                 "data": {
                     "city": "יישוב",
                     "language": "שפה",
@@ -40,6 +40,29 @@
                 },
                 "description": "הגדרות שילוב השירות המטאורולוגי הישראלי",
                 "data_description": {}
+            },
+            "init": {
+                "title": "הגדרות IMS Weather",
+                "menu_options": {
+                    "settings": "הגדרות ראשיות",
+                    "digest": "ערכי סף לתקציר היומי"
+                }
+            },
+            "digest": {
+                "title": "ערכי סף לתקציר היומי",
+                "description": "פריט מדווח רק כאשר שעה בתחזית של היום חוצה את ערך הסף.",
+                "data": {
+                    "digest_rules": "כללים פעילים",
+                    "digest_threshold_temperature_high": "חום גבוה (°C)",
+                    "digest_threshold_temperature_low": "קור (°C)",
+                    "digest_threshold_heat_stress_level": "דרגת עומס חום",
+                    "digest_threshold_uv_index": "מדד UV",
+                    "digest_threshold_gust_speed": "משבי רוח (קמ\"ש)",
+                    "digest_threshold_wind_speed": "מהירות רוח (קמ\"ש)",
+                    "digest_threshold_pm10": "אבק PM10 (µg/m³)",
+                    "digest_threshold_rain_chance": "סיכוי לגשם (%)",
+                    "digest_threshold_rain": "כמות גשם (מ\"מ)"
+                }
             }
         }
     },

@@ -23,7 +23,7 @@ from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
 from . import ImsEntity, ImsSensorEntityDescription
-from .weather_update_coordinator import WeatherData
+from .weather_update_coordinator import WeatherData, WeatherUpdateCoordinator
 from .const import (
     DOMAIN,
     ENTRY_WEATHER_COORDINATOR,
@@ -84,6 +84,9 @@ from .const import (
     TYPE_SEA_WARNINGS,
     TYPE_DAILY_DIGEST,
     DAILY_DIGEST_RULES,
+    DEFAULT_DIGEST_RULES,
+    CONF_DIGEST_RULES,
+    CONF_DIGEST_THRESHOLD_PREFIX,
     WARNING_SEVERITY_COLORS,
     DATETIME_FORMAT,
 )
@@ -418,10 +421,24 @@ async def async_setup_entry(
         # If a problem happens - create all sensors
         conditions = SENSOR_DESCRIPTIONS_KEYS
 
+    # Digest thresholds live in the entry options; unset keys keep the rule
+    # defaults. Editing them triggers a reload, so sensors pick up new values.
+    merged = {**config_entry.data, **config_entry.options}
+    digest_config = {
+        "enabled": merged.get(CONF_DIGEST_RULES, DEFAULT_DIGEST_RULES),
+        "thresholds": {
+            rule["key"]: merged[CONF_DIGEST_THRESHOLD_PREFIX + rule["key"]]
+            for rule in DAILY_DIGEST_RULES
+            if CONF_DIGEST_THRESHOLD_PREFIX + rule["key"] in merged
+        },
+    }
+
     for condition in conditions:
         if condition in SENSOR_DESCRIPTIONS_KEYS:
             description = SENSOR_DESCRIPTIONS_DICT[condition]
-            sensors.append(ImsSensor(weather_coordinator, description))
+            sensors.append(
+                ImsSensor(weather_coordinator, description, digest_config)
+            )
 
     async_add_entities(sensors, update_before_add=True)
 
@@ -484,36 +501,39 @@ def _hourly_metric(hour, rule):
     return getattr(hour, rule["field"], None)
 
 
-def generate_daily_digest(daily_forecast):
+def generate_daily_digest(daily_forecast, enabled=None, thresholds=None):
     """Summarise the notable hours left in today's forecast.
 
-    Only values crossing the thresholds in DAILY_DIGEST_RULES are reported, so
-    an ordinary day yields an empty digest. Items carry the peak value and the
-    hour range rather than prose, so a card can render them in any language;
-    ``summary`` is a ready-made English one-liner per item.
+    Only values crossing a threshold are reported, so an ordinary day yields an
+    empty digest. ``enabled`` limits which rules run and ``thresholds`` maps a
+    rule key to a user-set limit; both come from the config entry options and
+    fall back to the defaults in DAILY_DIGEST_RULES. Items carry the peak value
+    and the hour range rather than prose, so a card can render them in any
+    language; ``text`` is a ready-made English one-liner.
     """
     items = []
     hours = getattr(daily_forecast, "hours", None) or []
+    enabled = DEFAULT_DIGEST_RULES if enabled is None else enabled
+    thresholds = thresholds or {}
 
     for rule in DAILY_DIGEST_RULES:
-        limit_above = rule.get("above")
-        limit_below = rule.get("below")
+        if rule["key"] not in enabled:
+            continue
+
+        limit = thresholds.get(rule["key"], rule["default"])
+        above = rule["direction"] == "above"
         hits = []
         for hour in hours:
             value = _hourly_metric(hour, rule)
             if value is None:
                 continue
-            if (limit_above is not None and value >= limit_above) or (
-                limit_below is not None and value <= limit_below
-            ):
+            if (above and value >= limit) or (not above and value <= limit):
                 hits.append((hour.hour, value))
 
         if not hits:
             continue
 
-        peak = max(h[1] for h in hits) if limit_above is not None else min(
-            h[1] for h in hits
-        )
+        peak = max(h[1] for h in hits) if above else min(h[1] for h in hits)
         first, last = hits[0][0], hits[-1][0]
         window = first if first == last else f"{first}-{last}"
         unit = HOURLY_UNITS.get(rule["metric"], "")
@@ -622,6 +642,16 @@ class ImsSensor(ImsEntity, SensorEntity):
 
     entity_description: ImsSensorEntityDescription
     _attr_native_value: Any
+
+    def __init__(
+        self,
+        coordinator: WeatherUpdateCoordinator,
+        description: ImsSensorEntityDescription,
+        digest_config: dict | None = None,
+    ) -> None:
+        """Initialize, keeping the digest rule selection for this entry."""
+        super().__init__(coordinator, description)
+        self._digest_config = digest_config or {}
 
     @callback
     def _update_from_latest_data(self) -> None:
@@ -743,7 +773,15 @@ class ImsSensor(ImsEntity, SensorEntity):
                 # drops past days, and past hours within today, so this covers
                 # "what is still to come today".
                 days = data.forecast.days if data.forecast else []
-                digest = generate_daily_digest(days[0]) if days else []
+                digest = (
+                    generate_daily_digest(
+                        days[0],
+                        self._digest_config.get("enabled"),
+                        self._digest_config.get("thresholds"),
+                    )
+                    if days
+                    else []
+                )
                 self._attr_native_value = len(digest)
                 self._attr_extra_state_attributes = {
                     "items": digest,

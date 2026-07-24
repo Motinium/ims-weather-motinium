@@ -27,7 +27,7 @@
     },
     "options": {
         "step": {
-            "init": {
+            "settings": {
                 "data": {
                     "city": "Cidade",
                     "language": "Idioma",
@@ -41,6 +41,29 @@
                 },
                 "description": "Configurar a integração IMS Weather",
                 "data_description": {}
+            },
+            "init": {
+                "title": "IMS Weather options",
+                "menu_options": {
+                    "settings": "Main settings",
+                    "digest": "Daily digest thresholds"
+                }
+            },
+            "digest": {
+                "title": "Daily digest thresholds",
+                "description": "A finding is reported only when an hour of today's forecast crosses its threshold, so an ordinary day stays empty. Untick a rule to skip it.",
+                "data": {
+                    "digest_rules": "Active rules",
+                    "digest_threshold_temperature_high": "High temperature (°C)",
+                    "digest_threshold_temperature_low": "Cold (°C)",
+                    "digest_threshold_heat_stress_level": "Heat stress level",
+                    "digest_threshold_uv_index": "UV index",
+                    "digest_threshold_gust_speed": "Wind gusts (km/h)",
+                    "digest_threshold_wind_speed": "Wind speed (km/h)",
+                    "digest_threshold_pm10": "Dust PM10 (µg/m³)",
+                    "digest_threshold_rain_chance": "Rain chance (%)",
+                    "digest_threshold_rain": "Rainfall (mm)"
+                }
             }
         }
     },

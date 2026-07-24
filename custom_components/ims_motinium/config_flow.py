@@ -16,8 +16,13 @@ from homeassistant.const import (
 )
 from homeassistant.core import callback
 import homeassistant.helpers.config_validation as cv
+from homeassistant.helpers import selector
 
 from .const import (
+    CONF_DIGEST_RULES,
+    CONF_DIGEST_THRESHOLD_PREFIX,
+    DAILY_DIGEST_RULES,
+    DEFAULT_DIGEST_RULES,
     CONF_CITY,
     CONF_LANGUAGE,
     CONF_IMAGES_PATH,
@@ -276,6 +281,54 @@ class IMSWeatherOptionsFlow(config_entries.OptionsFlow):
         self._config_entry = config_entry
 
     async def async_step_init(self, user_input=None):
+        """Pick between the main settings and the digest thresholds.
+
+        The main form already carries eight fields; putting the nine digest
+        thresholds next to them would make one unreadable dialog, so they get
+        their own page.
+        """
+        return self.async_show_menu(
+            step_id="init",
+            menu_options=["settings", "digest"],
+        )
+
+    async def async_step_digest(self, user_input=None):
+        """Thresholds and active rules for the daily digest sensor."""
+        if user_input is not None:
+            # Merge into the existing options so this page cannot wipe the
+            # settings owned by the other step.
+            options = dict(self._config_entry.options)
+            options.update(user_input)
+            return self.async_create_entry(title="", data=options)
+
+        stored = self._config_entry.options
+        fields = {
+            vol.Optional(
+                CONF_DIGEST_RULES,
+                default=list(stored.get(CONF_DIGEST_RULES, DEFAULT_DIGEST_RULES)),
+            ): cv.multi_select(
+                {rule["key"]: rule["label"] for rule in DAILY_DIGEST_RULES}
+            )
+        }
+        for rule in DAILY_DIGEST_RULES:
+            option_key = CONF_DIGEST_THRESHOLD_PREFIX + rule["key"]
+            fields[
+                vol.Optional(
+                    option_key,
+                    default=stored.get(option_key, rule["default"]),
+                )
+            ] = selector.NumberSelector(
+                selector.NumberSelectorConfig(
+                    min=rule["min"],
+                    max=rule["max"],
+                    step=rule["step"],
+                    mode=selector.NumberSelectorMode.BOX,
+                )
+            )
+
+        return self.async_show_form(step_id="digest", data_schema=vol.Schema(fields))
+
+    async def async_step_settings(self, user_input=None):
         """Manage the options."""
         errors = {}
         global cities_data
@@ -299,8 +352,17 @@ class IMSWeatherOptionsFlow(config_entries.OptionsFlow):
 
             # _LOGGER.warning('async_step_init_Options')
             if not errors:
+                # Keep the digest options, which the other step owns: saving
+                # only this form's fields would drop them.
+                options = {
+                    key: value
+                    for key, value in self._config_entry.options.items()
+                    if key == CONF_DIGEST_RULES
+                    or key.startswith(CONF_DIGEST_THRESHOLD_PREFIX)
+                }
+                options.update(user_input)
                 return self.async_create_entry(
-                    title=user_input[CONF_NAME], data=user_input
+                    title=user_input[CONF_NAME], data=options
                 )
 
         city_options = {}
@@ -316,7 +378,7 @@ class IMSWeatherOptionsFlow(config_entries.OptionsFlow):
             city_default = next(iter(city_options))
 
         return self.async_show_form(
-            step_id="init",
+            step_id="settings",
             data_schema=vol.Schema(
                 {
                     vol.Optional(

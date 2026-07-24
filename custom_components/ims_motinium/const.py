@@ -158,22 +158,120 @@ WARNING_SENSOR_KEYS: frozenset[str] = frozenset(
 # week in Akko, where temperature peaked at 30.5, gusts at 33, PM10 at 41,
 # heat_stress_level reached 4 in only 2 of 149 hours and UV passed 8 daily.
 # Humidity is intentionally absent: IMS already folds it into heat_stress_level.
+# ``key`` is the stable identifier used in the config entry options, so
+# thresholds and the active-rule selection survive renames of the label.
+# ``default`` is the fallback when the option is unset, which also means new
+# rules added later arrive with a working value on existing installs.
+# ``min``/``max``/``step`` only shape the number field in the options UI.
 DAILY_DIGEST_RULES: tuple[dict, ...] = (
-    {"metric": "temperature", "field": None, "above": 35, "label": "High temperature"},
-    {"metric": "temperature", "field": None, "below": 8, "label": "Cold"},
     {
+        "key": "temperature_high",
+        "metric": "temperature",
+        "field": None,
+        "direction": "above",
+        "default": 35,
+        "min": 20,
+        "max": 50,
+        "step": 1,
+        "label": "High temperature",
+    },
+    {
+        "key": "temperature_low",
+        "metric": "temperature",
+        "field": None,
+        "direction": "below",
+        "default": 8,
+        "min": -5,
+        "max": 20,
+        "step": 1,
+        "label": "Cold",
+    },
+    {
+        "key": "heat_stress_level",
         "metric": "heat_stress_level",
         "field": "heat_stress_level",
-        "above": 4,
+        "direction": "above",
+        "default": 4,
+        "min": 1,
+        "max": 6,
+        "step": 1,
         "label": "Heat stress",
     },
-    {"metric": "uv_index", "field": "u_v_index", "above": 8, "label": "Very high UV"},
-    {"metric": "gust_speed", "field": "gust_speed", "above": 50, "label": "Wind gusts"},
-    {"metric": "wind_speed", "field": "wind_speed", "above": 35, "label": "Strong wind"},
-    {"metric": "pm10", "field": "pm10", "above": 80, "label": "Dust (PM10)"},
-    {"metric": "rain_chance", "field": "rain_chance", "above": 40, "label": "Rain likely"},
-    {"metric": "rain", "field": "rain", "above": 1.0, "label": "Rainfall"},
+    {
+        "key": "uv_index",
+        "metric": "uv_index",
+        "field": "u_v_index",
+        "direction": "above",
+        "default": 8,
+        "min": 1,
+        "max": 12,
+        "step": 1,
+        "label": "Very high UV",
+    },
+    {
+        "key": "gust_speed",
+        "metric": "gust_speed",
+        "field": "gust_speed",
+        "direction": "above",
+        "default": 50,
+        "min": 10,
+        "max": 120,
+        "step": 5,
+        "label": "Wind gusts",
+    },
+    {
+        "key": "wind_speed",
+        "metric": "wind_speed",
+        "field": "wind_speed",
+        "direction": "above",
+        "default": 35,
+        "min": 10,
+        "max": 100,
+        "step": 5,
+        "label": "Strong wind",
+    },
+    {
+        "key": "pm10",
+        "metric": "pm10",
+        "field": "pm10",
+        "direction": "above",
+        "default": 80,
+        "min": 20,
+        "max": 300,
+        "step": 10,
+        "label": "Dust (PM10)",
+    },
+    {
+        "key": "rain_chance",
+        "metric": "rain_chance",
+        "field": "rain_chance",
+        "direction": "above",
+        "default": 40,
+        "min": 10,
+        "max": 100,
+        "step": 5,
+        "label": "Rain likely",
+    },
+    {
+        "key": "rain",
+        "metric": "rain",
+        "field": "rain",
+        "direction": "above",
+        "default": 1.0,
+        "min": 0.5,
+        "max": 20,
+        "step": 0.5,
+        "label": "Rainfall",
+    },
 )
+
+DAILY_DIGEST_RULES_BY_KEY = {rule["key"]: rule for rule in DAILY_DIGEST_RULES}
+
+# Which rules are evaluated, and the per-rule threshold overrides. Both live in
+# the config entry options; unset means "all rules" / "rule default".
+CONF_DIGEST_RULES = "digest_rules"
+CONF_DIGEST_THRESHOLD_PREFIX = "digest_threshold_"
+DEFAULT_DIGEST_RULES = [rule["key"] for rule in DAILY_DIGEST_RULES]
 
 # IMS ships its own hex colour per severity level; using it keeps cards in
 # step with the colours on the IMS site instead of hand-picked approximations.
