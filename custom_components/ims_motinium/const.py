@@ -76,6 +76,7 @@ TYPE_CURRENT_UV_INDEX = "current_uv_index"
 TYPE_CURRENT_UV_LEVEL = "current_uv_level"
 TYPE_DEW_POINT_TEMP = "dew_point_temp"
 TYPE_WEATHER_WARNINGS = "weather_warnings"
+TYPE_SEA_WARNINGS = "sea_warnings"
 TYPE_FEELS_LIKE = "feels_like"
 TYPE_FORECAST_PREFIX = "forecast_"
 TYPE_FORECAST_TODAY = "today"
@@ -145,8 +146,19 @@ WARNING_SENSOR_KEYS: frozenset[str] = frozenset(
     {
         IMS_SENSOR_KEY_PREFIX + TYPE_WEATHER_WARNINGS,
         IMS_SENSOR_KEY_PREFIX + TYPE_IS_ACTIVE_WEATHER_WARNING,
+        IMS_SENSOR_KEY_PREFIX + TYPE_SEA_WARNINGS,
     }
 )
+
+# IMS ships its own hex colour per severity level; using it keeps cards in
+# step with the colours on the IMS site instead of hand-picked approximations.
+WARNING_SEVERITY_COLORS = {
+    "green": "#939598",
+    "yellow": "#FFD700",
+    "orange": "#FF8C00",
+    "red": "#fe0104",
+    "gray": "#B7B7B7",
+}
 
 
 FORECAST_MODE = types.SimpleNamespace()

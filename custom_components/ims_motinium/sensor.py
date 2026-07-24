@@ -81,6 +81,8 @@ from .const import (
     WIND_DIRECTIONS,
     FIELD_NAME_WARNING,
     TYPE_WEATHER_WARNINGS,
+    TYPE_SEA_WARNINGS,
+    WARNING_SEVERITY_COLORS,
     DATETIME_FORMAT,
 )
 from .utils import get_hourly_weather_icon
@@ -104,6 +106,7 @@ sensor_keys.TYPE_PRECIPITATION_PROBABILITY = (
 )
 sensor_keys.TYPE_WIND_DIRECTION = IMS_SENSOR_KEY_PREFIX + TYPE_WIND_DIRECTION
 sensor_keys.TYPE_WEATHER_WARNINGS = IMS_SENSOR_KEY_PREFIX + TYPE_WEATHER_WARNINGS
+sensor_keys.TYPE_SEA_WARNINGS = IMS_SENSOR_KEY_PREFIX + TYPE_SEA_WARNINGS
 sensor_keys.TYPE_WIND_SPEED = IMS_SENSOR_KEY_PREFIX + TYPE_WIND_SPEED
 sensor_keys.TYPE_FORECAST_TODAY = (
     IMS_SENSOR_KEY_PREFIX + TYPE_FORECAST_PREFIX + TYPE_FORECAST_TODAY
@@ -291,6 +294,16 @@ SENSOR_DESCRIPTIONS: list[ImsSensorEntityDescription] = [
         field_name=FIELD_NAME_WARNING,
     ),
     ImsSensorEntityDescription(
+        # Marine alerts are filed against the sea regions, so they never show
+        # up in the location's own warnings (a coastal city sits in a land
+        # region). Sea state, swimming danger, high waves.
+        key=IMS_SENSOR_KEY_PREFIX + TYPE_SEA_WARNINGS,
+        name="IMS Sea Warnings",
+        icon="mdi:waves-arrow-up",
+        forecast_mode=FORECAST_MODE.CURRENT,
+        field_name=FIELD_NAME_WARNING,
+    ),
+    ImsSensorEntityDescription(
         key=IMS_SENSOR_KEY_PREFIX + TYPE_FORECAST_PREFIX + TYPE_FORECAST_TODAY,
         name="IMS Forecast Today",
         icon="mdi:weather-sunny",
@@ -391,16 +404,33 @@ def generate_single_warning_detail(warning):
     """Structured view of one warning for template/card use.
 
     Surfaces the fields ``weatheril`` already parses (severity, warning type,
-    covered regions) that the plain ``warnings`` string list drops, so a
-    Lovelace card can style and label warnings without guessing severity or
-    type from the free text. ``getattr`` guards keep it working across
-    weatheril versions that may not expose every field.
+    covered regions, audience groups) that the plain ``warnings`` string list
+    drops, so a Lovelace card can style, label and filter warnings without
+    guessing any of it from the free text. ``getattr`` guards keep it working
+    across weatheril versions that may not expose every field.
     """
+    severity = getattr(warning, "severity", None) or ""
+    sent = getattr(warning, "sent", None)
     return {
-        "severity": getattr(warning, "severity", None),
+        "severity": severity or None,
+        # IMS's own colour for the level, so cards match the IMS site.
+        "severity_color": next(
+            (
+                color
+                for name, color in WARNING_SEVERITY_COLORS.items()
+                if name in severity.lower()
+            ),
+            None,
+        ),
         "type": getattr(warning, "warning_type", None),
         "region": getattr(warning, "region_name", None),
         "regions": getattr(warning, "regions", None),
+        # Audience, e.g. "General Public", "Seamanship", "Aviation" —
+        # lets a card show or hide alerts that are not meant for you.
+        "groups": sorted(set(getattr(warning, "groups", None) or [])),
+        # Stable id: the same alert is filed against several regions.
+        "id": getattr(warning, "wid", None),
+        "sent": sent.isoformat() if sent else None,
         "valid_from": warning.valid_from.isoformat(),
         "valid_to": warning.valid_to.isoformat(),
         "text": warning.text_full,
@@ -588,6 +618,13 @@ class ImsSensor(ImsEntity, SensorEntity):
                 self._attr_native_value = len(data.warnings)
                 self._attr_extra_state_attributes = (
                     generate_warnings_extra_state_attributes(data.warnings)
+                )
+
+            case sensor_keys.TYPE_SEA_WARNINGS:
+                sea_warnings = getattr(data, "sea_warnings", None) or []
+                self._attr_native_value = len(sea_warnings)
+                self._attr_extra_state_attributes = (
+                    generate_warnings_extra_state_attributes(sea_warnings)
                 )
 
             case (

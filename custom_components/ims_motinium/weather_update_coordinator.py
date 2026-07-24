@@ -35,6 +35,7 @@ class WeatherData:
     forecast: Forecast
     images: RadarSatellite | None
     warnings: list[Warning]
+    sea_warnings: list[Warning]
 
 
 class WeatherUpdateCoordinator(DataUpdateCoordinator[WeatherData]):
@@ -100,6 +101,11 @@ class WeatherUpdateCoordinator(DataUpdateCoordinator[WeatherData]):
         warnings = (
             await self._fetch_warnings(loop) if self._should_fetch_warnings() else []
         )
+        sea_warnings = (
+            await self._fetch_sea_warnings(loop)
+            if self._should_fetch_warnings()
+            else []
+        )
         # Radar/satellite imagery is not consumed by any entity, so the extra
         # HTTP round-trip is skipped. IMS also serves a 2-byte stub instead of
         # the actual radar PNGs, so there is nothing to render even if it were.
@@ -111,7 +117,9 @@ class WeatherUpdateCoordinator(DataUpdateCoordinator[WeatherData]):
         )
 
         self._filter_future_forecast(weather_forecast)
-        return WeatherData(current_weather, weather_forecast, images, warnings)
+        return WeatherData(
+            current_weather, weather_forecast, images, warnings, sea_warnings
+        )
 
     async def _fetch_forecast(self, loop: asyncio.AbstractEventLoop) -> Forecast:
         """Fetch the IMS forecast.
@@ -161,6 +169,26 @@ class WeatherUpdateCoordinator(DataUpdateCoordinator[WeatherData]):
         except Exception as error:  # noqa: BLE001 - intentional, see docstring
             _LOGGER.warning(
                 "Failed to fetch IMS weather warnings; continuing with no active warnings: %s",
+                error,
+            )
+            return []
+
+    async def _fetch_sea_warnings(
+        self, loop: asyncio.AbstractEventLoop
+    ) -> list[Warning]:
+        """Fetch active IMS marine warnings.
+
+        Marine alerts are filed against the sea regions, not the (land) region
+        of the configured location, so they never appear in ``get_warnings``.
+        This reuses the national warnings payload the library already cached,
+        so it adds no HTTP round-trip. Non-fatal for the same reasons as
+        ``_fetch_warnings``: an empty list simply means "no active alerts".
+        """
+        try:
+            return await loop.run_in_executor(None, self.weather.get_sea_warnings)
+        except Exception as error:  # noqa: BLE001 - intentional, see docstring
+            _LOGGER.warning(
+                "Failed to fetch IMS sea warnings; continuing with none: %s",
                 error,
             )
             return []

@@ -206,6 +206,12 @@
             },
             "ims_last_modified_he": {
                 "name": "עודכן לאחרונה"
+            },
+            "ims_sea_warnings_en": {
+                "name": "Sea Warnings"
+            },
+            "ims_sea_warnings_he": {
+                "name": "אזהרות ים"
             }
         }
     }
