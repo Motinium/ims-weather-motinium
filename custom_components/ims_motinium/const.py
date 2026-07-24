@@ -25,7 +25,7 @@ from homeassistant.const import (
 )
 
 DATETIME_FORMAT = "%H:%M:%S %d/%m/%Y"
-DOMAIN = "ims_local"
+DOMAIN = "ims_motinium"
 DEFAULT_NAME = "IMS Weather"
 IMS_TIMEZONE = dt_util.get_time_zone("Asia/Jerusalem")
 DEFAULT_LANGUAGE = "en"

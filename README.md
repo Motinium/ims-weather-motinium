@@ -1,5 +1,5 @@
 
-# IMS Weather (Local fork)
+# IMS Weather (Motinium)
 
 [![GitHub Release][releases-shield]][releases]
 [![GitHub Activity][commits-shield]][commits]
@@ -7,7 +7,7 @@
 
 ![Project Maintenance][maintenance-shield]
 
-> The domain is renamed to `ims_local` so it can be installed independently of any
+> The domain is renamed to `ims_motinium` so it can be installed independently of any
 > other IMS integration, and it includes a fix for the coordinator not refreshing
 > after a config-entry reload.
 
@@ -20,7 +20,7 @@ With IMS, you can get the following information for the current status (Updates 
 * Rain status
 * Weather Alerts
 
-[![IMS custom component](https://github.com/Motinium/ims-weather/blob/main/screenshots/ims.png?raw=true "IMS custom component")](https://github.com/Motinium/ims-weather/blob/main/screenshots/ims.png?raw=true "IMS custom component")
+[![IMS custom component](https://github.com/Motinium/ims-weather-motinium/blob/main/screenshots/ims.png?raw=true "IMS custom component")](https://github.com/Motinium/ims-weather-motinium/blob/main/screenshots/ims.png?raw=true "IMS custom component")
 
 
 
@@ -34,7 +34,7 @@ And also, the forecast data for today and the next four days in six hours interv
 * Temperature.
 
 
-[![IMS custom component](https://github.com/Motinium/ims-weather/blob/main/screenshots/ims_attributes.png?raw=true "IMS custom component")](https://github.com/Motinium/ims-weather/blob/main/screenshots/ims_attributes.png?raw=true "IMS custom component")
+[![IMS custom component](https://github.com/Motinium/ims-weather-motinium/blob/main/screenshots/ims_attributes.png?raw=true "IMS custom component")](https://github.com/Motinium/ims-weather-motinium/blob/main/screenshots/ims_attributes.png?raw=true "IMS custom component")
 
 
 ### Installation
@@ -42,7 +42,7 @@ And also, the forecast data for today and the next four days in six hours interv
 This fork is installed as a HACS **custom repository**:
 
 1. In HACS, open the three-dot menu → **Custom repositories**.
-2. Add `https://github.com/Motinium/ims-weather` with category **Integration**.
+2. Add `https://github.com/Motinium/ims-weather-motinium` with category **Integration**.
 3. Download the integration from HACS.
 
 **Restart** the Home Assistant instance to load the integration before moving on.
@@ -51,18 +51,18 @@ Finally, use the UI to add the integration:
 
 Under settings, go to "Devices & Services"
 
-[![IMS custom component](https://github.com/Motinium/ims-weather/blob/main/screenshots/settings-devices.png?raw=true "IMS custom component")](https://github.com/Motinium/ims-weather/blob/main/screenshots/settings-devices.png?raw=true "IMS custom component")
+[![IMS custom component](https://github.com/Motinium/ims-weather-motinium/blob/main/screenshots/settings-devices.png?raw=true "IMS custom component")](https://github.com/Motinium/ims-weather-motinium/blob/main/screenshots/settings-devices.png?raw=true "IMS custom component")
 
 In the lower left cornet click on "Add Integration" button
-[![IMS custom component](https://github.com/Motinium/ims-weather/blob/main/screenshots/add-integration.png?raw=true "IMS custom component")](https://github.com/Motinium/ims-weather/blob/main/screenshots/add-integration.png?raw=true "IMS custom component")
+[![IMS custom component](https://github.com/Motinium/ims-weather-motinium/blob/main/screenshots/add-integration.png?raw=true "IMS custom component")](https://github.com/Motinium/ims-weather-motinium/blob/main/screenshots/add-integration.png?raw=true "IMS custom component")
 
 In the list of integrations, search for IMS:
 
-[![IMS custom component](https://github.com/Motinium/ims-weather/blob/main/screenshots/select-brand.png?raw=true "IMS custom component")](https://github.com/Motinium/ims-weather/blob/main/screenshots/select-brand.png?raw=true "IMS custom component")
+[![IMS custom component](https://github.com/Motinium/ims-weather-motinium/blob/main/screenshots/select-brand.png?raw=true "IMS custom component")](https://github.com/Motinium/ims-weather-motinium/blob/main/screenshots/select-brand.png?raw=true "IMS custom component")
 
 Enter the relevant parameters (Location and Language) and click sthe submit button in the bottom:
 
-[![IMS custom component](https://github.com/Motinium/ims-weather/blob/main/screenshots/submit-settings.png?raw=true "IMS custom component")](https://github.com/Motinium/ims-weather/blob/main/screenshots/submit-settings.png?raw=true "IMS custom component")
+[![IMS custom component](https://github.com/Motinium/ims-weather-motinium/blob/main/screenshots/submit-settings.png?raw=true "IMS custom component")](https://github.com/Motinium/ims-weather-motinium/blob/main/screenshots/submit-settings.png?raw=true "IMS custom component")
 
 
 The Languages can be one of two:
@@ -227,9 +227,9 @@ The city code must be one of the codes in the following table:
 | 277| Hay-Bar Yotvata|
 | 278| Coral Beach|
 
-[commits-shield]: https://img.shields.io/github/commit-activity/y/Motinium/ims-weather.svg?style=for-the-badge
-[commits]: https://github.com/Motinium/ims-weather/commits/main
-[license-shield]: https://img.shields.io/github/license/Motinium/ims-weather.svg?style=for-the-badge
+[commits-shield]: https://img.shields.io/github/commit-activity/y/Motinium/ims-weather-motinium.svg?style=for-the-badge
+[commits]: https://github.com/Motinium/ims-weather-motinium/commits/main
+[license-shield]: https://img.shields.io/github/license/Motinium/ims-weather-motinium.svg?style=for-the-badge
 [maintenance-shield]: https://img.shields.io/badge/maintainer-%40Motinium-blue.svg?style=for-the-badge
-[releases-shield]: https://img.shields.io/github/release/Motinium/ims-weather.svg?style=for-the-badge
-[releases]: https://github.com/Motinium/ims-weather/releases
+[releases-shield]: https://img.shields.io/github/release/Motinium/ims-weather-motinium.svg?style=for-the-badge
+[releases]: https://github.com/Motinium/ims-weather-motinium/releases
