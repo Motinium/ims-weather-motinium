@@ -135,6 +135,24 @@ sensor_keys.TYPE_FORECAST_DAY7 = (
 
 _LOGGER = logging.getLogger(__name__)
 
+# Units for the plain hourly values in the forecast attributes. Declared once
+# per sensor instead of repeating a {value, unit} pair on every hour.
+HOURLY_UNITS = {
+    "temperature": UnitOfTemperature.CELSIUS,
+    "humidity": PERCENTAGE,
+    "rain": UnitOfPrecipitationDepth.MILLIMETERS,
+    "rain_chance": PERCENTAGE,
+    "wind_speed": UnitOfSpeed.KILOMETERS_PER_HOUR,
+    "wind_direction": DEGREE,
+    "gust_speed": UnitOfSpeed.KILOMETERS_PER_HOUR,
+    "wind_chill": UnitOfTemperature.CELSIUS,
+    "heat_stress": UnitOfTemperature.CELSIUS,
+    "uv_index": UV_INDEX,
+    "uv_index_max": UV_INDEX,
+    "pm10": CONCENTRATION_MICROGRAMS_PER_CUBIC_METER,
+    "wave_height": "m",
+}
+
 SENSOR_DESCRIPTIONS: list[ImsSensorEntityDescription] = [
     ImsSensorEntityDescription(
         key=IMS_SENSOR_KEY_PREFIX + TYPE_CURRENT_UV_INDEX,
@@ -492,7 +510,7 @@ def generate_forecast_extra_state_attributes(daily_forecast):
 
         hourly_weather_code = get_hourly_weather_icon(hour.hour, last_weather_code)
 
-        attributes[hour.hour] = {
+        hourly = {
             "weather": {
                 "value": last_weather_status,
                 "icon": WEATHER_CODE_TO_ICON.get(str(hourly_weather_code)),
@@ -502,6 +520,31 @@ def generate_forecast_extra_state_attributes(daily_forecast):
                 "unit": UnitOfTemperature.CELSIUS,
             },
         }
+        # The remaining hourly fields weatheril parses. Kept as plain values
+        # (units are declared once in HOURLY_UNITS) because the nested
+        # {value, unit} form roughly triples the size of a 24-hour day, and
+        # these attributes are written to the recorder on every poll.
+        for name, value in (
+            ("humidity", hour.relative_humidity),
+            ("rain", hour.rain),
+            ("rain_chance", hour.rain_chance),
+            ("wind_speed", hour.wind_speed),
+            ("wind_direction", hour.wind_direction),
+            ("gust_speed", hour.gust_speed),
+            ("wind_chill", hour.wind_chill),
+            ("heat_stress", hour.heat_stress),
+            ("heat_stress_level", hour.heat_stress_level),
+            ("uv_index", hour.u_v_index),
+            ("uv_index_max", hour.u_v_i_max),
+            ("pm10", hour.pm10),
+            ("wave_height", hour.wave_height),
+        ):
+            if value is not None:
+                hourly[name] = value
+
+        attributes[hour.hour] = hourly
+
+    attributes["hourly_units"] = HOURLY_UNITS
 
     return attributes
 
