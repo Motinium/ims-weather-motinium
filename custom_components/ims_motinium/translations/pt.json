@@ -12,7 +12,6 @@
             "user": {
                 "data": {
                     "city": "Cidade",
-                    "language": "Idioma",
                     "mode": "Modo de previsão para a entidade Meteorológica",
                     "name": "Nome da Integração",
                     "images_path": "Caminho para download das imagens",
@@ -30,7 +29,6 @@
             "settings": {
                 "data": {
                     "city": "Cidade",
-                    "language": "Idioma",
                     "mode": "Modo de previsão para a entidade Meteorológica",
                     "name": "Nome da Integração",
                     "units": "Unidades para os sensores. Só é usado se os sensores forem solicitados.",

@@ -35,7 +35,6 @@ from .const import (
     DEFAULT_UPDATE_INTERVAL,
     DOMAIN,
     FORECAST_MODES,
-    LANGUAGES,
     IMS_PLATFORMS,
     IMS_PLATFORM,
 )
@@ -81,6 +80,8 @@ class IMSWeatherConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: i
                 city_id = int(city_id)
                 user_input[CONF_CITY] = city_id
 
+            # The bundled library is English-only, so there is nothing to pick.
+            user_input[CONF_LANGUAGE] = DEFAULT_LANGUAGE
             language = user_input[CONF_LANGUAGE]
             forecast_mode = user_input[CONF_MODE]
             entity_name = user_input[CONF_NAME]
@@ -138,9 +139,6 @@ class IMSWeatherConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):  # type: i
                 vol.Optional(CONF_NAME, default=DEFAULT_NAME): str,
                 vol.Required(CONF_CITY, default=str(closest_city["lid"])): vol.In(
                     city_options
-                ),
-                vol.Required(CONF_LANGUAGE, default=DEFAULT_LANGUAGE): vol.In(
-                    LANGUAGES
                 ),
                 vol.Optional(
                     CONF_UPDATE_INTERVAL, default=DEFAULT_UPDATE_INTERVAL
@@ -348,6 +346,10 @@ class IMSWeatherOptionsFlow(config_entries.OptionsFlow):
             else:
                 user_input[CONF_CITY] = int(city_id)
 
+            # No longer a form field: keep it in the saved options so the
+            # coordinator does not have to fall back to the default.
+            user_input[CONF_LANGUAGE] = DEFAULT_LANGUAGE
+
             # entry = self.config_entry
 
             # _LOGGER.warning('async_step_init_Options')
@@ -392,15 +394,6 @@ class IMSWeatherOptionsFlow(config_entries.OptionsFlow):
                         CONF_CITY,
                         default=city_default,
                     ): vol.In(city_options) if city_options else str,
-                    vol.Optional(
-                        CONF_LANGUAGE,
-                        default=self._config_entry.options.get(
-                            CONF_LANGUAGE,
-                            self._config_entry.data.get(
-                                CONF_LANGUAGE, DEFAULT_LANGUAGE
-                            ),
-                        ),
-                    ): vol.In(LANGUAGES),
                     vol.Required(
                         IMS_PLATFORM,
                         default=self._config_entry.options.get(

@@ -553,7 +553,15 @@ def generate_daily_digest(daily_forecast, enabled=None, thresholds=None):
     return items
 
 
-def generate_forecast_extra_state_attributes(daily_forecast):
+def generate_forecast_extra_state_attributes(daily_forecast, extended=False):
+    """Attributes for one forecast day.
+
+    ``extended`` adds the full set of hourly values. It is only used for today,
+    where the hour-by-hour detail is actionable; for the following days it
+    would roughly triple the payload written to the recorder on every poll for
+    data nobody reads. The daily digest is unaffected either way — it reads the
+    Hourly objects from the library, not these attributes.
+    """
     attributes = {
         "minimum_temperature": {
             "value": daily_forecast.minimum_temperature,
@@ -608,31 +616,33 @@ def generate_forecast_extra_state_attributes(daily_forecast):
                 "unit": UnitOfTemperature.CELSIUS,
             },
         }
-        # The remaining hourly fields weatheril parses. Kept as plain values
-        # (units are declared once in HOURLY_UNITS) because the nested
-        # {value, unit} form roughly triples the size of a 24-hour day, and
-        # these attributes are written to the recorder on every poll.
-        for name, value in (
-            ("humidity", hour.relative_humidity),
-            ("rain", hour.rain),
-            ("rain_chance", hour.rain_chance),
-            ("wind_speed", hour.wind_speed),
-            ("wind_direction", hour.wind_direction),
-            ("gust_speed", hour.gust_speed),
-            ("wind_chill", hour.wind_chill),
-            ("heat_stress", hour.heat_stress),
-            ("heat_stress_level", hour.heat_stress_level),
-            ("uv_index", hour.u_v_index),
-            ("uv_index_max", hour.u_v_i_max),
-            ("pm10", hour.pm10),
-            ("wave_height", hour.wave_height),
-        ):
-            if value is not None:
-                hourly[name] = value
+        if extended:
+            # The remaining hourly fields weatheril parses. Kept as plain
+            # values (units are declared once in HOURLY_UNITS) because the
+            # nested {value, unit} form roughly triples the size of a 24-hour
+            # day, and these attributes go to the recorder on every poll.
+            for name, value in (
+                ("humidity", hour.relative_humidity),
+                ("rain", hour.rain),
+                ("rain_chance", hour.rain_chance),
+                ("wind_speed", hour.wind_speed),
+                ("wind_direction", hour.wind_direction),
+                ("gust_speed", hour.gust_speed),
+                ("wind_chill", hour.wind_chill),
+                ("heat_stress", hour.heat_stress),
+                ("heat_stress_level", hour.heat_stress_level),
+                ("uv_index", hour.u_v_index),
+                ("uv_index_max", hour.u_v_i_max),
+                ("pm10", hour.pm10),
+                ("wave_height", hour.wave_height),
+            ):
+                if value is not None:
+                    hourly[name] = value
 
         attributes[hour.hour] = hourly
 
-    attributes["hourly_units"] = HOURLY_UNITS
+    if extended:
+        attributes["hourly_units"] = HOURLY_UNITS
 
     return attributes
 
@@ -807,7 +817,11 @@ class ImsSensor(ImsEntity, SensorEntity):
                     daily_forecast = data.forecast.days[day_index]
                     self._attr_native_value = daily_forecast.day
                     self._attr_extra_state_attributes = (
-                        generate_forecast_extra_state_attributes(daily_forecast)
+                        generate_forecast_extra_state_attributes(
+                            daily_forecast,
+                            extended=self.entity_description.key
+                            == sensor_keys.TYPE_FORECAST_TODAY,
+                        )
                     )
                     self._attr_icon = WEATHER_CODE_TO_ICON.get(
                         str(daily_forecast.weather_code), "mdi:weather-sunny"

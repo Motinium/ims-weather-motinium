@@ -12,7 +12,6 @@
             "user": {
                 "data": {
                     "city": "City",
-                    "language": "Language",
                     "mode": "Forecast mode for the Weather entity",
                     "name": "Integration Name",
                     "images_path": "Path to download the images to",
@@ -30,7 +29,6 @@
             "settings": {
                 "data": {
                     "city": "City",
-                    "language": "Language",
                     "mode": "Forecast mode for the Weather entity",
                     "name": "Integration Name",
                     "units": "Units for sensors. Only used for if sensors are requested.",
