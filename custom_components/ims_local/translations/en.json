@@ -189,14 +189,24 @@
             "ims_weather_warnings_en": {
                 "name": "Weather Warnings",
                 "state_attributes": {
-                    "warnings": { "name": "Warnings" }
+                    "warnings": {
+                        "name": "Warnings"
+                    }
                 }
             },
             "ims_weather_warnings_he": {
                 "name": "אזהרות מז\"א",
                 "state_attributes": {
-                    "warnings": { "name": "אזהרות" }
+                    "warnings": {
+                        "name": "אזהרות"
+                    }
                 }
+            },
+            "ims_last_modified_en": {
+                "name": "Last Modified"
+            },
+            "ims_last_modified_he": {
+                "name": "עודכן לאחרונה"
             }
         }
     }

@@ -9,5 +9,5 @@
     "requirements": [
         "weatheril-motinium @ https://github.com/Motinium/py-weatheril-motinium/archive/refs/tags/0.41.0-fork.2.zip"
     ],
-    "version": "0.1.41.05"
+    "version": "0.1.41.06"
 }

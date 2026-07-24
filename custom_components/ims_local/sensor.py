@@ -14,6 +14,7 @@ from homeassistant.const import (
     DEGREE,
     PERCENTAGE,
     UV_INDEX,
+    EntityCategory,
     UnitOfPrecipitationDepth,
     UnitOfSpeed,
     UnitOfTemperature,
@@ -31,6 +32,7 @@ from .const import (
     FIELD_NAME_FORECAST_TIME,
     FIELD_NAME_HUMIDITY,
     FIELD_NAME_GUST_SPEED,
+    FIELD_NAME_LAST_MODIFIED,
     FIELD_NAME_LOCATION,
     FIELD_NAME_PM10,
     FIELD_NAME_RAIN,
@@ -62,6 +64,7 @@ from .const import (
     TYPE_FORECAST_TODAY,
     TYPE_GUST_SPEED,
     TYPE_HUMIDITY,
+    TYPE_LAST_MODIFIED,
     TYPE_MAX_UV_INDEX,
     TYPE_PM10,
     TYPE_PRECIPITATION,
@@ -92,6 +95,7 @@ sensor_keys.TYPE_CITY = IMS_SENSOR_KEY_PREFIX + TYPE_CITY
 sensor_keys.TYPE_TEMPERATURE = IMS_SENSOR_KEY_PREFIX + TYPE_TEMPERATURE
 sensor_keys.TYPE_HUMIDITY = IMS_SENSOR_KEY_PREFIX + TYPE_HUMIDITY
 sensor_keys.TYPE_FORECAST_TIME = IMS_SENSOR_KEY_PREFIX + TYPE_FORECAST_TIME
+sensor_keys.TYPE_LAST_MODIFIED = IMS_SENSOR_KEY_PREFIX + TYPE_LAST_MODIFIED
 sensor_keys.TYPE_FEELS_LIKE = IMS_SENSOR_KEY_PREFIX + TYPE_FEELS_LIKE
 sensor_keys.TYPE_PM10 = IMS_SENSOR_KEY_PREFIX + TYPE_PM10
 sensor_keys.TYPE_PRECIPITATION = IMS_SENSOR_KEY_PREFIX + TYPE_PRECIPITATION
@@ -226,6 +230,19 @@ SENSOR_DESCRIPTIONS: list[ImsSensorEntityDescription] = [
         device_class=SensorDeviceClass.TIMESTAMP,
         forecast_mode=FORECAST_MODE.CURRENT,
         field_name=FIELD_NAME_FORECAST_TIME,
+    ),
+    ImsSensorEntityDescription(
+        # When IMS last recomputed the model run behind the current analysis.
+        # Distinct from forecast_time (which slot a value belongs to): IMS
+        # precomputes slots hours ahead, so a stalled model pipeline keeps
+        # serving advancing slots while this timestamp stops moving.
+        key=IMS_SENSOR_KEY_PREFIX + TYPE_LAST_MODIFIED,
+        name="IMS Last Modified",
+        icon="mdi:database-clock",
+        device_class=SensorDeviceClass.TIMESTAMP,
+        entity_category=EntityCategory.DIAGNOSTIC,
+        forecast_mode=FORECAST_MODE.CURRENT,
+        field_name=FIELD_NAME_LAST_MODIFIED,
     ),
     ImsSensorEntityDescription(
         key=IMS_SENSOR_KEY_PREFIX + TYPE_PRECIPITATION,
@@ -421,6 +438,15 @@ def generate_forecast_extra_state_attributes(daily_forecast):
         "date": {"value": daily_forecast.date.strftime("%Y/%m/%d")},
     }
 
+    # When IMS computed this forecast run. Only the hourly entries carry it,
+    # so take the first available one; it is the same across the run.
+    forecast_created = next(
+        (hour.created for hour in daily_forecast.hours if getattr(hour, "created", None)),
+        None,
+    )
+    if forecast_created:
+        attributes["created"] = {"value": forecast_created.isoformat()}
+
     last_weather_code = None
     last_weather_status = None
     for hour in daily_forecast.hours:
@@ -541,6 +567,13 @@ class ImsSensor(ImsEntity, SensorEntity):
             case sensor_keys.TYPE_FORECAST_TIME:
                 self._attr_native_value = (
                     data.current_weather.forecast_time.astimezone()
+                )
+
+            case sensor_keys.TYPE_LAST_MODIFIED:
+                # weatheril leaves modified_at as None when IMS omits the field
+                modified_at = getattr(data.current_weather, "modified_at", None)
+                self._attr_native_value = (
+                    modified_at.astimezone() if modified_at else None
                 )
 
             case sensor_keys.TYPE_WIND_DIRECTION:

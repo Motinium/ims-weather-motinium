@@ -83,13 +83,17 @@
             "ims_weather_warnings_en": {
                 "name": "Alertas meteorológicos",
                 "state_attributes": {
-                    "warnings": { "name": "Alertas" }
+                    "warnings": {
+                        "name": "Alertas"
+                    }
                 }
             },
             "ims_weather_warnings_he": {
                 "name": "Alertas meteorológicos",
                 "state_attributes": {
-                    "warnings": { "name": "Alertas" }
+                    "warnings": {
+                        "name": "Alertas"
+                    }
                 }
             }
         },
@@ -197,6 +201,12 @@
                     "moderate": "Moderado",
                     "low": "Baixo"
                 }
+            },
+            "ims_last_modified_en": {
+                "name": "Last Modified"
+            },
+            "ims_last_modified_he": {
+                "name": "עודכן לאחרונה"
             }
         }
     }
