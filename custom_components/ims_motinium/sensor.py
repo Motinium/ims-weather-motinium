@@ -14,13 +14,24 @@ from homeassistant.const import (
     PERCENTAGE,
     UV_INDEX,
     EntityCategory,
-    UnitOfDensity,
     UnitOfPrecipitationDepth,
     UnitOfSpeed,
     UnitOfTemperature,
 )
 from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
+
+# UnitOfDensity was added in Home Assistant 2026.8; the flat constant it
+# replaces is deprecated but still present on older versions the manifest
+# supports (>= 2025.4). Both resolve to the same "µg/m³" string.
+try:
+    from homeassistant.const import UnitOfDensity
+
+    MICROGRAMS_PER_CUBIC_METER = UnitOfDensity.MICROGRAMS_PER_CUBIC_METER
+except ImportError:  # pragma: no cover - depends on the installed HA version
+    from homeassistant.const import (
+        CONCENTRATION_MICROGRAMS_PER_CUBIC_METER as MICROGRAMS_PER_CUBIC_METER,
+    )
 
 from . import ImsEntity, ImsSensorEntityDescription
 from .const import (
@@ -155,7 +166,7 @@ HOURLY_UNITS = {
     "heat_stress": UnitOfTemperature.CELSIUS,
     "uv_index": UV_INDEX,
     "uv_index_max": UV_INDEX,
-    "pm10": UnitOfDensity.MICROGRAMS_PER_CUBIC_METER,
+    "pm10": MICROGRAMS_PER_CUBIC_METER,
     "wave_height": "m",
 }
 
@@ -295,7 +306,7 @@ SENSOR_DESCRIPTIONS: list[ImsSensorEntityDescription] = [
         name="IMS PM10",
         icon="mdi:air-filter",
         device_class=SensorDeviceClass.PM10,
-        native_unit_of_measurement=UnitOfDensity.MICROGRAMS_PER_CUBIC_METER,
+        native_unit_of_measurement=MICROGRAMS_PER_CUBIC_METER,
         state_class=SensorStateClass.MEASUREMENT,
         forecast_mode=FORECAST_MODE.CURRENT,
         field_name=FIELD_NAME_PM10,
