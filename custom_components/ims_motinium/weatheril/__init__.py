@@ -122,8 +122,16 @@ class WeatherIL:
                     ),
                 )
             else:
-                logger.error('No "' + self.location + '" in current analysis response')
-                logger.debug("Response: " + analysis_data)
+                # IMS occasionally answers this endpoint with an empty or
+                # non-JSON body. The caller turns the None into a failed
+                # update and retries, so this is detail, not a failure of its
+                # own. Lazy %-formatting: the payload is a dict, and
+                # concatenating it onto a string raised TypeError here.
+                logger.debug(
+                    'No "%s" in current analysis response: %s',
+                    self.location,
+                    self._analysis_data,
+                )
                 return None
         except Exception:
             logger.exception("Error getting current analysis")

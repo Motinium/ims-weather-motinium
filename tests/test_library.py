@@ -6,6 +6,7 @@ the fields the integration reads are populated.
 """
 
 import datetime
+import logging
 
 
 def test_current_analysis_parses(weather):
@@ -111,6 +112,25 @@ def test_cache_does_not_slide_on_a_hit(weather, monkeypatch):
     weather.get_current_analysis()
 
     assert weather._analysis_last_fetch == first_fetch
+
+
+def test_empty_current_analysis_degrades_quietly(weather, monkeypatch, caplog):
+    """IMS sometimes answers an endpoint with an empty or non-JSON body.
+
+    Returning None is the right outcome — the coordinator turns it into a
+    failed update and retries. It has to get there without an exception: the
+    empty payload used to reach a log line that concatenated a dict onto a
+    string, and the resulting TypeError was swallowed by the except branch,
+    which is why a plain "returns None" assertion would not catch it.
+    """
+    from ims_motinium import weatheril as weatheril_pkg
+
+    monkeypatch.setattr(weatheril_pkg, "fetch_data", lambda url: {})
+    caplog.set_level(logging.DEBUG)
+
+    assert weather.get_current_analysis() is None
+    logged = [record for record in caplog.records if record.exc_info]
+    assert not logged, f"an exception was logged while degrading: {logged}"
 
 
 def test_radar_lists_are_per_instance(weather):

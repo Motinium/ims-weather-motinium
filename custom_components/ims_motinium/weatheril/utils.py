@@ -291,11 +291,14 @@ def fetch_data(url: str) -> dict:
     Helper method to get the Json data from ims website
     """
     try:
-        logger.debug("Getting data from: " + url)
+        logger.debug("Getting data from: %s", url)
         response = _session.get(url, timeout=15)
         return json.loads(response.text)
     except Exception as e:
-        logger.error("Error getting data. " + str(e))
+        # Every caller degrades on an empty dict, and the coordinator is what
+        # reports a genuinely failed update, so this is a warning rather than
+        # an error: IMS answering one endpoint with a stub is routine.
+        logger.warning("Error getting data from %s: %s", url, e)
         return {}
 
 
