@@ -17,8 +17,8 @@ from .utils import (
     _get_warning_metadata,
     fetch_data,
     get_location_info_by_id,
-    get_region_by_id,
     get_value,
+    warm_warning_caches,
 )
 from .warning import Warning
 from .weather import Weather
@@ -362,12 +362,9 @@ class WeatherIL:
         self._get_warnings_data()
 
         # The /regions endpoint carries no is_sea flag; that lives in the
-        # warnings metadata, which is cached after the first call.
-        try:
-            metadata = _get_warning_metadata(self.language) or {}
-        except Exception as e:
-            logger.error("Could not read warning metadata for sea regions: " + str(e))
-            return []
+        # warnings metadata, which is cached after the first call and comes
+        # back empty if it could not be read, leaving sea_rids empty too.
+        metadata = _get_warning_metadata(self.language)
 
         sea_rids = [
             rid
@@ -391,87 +388,88 @@ class WeatherIL:
         self._get_warnings_data()
         return self._collect_warnings(region_ids)
 
+    def _build_warning(self, alert):
+        """
+        Build one Warning, or None if this alert cannot be parsed.
+
+        One malformed alert -- an unexpected date format, a field IMS
+        renamed -- used to raise out of the loop and cost the entire batch.
+        The coordinator turns that into "no active warnings", which is the
+        one answer a warnings feed must not give wrongly, so a bad alert is
+        now dropped on its own.
+        """
+        try:
+            return Warning(
+                language=self.language,
+                location_id=int(self.location),
+                wid=int(alert["wid"]),
+                alert_id=int(alert["alert_id"]),
+                severity_id=int(alert["severity_id"]),
+                warning_type_id=int(alert["warning_type_id"]),
+                sent=alert["sent"],
+                valid_from=alert["valid_from"],
+                valid_to=alert["valid_to"],
+                full_en=alert["full_en"],
+                full_he=alert["full_he"],
+                text=alert["text"],
+                text_full=alert["text_full"],
+                valid_from_unix=int(alert["valid_from_unix"]),
+                groups=alert["groups"],
+                regions=alert["regions"],
+            )
+        except Exception as e:
+            logger.warning(
+                "Skipping an IMS warning that did not parse (wid %s): %s",
+                alert.get("wid") if isinstance(alert, dict) else alert,
+                e,
+            )
+            return None
+
     def _collect_warnings(self, region_ids):
         """
         Build Warning objects for the given region ids, de-duplicated by wid.
         """
-        warnings = {}
         if not self._full_warnings_data:
             return []
 
-        for key in self._full_warnings_data[FULL_WARNINGS_DATA_KEY]:
+        # Warning resolves its severity, type, group and region names as it
+        # is constructed, and those lookups are lazy. Loading them here means
+        # the network call the whole batch depends on happens once, in the
+        # open, rather than from inside whichever alert happens to be first.
+        warm_warning_caches(self.language)
+
+        warnings = {}
+        for key in self._full_warnings_data.get(FULL_WARNINGS_DATA_KEY) or {}:
             daily_warnings: dict = get_value(
                 self._full_warnings_data, FULL_WARNINGS_DATA_KEY, key, dict
             )
             for region_id in region_ids:
                 for alert in daily_warnings.get(region_id, {}).values():
-                    wid = int(alert["wid"])
-                    if wid in warnings:
-                        continue
-                    warnings[wid] = Warning(
-                        language=self.language,
-                        location_id=int(self.location),
-                        wid=wid,
-                        alert_id=int(alert["alert_id"]),
-                        severity_id=int(alert["severity_id"]),
-                        warning_type_id=int(alert["warning_type_id"]),
-                        sent=alert["sent"],
-                        valid_from=alert["valid_from"],
-                        valid_to=alert["valid_to"],
-                        full_en=alert["full_en"],
-                        full_he=alert["full_he"],
-                        text=alert["text"],
-                        text_full=alert["text_full"],
-                        valid_from_unix=int(alert["valid_from_unix"]),
-                        groups=alert["groups"],
-                        regions=alert["regions"],
-                    )
+                    warning = self._build_warning(alert)
+                    if warning is not None and warning.wid not in warnings:
+                        warnings[warning.wid] = warning
         return list(warnings.values())
 
     def get_warnings(self):
         """
-        Get weather forecast
-        return: Forecast object
+        Get active warnings for the region the configured location sits in.
+
+        Goes through the same collector as the other two, so an alert filed
+        under several dates is returned once rather than once per date, and
+        an unknown location gives an empty list instead of raising into the
+        caller.
+
+        return: list of Warning objects
         """
         logger.debug("Getting warnings")
-        self._get_warnings_data()
 
         location_info = get_location_info_by_id(self.language, self.location)
-        if not location_info:
-            raise ValueError(f"Location not found for id {self.location}")
+        rid = location_info.get("rid") if location_info else None
+        if not rid:
+            logger.warning(
+                "No region known for location %s; cannot select its warnings",
+                self.location,
+            )
+            return []
 
-        rid = location_info.get("rid")
-        region = get_region_by_id(self.language, region_id="r-" + rid)
-        if not region:
-            raise ValueError(f"Region not found for id {rid}")
-
-        warnings = []
-        if self._full_warnings_data:
-            for key in self._full_warnings_data[FULL_WARNINGS_DATA_KEY]:
-                daily_warnings: dict = get_value(
-                    self._full_warnings_data, FULL_WARNINGS_DATA_KEY, key, dict
-                )
-                regional_alerts = daily_warnings.get("r-" + rid, {})
-                for alert in regional_alerts.values():
-                    warnings.append(  # noqa: PERF401 - multi-line constructor reads better as a loop
-                        Warning(
-                            language=self.language,
-                            location_id=int(self.location),
-                            wid=int(alert["wid"]),
-                            alert_id=int(alert["alert_id"]),
-                            severity_id=int(alert["severity_id"]),
-                            warning_type_id=int(alert["warning_type_id"]),
-                            sent=alert["sent"],
-                            valid_from=alert["valid_from"],
-                            valid_to=alert["valid_to"],
-                            full_en=alert["full_en"],
-                            full_he=alert["full_he"],
-                            text=alert["text"],
-                            text_full=alert["text_full"],
-                            valid_from_unix=int(alert["valid_from_unix"]),
-                            groups=alert["groups"],
-                            regions=alert["regions"],
-                        )
-                    )
-
-        return warnings
+        return self.get_warnings_for_regions(["r-" + str(rid)])

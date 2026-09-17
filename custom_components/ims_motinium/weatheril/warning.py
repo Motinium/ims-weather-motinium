@@ -36,12 +36,15 @@ class Warning:
     warning_type: str = field(init=False)
 
     def __post_init__(self):
+        # Every name below is looked up, and a lookup that does not resolve
+        # leaves the field blank rather than raising. The alert text is what
+        # the user acts on; losing the whole warning because IMS could not
+        # name its region would be the worse outcome.
         location_info = get_location_info_by_id(self.language, self.location_id)
-        if not location_info:
-            raise ValueError(f"Location not found for id: {self.location_id}")
-
-        rid = location_info.get("rid")
-        region = get_region_by_id(self.language, region_id="r-" + str(rid))
+        rid = location_info.get("rid") if location_info else None
+        region = (
+            get_region_by_id(self.language, region_id="r-" + str(rid)) if rid else {}
+        )
         self.region_name = region.get("name", "")
 
         self.severity = get_warning_severity_by_id(self.language, self.severity_id).get(
@@ -66,14 +69,23 @@ class Warning:
             else self.valid_to
         )
 
+        # Names only: an id that does not resolve is dropped instead of
+        # becoming an empty string, which would render as a blank chip on a
+        # card. "g-..."["name"] used to KeyError on an id IMS had just added.
         self.groups = [
-            get_warning_group_by_id(self.language, "g-" + str(gid))["name"]
+            name
             for gid in self.groups
+            if (
+                name := get_warning_group_by_id(self.language, "g-" + str(gid)).get(
+                    "name"
+                )
+            )
         ]
 
         self.regions = [
-            get_region_by_id(self.language, "r-" + str(rid)).get("name", "")
+            name
             for rid in self.regions
+            if (name := get_region_by_id(self.language, "r-" + str(rid)).get("name"))
         ]
 
         if not self.text_full:

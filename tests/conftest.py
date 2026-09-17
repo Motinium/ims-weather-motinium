@@ -51,13 +51,18 @@ def _install_stub_package():
     sys.modules["ims_motinium"] = stub
 
 
-def _fake_fetch_data(url):
-    """Stand in for utils.fetch_data, matching on the endpoint in the URL."""
+def _fixture_name_for(url):
+    """Which captured response answers this URL."""
     # warnings_metadata before warnings: the shorter name is a substring.
     for fragment, filename in FIXTURE_BY_URL.items():
         if fragment in url:
-            return load_fixture(filename)
+            return filename
     raise AssertionError(f"No fixture for {url}")
+
+
+def _fake_fetch_data(url):
+    """Stand in for utils.fetch_data, matching on the endpoint in the URL."""
+    return load_fixture(_fixture_name_for(url))
 
 
 @pytest.fixture
@@ -89,3 +94,35 @@ def weather(monkeypatch):
     monkeypatch.setattr(weatheril_utils._session, "get", _no_network)
 
     return weatheril_pkg.WeatherIL("35", "en")
+
+
+@pytest.fixture
+def serve(monkeypatch):
+    """Answer one endpoint with something other than its captured response.
+
+    Used to reproduce IMS misbehaving on a single endpoint -- an empty body,
+    an alert with a field the parser cannot read -- while the rest of the
+    responses stay real. Endpoints are named by the same fragments as
+    FIXTURE_BY_URL, and resolved with the same precedence.
+    """
+    overrides = {}
+
+    def register(fragment, payload):
+        overrides[FIXTURE_BY_URL[fragment]] = payload
+
+    def fetch(url):
+        name = _fixture_name_for(url)
+        return overrides[name] if name in overrides else load_fixture(name)
+
+    from ims_motinium import weatheril as weatheril_pkg
+    from ims_motinium.weatheril import utils as weatheril_utils
+
+    monkeypatch.setattr(weatheril_utils, "fetch_data", fetch)
+    monkeypatch.setattr(weatheril_pkg, "fetch_data", fetch)
+    return register
+
+
+@pytest.fixture
+def warnings_payload():
+    """A mutable copy of the captured warnings response."""
+    return load_fixture(FIXTURE_BY_URL["warnings"])

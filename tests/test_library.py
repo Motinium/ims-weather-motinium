@@ -5,6 +5,7 @@ They check that each response still parses into the expected shape and that
 the fields the integration reads are populated.
 """
 
+import copy
 import datetime
 import logging
 
@@ -131,6 +132,95 @@ def test_empty_current_analysis_degrades_quietly(weather, monkeypatch, caplog):
     assert weather.get_current_analysis() is None
     logged = [record for record in caplog.records if record.exc_info]
     assert not logged, f"an exception was logged while degrading: {logged}"
+
+
+def _land_alerts(payload):
+    """The alerts filed against r-97, the region of the fixture's location."""
+    return payload["data"]["full_warnings_data"]["2026-07-25"]["r-97"]
+
+
+def test_warnings_survive_unreadable_metadata(weather, serve):
+    """A warning with no severity name still beats no warning at all.
+
+    The severity, type and group lookups sit in Warning.__post_init__ and
+    used to raise when the metadata had not loaded, which came out of the
+    constructor and cost every alert in the batch. The coordinator reports
+    that as "no active warnings" -- the one answer a warnings feed must not
+    give wrongly.
+    """
+    serve("warnings_metadata", {})
+
+    warnings = weather.get_warnings()
+
+    assert warnings, "the alert should survive its metadata being unreadable"
+    assert warnings[0].text_full, "and still carry the text the user acts on"
+    assert warnings[0].severity == ""
+    assert warnings[0].warning_type == ""
+
+
+def test_warnings_survive_unreadable_regions(weather, serve):
+    """Same for the regions map, which had no fallback of its own."""
+    serve("regions", {})
+
+    warnings = weather.get_warnings()
+
+    assert warnings
+    assert warnings[0].region_name == ""
+    assert warnings[0].regions == []
+
+
+def test_an_unknown_group_id_does_not_lose_the_warning(
+    weather, serve, warnings_payload
+):
+    """IMS adding a group id used to KeyError out of the constructor."""
+    alert = next(iter(_land_alerts(warnings_payload).values()))
+    alert["groups"] = [*alert["groups"], "999999"]
+    serve("warnings", warnings_payload)
+
+    warnings = weather.get_warnings()
+
+    assert warnings
+    assert warnings[0].groups, "the groups that do resolve are still named"
+    assert all(group for group in warnings[0].groups), "no blank group names"
+
+
+def test_one_unparsable_alert_does_not_drop_the_others(
+    weather, serve, warnings_payload, caplog
+):
+    """A single bad alert is skipped, not the whole batch."""
+    alerts = _land_alerts(warnings_payload)
+    good = next(iter(alerts.values()))
+    broken = copy.deepcopy(good)
+    broken["wid"] = "999999"
+    broken["valid_from"] = "whenever"
+    alerts["999999"] = broken
+    serve("warnings", warnings_payload)
+
+    warnings = weather.get_warnings()
+
+    assert [w.wid for w in warnings] == [int(good["wid"])]
+    assert any("did not parse" in record.message for record in caplog.records)
+
+
+def test_the_same_alert_on_several_days_is_returned_once(
+    weather, serve, warnings_payload
+):
+    """One alert spanning two dates used to produce two identical warnings."""
+    days = warnings_payload["data"]["full_warnings_data"]
+    days["2026-07-26"]["r-97"] = copy.deepcopy(days["2026-07-25"]["r-97"])
+    serve("warnings", warnings_payload)
+
+    wids = [w.wid for w in weather.get_warnings()]
+
+    assert wids
+    assert len(wids) == len(set(wids))
+
+
+def test_warnings_for_an_unknown_location_are_empty(weather):
+    """An unresolvable location returns nothing instead of raising."""
+    weather.location = "999999"
+
+    assert weather.get_warnings() == []
 
 
 def test_radar_lists_are_per_instance(weather):

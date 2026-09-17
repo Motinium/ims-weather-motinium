@@ -135,44 +135,71 @@ def _get_wind_direction_map(language) -> dict:
         return EN_WIND_DIRECTIONS
 
 
-def get_region_by_id(language: str, region_id: str) -> dict:
+def _ensure_regions_map(language: str) -> None:
     """
-    Get Region Information by Id
+    Populate the regions map if it is not loaded yet.
     """
     global _regions_map
     if not _regions_map:
         with _cache_lock:
             if not _regions_map:
-                _regions_map = _get_regions(language) or {}
-    if not _regions_map:
-        return {}
+                _regions_map = _get_regions(language)
+
+
+def get_region_by_id(language: str, region_id: str) -> dict:
+    """
+    Get Region Information by Id
+    """
+    _ensure_regions_map(language)
     return _regions_map.get(region_id, {})
 
 
-def _get_regions(language) -> dict | None:
+def warm_warning_caches(language: str) -> None:
+    """
+    Load the maps that Warning resolves its names against.
+
+    Those lookups sit in Warning.__post_init__ and are lazy, so without this
+    the first alert of a batch is the one that goes to the network -- a
+    constructor doing I/O, with any failure surfacing from inside a
+    dataclass. Calling this before the parse loop keeps the fetch in the
+    open. Both halves already degrade to an empty map, so it cannot raise.
+    """
+    _load_warning_maps(language)
+    _ensure_regions_map(language)
+
+
+def _get_regions(language) -> dict:
     """
     Get the Regions Map from IMS
+
+    An empty map on failure rather than an exception: the callers resolve
+    names off it and can live without one. It is falsy, so the next call
+    retries the fetch instead of caching the failure.
     """
     try:
         url = REGIONS_URL.format(language=language)
         data = fetch_data(url)
         return {v["rid"]: v for v in data["data"]}
     except Exception as e:
-        logger.error("Error getting Regions info.. " + str(e))
-        raise
+        logger.warning("Error getting Regions info: %s", e)
+        return {}
 
 
-def _get_warning_metadata(language) -> dict | None:
+def _get_warning_metadata(language) -> dict:
     """
     Get the Warning Types Map from IMS
+
+    Empty on failure, for the same reason as _get_regions: a warning with an
+    unresolved severity name is still worth showing, and the next call
+    retries.
     """
     try:
         url = WARNINGS_METADTA_URL.format(language=language)
         data = fetch_data(url)
         return data["data"]
     except Exception as e:
-        logger.error("Error getting Warning Metadata... " + str(e))
-        raise
+        logger.warning("Error getting Warning Metadata: %s", e)
+        return {}
 
 
 def _load_warning_maps(language) -> None:
@@ -197,42 +224,46 @@ def _load_warning_maps(language) -> None:
         if not metadata:
             return
 
+        # .get rather than [...]: IMS dropping or renaming one of these
+        # sections must not raise out of the Warning constructor that is
+        # asking for a name.
         _warning_type_map = {
-            int(v["warning_type_id"]): v for v in metadata["ims_warning_type"].values()
+            int(v["warning_type_id"]): v
+            for v in metadata.get("ims_warning_type", {}).values()
         }
-        _warning_group_map = dict(metadata["warning_groups"].items())
+        _warning_group_map = dict(metadata.get("warning_groups", {}))
         _warning_severity_map = {
-            int(v["severity_id"]): v for v in metadata["warning_severity"].values()
+            int(v["severity_id"]): v
+            for v in metadata.get("warning_severity", {}).values()
         }
 
 
 def get_warning_type_by_id(language: str, warning_type_id: int) -> dict:
     """
-    Get the Warning Types by Id
+    Get the Warning Types by Id, or {} if it does not resolve.
+
+    These three used to raise when the metadata had not loaded. They are
+    called from Warning.__post_init__, so the exception came out of a
+    constructor and took every warning in the batch with it. An empty dict
+    leaves the name blank instead, and the alert text still gets through.
     """
     _load_warning_maps(language)
-    if not _warning_type_map:
-        raise ValueError("Warning Type Map not found")
     return _warning_type_map.get(warning_type_id, {})
 
 
 def get_warning_group_by_id(language: str, warning_group_id: str) -> dict:
     """
-    Get the Warning Group by Id
+    Get the Warning Group by Id, or {} if it does not resolve.
     """
     _load_warning_maps(language)
-    if not _warning_group_map:
-        raise ValueError("Warning Group Map not found")
     return _warning_group_map.get(warning_group_id, {})
 
 
 def get_warning_severity_by_id(language: str, warning_severity_id: int) -> dict:
     """
-    Get the Warning Severity by Id
+    Get the Warning Severity by Id, or {} if it does not resolve.
     """
     _load_warning_maps(language)
-    if not _warning_severity_map:
-        raise ValueError("Warning Severity Map not found")
     return _warning_severity_map.get(warning_severity_id, {})
 
 
