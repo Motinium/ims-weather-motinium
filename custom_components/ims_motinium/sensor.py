@@ -1,3 +1,4 @@
+import datetime
 import logging
 import types
 from typing import Any
@@ -20,6 +21,7 @@ from homeassistant.const import (
 )
 from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
+from homeassistant.helpers.restore_state import RestoreEntity
 
 # UnitOfDensity was added in Home Assistant 2026.8; the flat constant it
 # replaces is deprecated but still present on older versions the manifest
@@ -38,6 +40,7 @@ from .const import (
     CONF_DIGEST_RULES,
     CONF_DIGEST_THRESHOLD_PREFIX,
     DAILY_DIGEST_RULES,
+    DAILY_DIGEST_RULES_BY_KEY,
     DATETIME_FORMAT,
     DEFAULT_DIGEST_RULES,
     DOMAIN,
@@ -447,7 +450,14 @@ async def async_setup_entry(
     for condition in conditions:
         if condition in SENSOR_DESCRIPTIONS_KEYS:
             description = SENSOR_DESCRIPTIONS_DICT[condition]
-            sensors.append(ImsSensor(weather_coordinator, description, digest_config))
+            sensor_class = (
+                ImsDailyDigestSensor
+                if condition == sensor_keys.TYPE_DAILY_DIGEST
+                else ImsSensor
+            )
+            sensors.append(
+                sensor_class(weather_coordinator, description, digest_config)
+            )
 
     async_add_entities(sensors, update_before_add=True)
 
@@ -510,7 +520,9 @@ def _hourly_metric(hour, rule):
     return getattr(hour, rule["field"], None)
 
 
-def generate_daily_digest(daily_forecast, enabled=None, thresholds=None):
+def generate_daily_digest(
+    daily_forecast, enabled=None, thresholds=None, known_starts=None
+):
     """Summarise the notable hours left in today's forecast.
 
     Only values crossing a threshold are reported, so an ordinary day yields an
@@ -519,11 +531,20 @@ def generate_daily_digest(daily_forecast, enabled=None, thresholds=None):
     fall back to the defaults in DAILY_DIGEST_RULES. Items carry the peak value
     and the hour range rather than prose, so a card can render them in any
     language; ``text`` is a ready-made English one-liner.
+
+    IMS drops today's past hours from the forecast, so an episode already under
+    way starts, as far as this data goes, at whatever hour is still visible --
+    which crept forward through the day. ``known_starts`` maps a rule key to
+    the start recorded while it was still in the future, which is the only way
+    to know it once the hours it came from are gone. An episode whose start is
+    unknown reports ``from: None`` with ``ongoing: True`` rather than a start
+    that would move on the next poll.
     """
     items = []
     hours = getattr(daily_forecast, "hours", None) or []
     enabled = DEFAULT_DIGEST_RULES if enabled is None else enabled
     thresholds = thresholds or {}
+    known_starts = known_starts or {}
 
     for rule in DAILY_DIGEST_RULES:
         if rule["key"] not in enabled:
@@ -544,18 +565,36 @@ def generate_daily_digest(daily_forecast, enabled=None, thresholds=None):
 
         peak = max(h[1] for h in hits) if above else min(h[1] for h in hits)
         first, last = hits[0][0], hits[-1][0]
-        window = first if first == last else f"{first}-{last}"
+
+        # If the first qualifying hour is also the first hour still in the
+        # forecast, the hour before it is gone and cannot be checked, so
+        # whether the episode started there or earlier is unknowable from
+        # this payload alone. Anywhere else, the preceding hour is visible
+        # and did not qualify, which makes this the real start.
+        ongoing = first == hours[0].hour
+        start = known_starts.get(rule["key"]) if ongoing else first
+
+        if start is None:
+            window = f"until {last}"
+        elif start == last:
+            window = f"at {start}"
+        else:
+            window = f"at {start}-{last}"
+
         unit = HOURLY_UNITS.get(rule["metric"], "")
         items.append(
             {
+                "key": rule["key"],
                 "metric": rule["metric"],
                 "label": rule["label"],
                 "peak": peak,
                 "unit": unit,
-                "from": first,
+                "limit": limit,
+                "from": start,
                 "to": last,
+                "ongoing": ongoing,
                 "hours": [h[0] for h in hits],
-                "text": f"{rule['label']}: {peak}{' ' + unit if unit else ''} at {window}",
+                "text": f"{rule['label']}: {peak}{' ' + unit if unit else ''} {window}",
             }
         )
 
@@ -680,6 +719,23 @@ class ImsSensor(ImsEntity, SensorEntity):
         super().__init__(coordinator, description)
         self._digest_config = digest_config or {}
 
+    def _build_digest(self, day) -> list[dict]:
+        """Digest for ``day`` with no memory of earlier starts.
+
+        Only ImsDailyDigestSensor is built for the digest key, so this is the
+        unreachable-in-practice base: it keeps the match arm honest if the
+        digest description is ever attached to a plain sensor.
+        """
+        return (
+            generate_daily_digest(
+                day,
+                self._digest_config.get("enabled"),
+                self._digest_config.get("thresholds"),
+            )
+            if day is not None
+            else []
+        )
+
     @callback
     def _update_from_latest_data(self) -> None:
         """Update the state."""
@@ -801,17 +857,11 @@ class ImsSensor(ImsEntity, SensorEntity):
                 # drops past days, and past hours within today, so this covers
                 # "what is still to come today".
                 days = data.forecast.days if data.forecast else []
-                digest = (
-                    generate_daily_digest(
-                        days[0],
-                        self._digest_config.get("enabled"),
-                        self._digest_config.get("thresholds"),
-                    )
-                    if days
-                    else []
-                )
+                day = days[0] if days else None
+                digest = self._build_digest(day)
                 self._attr_native_value = len(digest)
                 self._attr_extra_state_attributes = {
+                    "date": day.date.date().isoformat() if day else None,
                     "items": digest,
                     "summary": "; ".join(item["text"] for item in digest),
                 }
@@ -847,3 +897,88 @@ class ImsSensor(ImsEntity, SensorEntity):
 
             case _:
                 self._attr_native_value = None
+
+
+class ImsDailyDigestSensor(ImsSensor, RestoreEntity):
+    """The daily digest, which remembers when each episode started.
+
+    IMS serves today's forecast without its past hours, so the start of an
+    episode that is already under way is not in the data any more. It is
+    recorded here on the last poll where it was still in the future, kept for
+    the rest of the day, and restored across a Home Assistant restart. Without
+    that the reported start walked forward with the clock: a heat-stress
+    episode seen as "from 08:00" in the morning read "from 13:00" by the
+    afternoon, looking like a fresh warning rather than the same one.
+    """
+
+    def __init__(
+        self,
+        coordinator: WeatherUpdateCoordinator,
+        description: ImsSensorEntityDescription,
+        digest_config: dict | None = None,
+    ) -> None:
+        """Initialize with no episode starts known yet."""
+        super().__init__(coordinator, description, digest_config)
+        self._digest_starts: dict[str, str] = {}
+        self._digest_starts_date: datetime.date | None = None
+
+    async def async_added_to_hass(self) -> None:
+        """Take the remembered starts from the state saved before a restart."""
+        last_state = await self.async_get_last_state()
+        if last_state is not None:
+            self._restore_starts(last_state)
+        # After the restore: the base class renders the digest from here.
+        await super().async_added_to_hass()
+
+    def _restore_starts(self, last_state) -> None:
+        """Rebuild the remembered starts from a previously written state.
+
+        Only same-day items whose threshold still matches the configuration
+        are taken: a limit edited in the options describes a different
+        episode, so the start stored under the old one would be the wrong
+        answer rather than a missing one.
+        """
+        stored_date = last_state.attributes.get("date")
+        if not stored_date:
+            return
+
+        thresholds = self._digest_config.get("thresholds") or {}
+        restored = {}
+        for item in last_state.attributes.get("items") or []:
+            key, start = item.get("key"), item.get("from")
+            rule = DAILY_DIGEST_RULES_BY_KEY.get(key)
+            if not start or rule is None:
+                continue
+            if item.get("limit") != thresholds.get(key, rule["default"]):
+                continue
+            restored[key] = start
+
+        if restored:
+            self._digest_starts = restored
+            self._digest_starts_date = datetime.date.fromisoformat(stored_date)
+
+    def _build_digest(self, day) -> list[dict]:
+        """Run the digest for ``day``, carrying starts across updates."""
+        if day is None:
+            return []
+
+        date = day.date.date()
+        if date != self._digest_starts_date:
+            # A new day. Yesterday's starts belong to episodes that are over.
+            self._digest_starts = {}
+            self._digest_starts_date = date
+
+        items = generate_daily_digest(
+            day,
+            self._digest_config.get("enabled"),
+            self._digest_config.get("thresholds"),
+            known_starts=self._digest_starts,
+        )
+
+        # Keep only the rules reporting something now. A rule that has gone
+        # quiet has no live episode, and leaving its start behind would hand
+        # it to the next, separate episode of the same kind later today.
+        self._digest_starts = {
+            item["key"]: item["from"] for item in items if item["from"]
+        }
+        return items

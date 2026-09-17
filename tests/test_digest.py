@@ -43,6 +43,15 @@ def _quiet_day():
     )
 
 
+def _digest_at(first_visible, thresholds=None, known_starts=None):
+    """The digest for an 08:00-17:00 heat episode, seen at ``first_visible``."""
+    return generate_daily_digest(
+        _heat_day(8, first_visible=first_visible),
+        thresholds=HEAT_3 if thresholds is None else thresholds,
+        known_starts=known_starts,
+    )
+
+
 def test_ordinary_day_reports_nothing():
     assert generate_daily_digest(_quiet_day()) == []
 
@@ -106,6 +115,94 @@ def test_missing_values_do_not_trigger_a_rule():
     day = _Day([_Hour("12:00", pm10=None, rain_chance=None)])
 
     assert generate_daily_digest(day) == []
+
+
+def _heat_day(starts_at, ends_at=17, first_visible=0, level=3):
+    """Today's *remaining* hours, with a heat-stress episode among them.
+
+    ``first_visible`` is where the day now begins: IMS serves today's
+    forecast without its past hours, so this is what the payload looks like
+    as the day wears on.
+    """
+    return _Day(
+        [
+            _Hour(
+                f"{hour:02d}:00",
+                heat_stress_level=level if starts_at <= hour <= ends_at else 1,
+            )
+            for hour in range(first_visible, 24)
+        ]
+    )
+
+
+def _heat(items):
+    return next(item for item in items if item["key"] == "heat_stress_level")
+
+
+HEAT_3 = {"heat_stress_level": 3}
+
+
+def test_a_start_still_in_the_future_is_the_real_one():
+    """At 06:00 the hour before 08:00 is visible and does not qualify."""
+    item = _heat(_digest_at(6))
+
+    assert item["from"] == "08:00"
+    assert item["ongoing"] is False
+    assert item["text"] == "Heat stress: 3 at 08:00-17:00"
+
+
+def test_a_started_episode_keeps_the_start_it_was_given():
+    """The whole point: the start must not walk forward with the clock.
+
+    By 13:00 IMS has dropped 00:00-12:00, so nothing in the payload says the
+    episode began at 08:00. Passing the start recorded that morning is the
+    only way to keep reporting it.
+    """
+    item = _heat(_digest_at(13, known_starts={"heat_stress_level": "08:00"}))
+
+    assert item["from"] == "08:00"
+    assert item["ongoing"] is True
+    assert item["text"] == "Heat stress: 3 at 08:00-17:00"
+
+
+def test_a_started_episode_without_a_known_start_claims_none():
+    """After a restart mid-episode the start is genuinely unknown.
+
+    Reporting the first surviving hour would be the old creeping behaviour
+    dressed up, so the item says only when it ends.
+    """
+    item = _heat(_digest_at(13))
+
+    assert item["from"] is None
+    assert item["ongoing"] is True
+    assert item["text"] == "Heat stress: 3 until 17:00"
+
+
+def test_a_later_separate_episode_does_not_inherit_an_old_start():
+    """16:00-18:00 is a new episode, not the morning one continuing."""
+    day = _heat_day(16, ends_at=18, first_visible=13)
+
+    item = _heat(
+        generate_daily_digest(
+            day, thresholds=HEAT_3, known_starts={"heat_stress_level": "08:00"}
+        )
+    )
+
+    assert item["from"] == "16:00"
+    assert item["ongoing"] is False
+
+
+def test_a_single_remaining_hour_reads_as_ongoing():
+    item = _heat(generate_daily_digest(_Day([_Hour("17:00", heat_stress_level=5)])))
+
+    assert item["ongoing"] is True
+    assert item["text"] == "Heat stress: 5 until 17:00"
+
+
+def test_the_threshold_used_is_reported_back():
+    """The card, and the restore on restart, need to know which limit ran."""
+    assert _heat(_digest_at(6))["limit"] == 3
+    assert _heat(_digest_at(6, thresholds={"heat_stress_level": 2}))["limit"] == 2
 
 
 def test_every_rule_has_a_usable_definition():

@@ -123,8 +123,22 @@ The older `warnings` attribute (a list of strings) is still there.
 ### Daily digest
 
 `ims_daily_digest` counts the notable hours left in today's forecast — nothing
-on an ordinary day. `items` holds one entry per finding with `metric`, `label`,
-`peak`, `unit` and the hour window; `summary` is a ready-made English line.
+on an ordinary day. `items` holds one entry per finding with `key`, `metric`,
+`label`, `peak`, `unit`, the `limit` that triggered it and the hour window
+(`from`, `to`, `hours`); `summary` is a ready-made English line.
+
+**The start does not move.** IMS serves today's forecast without its past
+hours, so an episode already under way would otherwise appear to begin at
+whatever hour is still in the payload — a heat-stress warning read "from 08:00"
+in the morning and "from 13:00" by the afternoon, looking like a new alert
+rather than the same one. The start is recorded on the last poll where it was
+still in the future and kept for the rest of the day, surviving a restart.
+
+`ongoing` says the episode began before the current hour. If it is `true` and
+`from` is `null`, the start is genuinely unknown — Home Assistant was not
+running before it began — and the item reports only when it ends, rather than a
+start that would creep forward on the next poll. Cards should handle that case;
+the one below does.
 
 Thresholds and which rules run are set in **Configure → Daily digest
 thresholds**. Defaults are deliberately above ordinary conditions, calibrated
@@ -257,7 +271,9 @@ card:
         'rain_chance': '🌧️', 'rain': '🌧️' } -%}
     {%- set ns = namespace(out=[]) -%}
     {%- for i in items -%}
-      {%- set win = i['from'] if i['from'] == i['to'] else i['from'] ~ '–' ~ i['to'] -%}
+      {%- set win = ('until ' ~ i['to']) if not i['from']
+            else (i['from'] if i['from'] == i['to']
+                  else i['from'] ~ '–' ~ i['to']) -%}
       {%- set ns.out = ns.out + [
           (icons.get(i.metric, '📌')) ~ ' **' ~ i.label ~ '** — '
           ~ i.peak ~ ' ' ~ (i.unit or '') ~ '  \n<sub>🕒 ' ~ win ~ '</sub>' ] -%}
