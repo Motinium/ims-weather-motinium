@@ -263,22 +263,31 @@ conditions:
     above: 0
 card:
   type: markdown
-  content: >
-    {%- set items = state_attr('sensor.ims_daily_digest','items') or [] -%}
+  content: |
+    {%- set items = state_attr('sensor.ims_daily_digest', 'items') or [] -%}
     {%- set icons = {
-        'temperature': '🌡️', 'heat_stress_level': '🥵', 'uv_index': '☀️',
-        'gust_speed': '💨', 'wind_speed': '💨', 'pm10': '🌪️',
-        'rain_chance': '🌧️', 'rain': '🌧️' } -%}
+         'temperature': '🌡️', 'heat_stress_level': '🥵', 'uv_index': '☀️',
+         'gust_speed': '💨', 'wind_speed': '💨', 'pm10': '🌪️',
+         'rain_chance': '🌧️', 'rain': '🌧️' } -%}
     {%- set ns = namespace(out=[]) -%}
     {%- for i in items -%}
+      {#- An episode already under way may have no known start. -#}
       {%- set win = ('until ' ~ i['to']) if not i['from']
             else (i['from'] if i['from'] == i['to']
                   else i['from'] ~ '–' ~ i['to']) -%}
+      {#- Heat stress has no unit; UV's unit repeats its label. -#}
+      {%- if i.metric == 'heat_stress_level' -%}
+        {%- set value = 'level ' ~ i.peak -%}
+      {%- else -%}
+        {%- set value = i.peak ~ (' ' ~ i.unit
+              if i.unit and i.unit | lower not in i.label | lower else '') -%}
+      {%- endif -%}
       {%- set ns.out = ns.out + [
-          (icons.get(i.metric, '📌')) ~ ' **' ~ i.label ~ '** — '
-          ~ i.peak ~ ' ' ~ (i.unit or '') ~ '  \n<sub>🕒 ' ~ win ~ '</sub>' ] -%}
+            icons.get(i.metric, '📌') ~ ' **' ~ i.label ~ '** — ' ~ value
+            ~ '  \n<sub>🕒 ' ~ win ~ '</sub>' ] -%}
     {%- endfor -%}
     ### 📋 Worth knowing today
+
     {{ ns.out | join('\n\n') }}
 ```
 
