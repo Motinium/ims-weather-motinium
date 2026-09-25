@@ -20,6 +20,7 @@ from homeassistant.const import (
     UnitOfTemperature,
 )
 from homeassistant.core import HomeAssistant, callback
+from homeassistant.helpers import entity_registry as er
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.restore_state import RestoreEntity
 
@@ -78,7 +79,6 @@ from .const import (
     TYPE_FORECAST_DAY4,
     TYPE_FORECAST_DAY5,
     TYPE_FORECAST_DAY6,
-    TYPE_FORECAST_DAY7,
     TYPE_FORECAST_PREFIX,
     TYPE_FORECAST_TIME,
     TYPE_FORECAST_TODAY,
@@ -148,9 +148,6 @@ sensor_keys.TYPE_FORECAST_DAY5 = (
 )
 sensor_keys.TYPE_FORECAST_DAY6 = (
     IMS_SENSOR_KEY_PREFIX + TYPE_FORECAST_PREFIX + TYPE_FORECAST_DAY6
-)
-sensor_keys.TYPE_FORECAST_DAY7 = (
-    IMS_SENSOR_KEY_PREFIX + TYPE_FORECAST_PREFIX + TYPE_FORECAST_DAY7
 )
 
 _LOGGER = logging.getLogger(__name__)
@@ -385,15 +382,15 @@ SENSOR_DESCRIPTIONS: list[ImsSensorEntityDescription] = [
         name="IMS Forecast Day6",
         icon="mdi:weather-sunny",
     ),
-    ImsSensorEntityDescription(
-        key=IMS_SENSOR_KEY_PREFIX + TYPE_FORECAST_PREFIX + TYPE_FORECAST_DAY7,
-        name="IMS Forecast Day7",
-        icon="mdi:weather-sunny",
-    ),
 ]
 
 SENSOR_DESCRIPTIONS_DICT = {desc.key: desc for desc in SENSOR_DESCRIPTIONS}
 SENSOR_DESCRIPTIONS_KEYS = [desc.key for desc in SENSOR_DESCRIPTIONS]
+
+# Sensors earlier versions created. Their registry entries would otherwise stay
+# behind as "no longer provided" entities for the user to delete by hand.
+# day7: IMS sends seven days counting today, so there was never a day for it.
+RETIRED_SENSOR_KEYS = (IMS_SENSOR_KEY_PREFIX + TYPE_FORECAST_PREFIX + "day7",)
 
 weather = None
 
@@ -423,6 +420,8 @@ async def async_setup_entry(
     async_add_entities: AddEntitiesCallback,
 ) -> None:
     """Set up IMS Weather sensor entities based on a config entry."""
+
+    remove_retired_entities(er.async_get(hass), config_entry.entry_id)
 
     domain_data = hass.data[DOMAIN][config_entry.entry_id]
     conditions = domain_data[CONF_MONITORED_CONDITIONS]
@@ -460,6 +459,16 @@ async def async_setup_entry(
             )
 
     async_add_entities(sensors, update_before_add=True)
+
+
+def remove_retired_entities(registry, config_entry_id: str) -> None:
+    """Drop this entry's registry entries for sensors that no longer exist."""
+    # unique_id is "<key>_<city>_<language>"; the trailing underscore keeps a
+    # retired key from matching a longer one that shares its prefix.
+    retired = tuple(f"{key}_" for key in RETIRED_SENSOR_KEYS)
+    for entry in er.async_entries_for_config_entry(registry, config_entry_id):
+        if entry.domain == "sensor" and entry.unique_id.startswith(retired):
+            registry.async_remove(entry.entity_id)
 
 
 def generate_single_warning_string(warning):
@@ -874,7 +883,6 @@ class ImsSensor(ImsEntity, SensorEntity):
                 | sensor_keys.TYPE_FORECAST_DAY4
                 | sensor_keys.TYPE_FORECAST_DAY5
                 | sensor_keys.TYPE_FORECAST_DAY6
-                | sensor_keys.TYPE_FORECAST_DAY7
             ):
                 day_index = (
                     0
@@ -895,11 +903,9 @@ class ImsSensor(ImsEntity, SensorEntity):
                         str(daily_forecast.weather_code), "mdi:weather-sunny"
                     )
                 else:
-                    # No such day in this forecast: IMS serves seven days
-                    # counting today, so day7 is past the end, and the others
-                    # are whenever the forecast runs a day short. Keeping the
-                    # previous values would show a day that is no longer the
-                    # one this sensor is named for.
+                    # No such day in this forecast, which happens whenever it
+                    # runs a day short. Keeping the previous values would show
+                    # a day that is no longer the one this sensor is named for.
                     self._attr_native_value = None
                     self._attr_extra_state_attributes = {}
                     self._attr_icon = self.entity_description.icon

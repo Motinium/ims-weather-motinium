@@ -236,6 +236,18 @@ def _handle_http_error(error):
     _LOGGER.error("Error fetching data from URL: %s", error)
 
 
+def known_conditions(conditions):
+    """The stored monitored conditions that still name a sensor.
+
+    An entry keeps the keys it was saved with, including sensors a later
+    version removed. Offered back as the form's default, one of those fails
+    multi_select validation, and the options could not be saved at all.
+    """
+    if conditions is None:
+        return list(SENSOR_KEYS)
+    return [key for key in conditions if key in SENSOR_KEYS]
+
+
 def _extract_city_id(city_value):
     """Extract city id from entry value."""
     if isinstance(city_value, dict):
@@ -424,11 +436,13 @@ class IMSWeatherOptionsFlow(config_entries.OptionsFlow):
                     ): int,
                     vol.Optional(
                         CONF_MONITORED_CONDITIONS,
-                        default=self._config_entry.options.get(
-                            CONF_MONITORED_CONDITIONS,
-                            self._config_entry.data.get(
-                                CONF_MONITORED_CONDITIONS, SENSOR_KEYS
-                            ),
+                        default=known_conditions(
+                            self._config_entry.options.get(
+                                CONF_MONITORED_CONDITIONS,
+                                self._config_entry.data.get(
+                                    CONF_MONITORED_CONDITIONS, SENSOR_KEYS
+                                ),
+                            )
                         ),
                     ): cv.multi_select(SENSOR_KEYS),
                     vol.Optional(

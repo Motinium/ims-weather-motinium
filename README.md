@@ -81,7 +81,7 @@ Current conditions: temperature, feels like, humidity, wind speed and
 direction, gusts, precipitation and its probability, dew point, PM10, UV index
 and level, max UV, city.
 
-Forecast: `ims_forecast_today` and `ims_forecast_day1` … `day7`. Each carries
+Forecast: `ims_forecast_today` and `ims_forecast_day1` … `day6`. Each carries
 per-hour attributes keyed by time (`"14:00"`). Today also carries the full
 hourly set — humidity, wind, gusts, wind chill, heat stress, UV, PM10, wave
 height — with the units declared once in `hourly_units`:
