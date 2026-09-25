@@ -894,6 +894,15 @@ class ImsSensor(ImsEntity, SensorEntity):
                     self._attr_icon = WEATHER_CODE_TO_ICON.get(
                         str(daily_forecast.weather_code), "mdi:weather-sunny"
                     )
+                else:
+                    # No such day in this forecast: IMS serves seven days
+                    # counting today, so day7 is past the end, and the others
+                    # are whenever the forecast runs a day short. Keeping the
+                    # previous values would show a day that is no longer the
+                    # one this sensor is named for.
+                    self._attr_native_value = None
+                    self._attr_extra_state_attributes = {}
+                    self._attr_icon = self.entity_description.icon
 
             case _:
                 self._attr_native_value = None

@@ -5,6 +5,7 @@ Assistant and are skipped when it is not installed. The forecast itself comes
 from the captured IMS responses through the ``weather`` fixture.
 """
 
+import copy
 import types
 
 import pytest
@@ -12,7 +13,10 @@ import pytest
 pytest.importorskip("homeassistant", reason="Home Assistant is not installed")
 
 from ims_motinium.sensor import (
+    SENSOR_DESCRIPTIONS_DICT,
+    ImsSensor,
     generate_forecast_extra_state_attributes,
+    sensor_keys,
 )
 from ims_motinium.weather import IMSWeather
 
@@ -31,6 +35,10 @@ def _coordinator(forecast, current_weather=None):
 
 def _weather_entity(coordinator):
     return IMSWeather("IMS", "35", "hourly", coordinator, "Tel Aviv - Yafo", "No")
+
+
+def _day_sensor(key, coordinator):
+    return ImsSensor(coordinator, SENSOR_DESCRIPTIONS_DICT[key])
 
 
 def test_hourly_rain_chance_is_already_a_percentage(weather):
@@ -83,3 +91,26 @@ def test_the_weather_entity_reports_a_clear_night(weather):
     assert entity.condition == "clear-night"
     assert by_time[night]["condition"] == "clear-night"
     assert by_time[noon]["condition"] == "sunny"
+
+
+def test_a_day_sensor_whose_day_is_gone_goes_unknown(weather):
+    """A sensor past the end of the forecast used to keep its previous day.
+
+    Whenever the forecast came back a day shorter than the poll before -- a
+    day that has passed, dropped by the coordinator -- day6 kept showing the
+    date that day5 now shows. day7 has no day at all in the seven IMS sends.
+    """
+    forecast = weather.get_forecast()
+    coordinator = _coordinator(forecast)
+    day6 = _day_sensor(sensor_keys.TYPE_FORECAST_DAY6, coordinator)
+    day6._update_from_latest_data()
+    assert day6.native_value is not None
+
+    shorter = copy.copy(forecast)
+    shorter.days = forecast.days[1:]
+    coordinator.data = types.SimpleNamespace(forecast=shorter, current_weather=None)
+    day6._update_from_latest_data()
+
+    assert day6.native_value is None
+    assert day6.extra_state_attributes == {}
+    assert day6.icon == SENSOR_DESCRIPTIONS_DICT[sensor_keys.TYPE_FORECAST_DAY6].icon
