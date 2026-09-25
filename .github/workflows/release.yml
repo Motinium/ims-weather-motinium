@@ -1,0 +1,105 @@
+name: "Release"
+
+# Publishes a GitHub release -- which is what HACS offers as an update --
+# whenever main carries a manifest version that has no release yet. Bumping
+# "version" in manifest.json is the whole release process.
+#
+# It runs after the Tests workflow finishes on a push to main and only if that
+# run passed, so a version whose tests fail is not shipped. The release is cut
+# from the commit that was tested, not from whatever main is by then.
+#
+# The body comes from .github/release-notes/<version>.md when that file exists,
+# otherwise from the commit subjects since the previous release.
+
+on:
+  workflow_run:
+    workflows: ["Tests"]
+    types: [completed]
+    branches: [main]
+  # Re-run by hand, e.g. after adding release notes for a version that has not
+  # been released yet.
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+# Two runs finishing close together must not both try to create the release.
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    name: "Publish release"
+    if: >-
+      (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main')
+      || (github.event.workflow_run.conclusion == 'success'
+          && github.event.workflow_run.event == 'push')
+    runs-on: "ubuntu-latest"
+    env:
+      GH_TOKEN: "${{ github.token }}"
+      GH_REPO: "${{ github.repository }}"
+      SHA: "${{ github.event.workflow_run.head_sha || github.sha }}"
+    steps:
+      - name: "Checkout the tested commit"
+        uses: "actions/checkout@v7.0.0"
+        with:
+          ref: "${{ env.SHA }}"
+          # Tags and history, for the fallback notes.
+          fetch-depth: 0
+
+      - name: "Read the manifest version"
+        id: version
+        run: |
+          version=$(jq -r .version custom_components/ims_motinium/manifest.json)
+          if [ -z "$version" ] || [ "$version" = "null" ]; then
+            echo "::error::No version in manifest.json"
+            exit 1
+          fi
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+
+      - name: "Skip a version that is already released"
+        id: existing
+        env:
+          VERSION: "${{ steps.version.outputs.version }}"
+        run: |
+          if gh release view "$VERSION" > /dev/null 2>&1; then
+            echo "Release $VERSION already exists, nothing to do."
+            echo "released=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "released=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: "Write the release notes"
+        if: steps.existing.outputs.released == 'false'
+        env:
+          VERSION: "${{ steps.version.outputs.version }}"
+        run: |
+          notes=".github/release-notes/$VERSION.md"
+          if [ -f "$notes" ]; then
+            cp "$notes" "$RUNNER_TEMP/notes.md"
+          else
+            previous=$(git describe --tags --abbrev=0 2> /dev/null || true)
+            range="HEAD"
+            if [ -n "$previous" ]; then
+              range="$previous..HEAD"
+            fi
+            {
+              echo "Changes since ${previous:-the start of the fork}:"
+              echo
+              git log --no-merges --format='- %s' "$range"
+              echo
+              echo "Update through HACS and restart Home Assistant."
+            } > "$RUNNER_TEMP/notes.md"
+          fi
+          cat "$RUNNER_TEMP/notes.md"
+
+      - name: "Publish"
+        if: steps.existing.outputs.released == 'false'
+        env:
+          VERSION: "${{ steps.version.outputs.version }}"
+        run: |
+          gh release create "$VERSION" \
+            --target "$SHA" \
+            --title "$VERSION" \
+            --notes-file "$RUNNER_TEMP/notes.md"
