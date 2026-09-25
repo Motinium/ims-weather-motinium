@@ -307,7 +307,7 @@ WIND_DIRECTIONS = {
     5: float(90),
     6: float(113),
     7: float(135),
-    8: float(150),
+    8: float(158),
     9: float(180),
     10: float(203),
     11: float(225),

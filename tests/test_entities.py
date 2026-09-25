@@ -12,6 +12,8 @@ import pytest
 
 pytest.importorskip("homeassistant", reason="Home Assistant is not installed")
 
+from conftest import load_fixture
+from ims_motinium.const import WIND_DIRECTIONS
 from ims_motinium.sensor import (
     SENSOR_DESCRIPTIONS_DICT,
     ImsSensor,
@@ -114,3 +116,11 @@ def test_a_day_sensor_whose_day_is_gone_goes_unknown(weather):
     assert day6.native_value is None
     assert day6.extra_state_attributes == {}
     assert day6.icon == SENSOR_DESCRIPTIONS_DICT[sensor_keys.TYPE_FORECAST_DAY6].icon
+
+
+def test_wind_directions_match_the_ims_table():
+    """The degrees behind each IMS wind direction id, as IMS publishes them."""
+    table = load_fixture("wind_directions.json")["data"]
+
+    for wind_id, entry in table.items():
+        assert WIND_DIRECTIONS[int(wind_id)] == float(entry["direction"]), entry["text"]
