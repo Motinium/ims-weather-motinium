@@ -57,9 +57,10 @@ jobs:
           python-version: "${{ matrix.python-version }}"
           cache: "pip"
 
-      # The digest lives in the integration, so these need Home Assistant.
+      # The digest and the entities live in the integration, so these need
+      # Home Assistant.
       - name: "Install dependencies"
         run: python -m pip install --upgrade pip pytest pytz requests "${{ matrix.ha }}"
 
       - name: "Run tests"
-        run: python -m pytest tests/test_digest.py -v
+        run: python -m pytest tests/test_digest.py tests/test_entities.py -v
