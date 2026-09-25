@@ -237,7 +237,10 @@ SENSOR_DESCRIPTIONS: list[ImsSensorEntityDescription] = [
         name="IMS Wind Direction",
         icon="mdi:weather-windy",
         native_unit_of_measurement=DEGREE,
-        state_class=SensorStateClass.MEASUREMENT,
+        # An angle: long-term statistics average it around the circle, where
+        # plain MEASUREMENT would put the mean of 350° and 10° at 180°.
+        device_class=SensorDeviceClass.WIND_DIRECTION,
+        state_class=SensorStateClass.MEASUREMENT_ANGLE,
         forecast_mode=FORECAST_MODE.CURRENT,
         field_name=FIELD_NAME_WIND_DIRECTION_ID,
     ),

@@ -15,11 +15,18 @@ import voluptuous as vol
 pytest.importorskip("homeassistant", reason="Home Assistant is not installed")
 
 from conftest import load_fixture
+from homeassistant.components.sensor import (
+    DEVICE_CLASS_STATE_CLASSES,
+    DEVICE_CLASS_UNITS,
+    SensorDeviceClass,
+    SensorStateClass,
+)
 from homeassistant.helpers import config_validation as cv
 from homeassistant.helpers import entity_registry as er
 from ims_motinium.config_flow import SENSOR_KEYS, known_conditions
 from ims_motinium.const import WIND_DIRECTIONS
 from ims_motinium.sensor import (
+    SENSOR_DESCRIPTIONS,
     SENSOR_DESCRIPTIONS_DICT,
     ImsSensor,
     generate_forecast_extra_state_attributes,
@@ -173,3 +180,27 @@ def test_the_options_form_still_saves_for_an_entry_that_had_day7():
         validate(stored)
     assert validate(known_conditions(stored)) == SENSOR_KEYS
     assert known_conditions(None) == SENSOR_KEYS
+
+
+def test_wind_direction_statistics_average_around_the_circle():
+    """As a plain MEASUREMENT the mean of 350° and 10° came out at 180°."""
+    description = SENSOR_DESCRIPTIONS_DICT[sensor_keys.TYPE_WIND_DIRECTION]
+
+    assert description.device_class == SensorDeviceClass.WIND_DIRECTION
+    assert description.state_class == SensorStateClass.MEASUREMENT_ANGLE
+
+
+@pytest.mark.parametrize(
+    "description",
+    [d for d in SENSOR_DESCRIPTIONS if d.device_class is not None],
+    ids=lambda d: d.key,
+)
+def test_each_device_class_gets_a_unit_and_state_class_it_accepts(description):
+    """Home Assistant logs a warning for any combination it does not accept."""
+    units = DEVICE_CLASS_UNITS.get(description.device_class)
+    state_classes = DEVICE_CLASS_STATE_CLASSES.get(description.device_class)
+
+    if units is not None:
+        assert description.native_unit_of_measurement in units
+    if state_classes is not None and description.state_class is not None:
+        assert description.state_class in state_classes
