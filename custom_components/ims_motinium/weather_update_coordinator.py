@@ -9,6 +9,7 @@ from dataclasses import dataclass
 from typing import Any
 
 import homeassistant.util.dt as dt_util
+from homeassistant.config_entries import ConfigEntry
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
 from .const import (
@@ -52,6 +53,8 @@ class WeatherUpdateCoordinator(DataUpdateCoordinator[WeatherData]):
         update_interval: datetime.timedelta,
         hass: Any,
         monitored_conditions: list[str] | None = None,
+        *,
+        config_entry: ConfigEntry | None,
     ) -> None:
         """Initialize coordinator.
 
@@ -62,6 +65,11 @@ class WeatherUpdateCoordinator(DataUpdateCoordinator[WeatherData]):
         stored" and is treated as "all sensors enabled" — the legacy
         behavior in ``sensor.py`` and ``binary_sensor.py`` falls back to
         every description key when conditions are missing.
+
+        ``config_entry`` is the entry this coordinator serves, passed rather
+        than picked up from the setup context so the binding is plain. Home
+        Assistant shuts the coordinator down when that entry unloads or fails
+        to set up, so each setup builds its own.
         """
         self.city = city
         self.language = language
@@ -73,7 +81,13 @@ class WeatherUpdateCoordinator(DataUpdateCoordinator[WeatherData]):
         self._hass = hass
         self._monitored_conditions: list[str] | None = monitored_conditions
 
-        super().__init__(hass, _LOGGER, name=DOMAIN, update_interval=update_interval)
+        super().__init__(
+            hass,
+            _LOGGER,
+            config_entry=config_entry,
+            name=DOMAIN,
+            update_interval=update_interval,
+        )
 
     async def _async_update_data(self) -> WeatherData:
         """Update the data, polling again soon if that failed.
