@@ -25,6 +25,11 @@ ATTRIBUTION = "Powered by IMS Weather"
 # Use the shared timezone constant
 timezone = IMS_TIMEZONE
 
+# How soon to poll again after a failed update. The update interval defaults to
+# an hour, and waiting a whole one after a failure kept every entity unavailable
+# for up to an hour after IMS was reachable again.
+RETRY_INTERVAL = datetime.timedelta(minutes=5)
+
 
 @dataclass
 class WeatherData:
@@ -61,6 +66,7 @@ class WeatherUpdateCoordinator(DataUpdateCoordinator[WeatherData]):
         self.city = city
         self.language = language
         self.update_interval = update_interval
+        self._configured_interval = update_interval
         self.weather = WeatherIL(str(city), language)
 
         self._connect_error = False
@@ -70,14 +76,29 @@ class WeatherUpdateCoordinator(DataUpdateCoordinator[WeatherData]):
         super().__init__(hass, _LOGGER, name=DOMAIN, update_interval=update_interval)
 
     async def _async_update_data(self) -> WeatherData:
-        """Update the data."""
-        async with self._hass.timeout.async_timeout(30):
-            try:
+        """Update the data, polling again soon if that failed.
+
+        The next poll is scheduled from ``update_interval`` once this returns,
+        so setting it here is what moves the next attempt. A timeout is
+        re-raised as is: Home Assistant reports it as "Timeout fetching",
+        where wrapped in UpdateFailed it logged an error with no message.
+        """
+        try:
+            async with self._hass.timeout.async_timeout(30):
                 _LOGGER.info("Fetching data from IMS")
                 data = await self._get_ims_weather()
-            except Exception as error:
-                raise UpdateFailed(error) from error
+        except TimeoutError:
+            self._retry_soon()
+            raise
+        except Exception as error:
+            self._retry_soon()
+            raise UpdateFailed(error) from error
+        self.update_interval = self._configured_interval
         return data
+
+    def _retry_soon(self) -> None:
+        """Poll again after RETRY_INTERVAL, never later than a normal poll."""
+        self.update_interval = min(RETRY_INTERVAL, self._configured_interval)
 
     async def _get_ims_weather(self) -> WeatherData:
         """Poll weather data from IMS."""
