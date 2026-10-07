@@ -51,6 +51,7 @@ def _coordinator(forecast, current_weather=None):
         city="35",
         language="en",
         data=types.SimpleNamespace(forecast=forecast, current_weather=current_weather),
+        last_update_success=True,
     )
 
 
@@ -291,3 +292,21 @@ def test_a_retry_never_comes_later_than_a_normal_poll(monkeypatch):
         assert coordinator.update_interval == two_minutes
 
     asyncio.run(scenario())
+
+
+def test_the_weather_entity_goes_unavailable_with_the_sensors(weather):
+    """While IMS was unreachable the sensors went unavailable, but the weather
+    entity went on showing the last data as current: the night's conditions,
+    hours later, with nothing to say they were old.
+    """
+    coordinator = _coordinator(weather.get_forecast(), weather.get_current_analysis())
+    entity = _weather_entity(coordinator)
+    today = _day_sensor(sensor_keys.TYPE_FORECAST_TODAY, coordinator)
+
+    assert entity.available
+    assert today.available
+
+    coordinator.last_update_success = False
+
+    assert not today.available
+    assert not entity.available
