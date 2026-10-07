@@ -8,6 +8,9 @@ the fields the integration reads are populated.
 import copy
 import datetime
 import logging
+import types
+
+import requests
 
 
 def test_current_analysis_parses(weather):
@@ -132,6 +135,40 @@ def test_empty_current_analysis_degrades_quietly(weather, monkeypatch, caplog):
     assert weather.get_current_analysis() is None
     logged = [record for record in caplog.records if record.exc_info]
     assert not logged, f"an exception was logged while degrading: {logged}"
+
+
+def test_an_outage_is_logged_when_it_starts_and_when_it_ends(
+    ims_utils, monkeypatch, caplog
+):
+    """IMS unreachable all day put the same warning in the log on every poll.
+
+    A failed poll is now retried within minutes, which would make that one
+    warning every five minutes. The failure is logged when it starts, at
+    debug while it lasts, and once more when IMS answers again.
+    """
+    url = "https://ims.gov.il/en/now_analysis/35"
+    answers = iter([None, None, None, '{"data": {}}'])
+
+    def get(requested, timeout):
+        answer = next(answers)
+        if answer is None:
+            raise requests.exceptions.ConnectTimeout(
+                "Connection to ims.gov.il timed out. (connect timeout=15)"
+            )
+        return types.SimpleNamespace(text=answer)
+
+    monkeypatch.setattr(ims_utils._session, "get", get)
+    caplog.set_level(logging.DEBUG, logger=ims_utils.logger.name)
+
+    results = [ims_utils.fetch_data(url) for _ in range(4)]
+
+    assert results == [{}, {}, {}, {"data": {}}]
+    warnings = [r for r in caplog.records if r.levelno == logging.WARNING]
+    assert len(warnings) == 1, [r.getMessage() for r in warnings]
+    assert "timed out" in warnings[0].getMessage()
+    recovered = [r for r in caplog.records if r.levelno == logging.INFO]
+    assert len(recovered) == 1
+    assert url in recovered[0].getMessage()
 
 
 def _land_alerts(payload):

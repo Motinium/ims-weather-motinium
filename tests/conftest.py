@@ -123,6 +123,20 @@ def serve(monkeypatch):
 
 
 @pytest.fixture
+def ims_utils(monkeypatch):
+    """weatheril.utils with its real fetch_data and no outage on record.
+
+    The ``weather`` fixture replaces fetch_data with the fixtures; this one
+    leaves it alone, so a test can drive it through ``_session.get``.
+    """
+    _install_stub_package()
+    from ims_motinium.weatheril import utils as weatheril_utils
+
+    monkeypatch.setattr(weatheril_utils, "_failing_urls", set(), raising=False)
+    return weatheril_utils
+
+
+@pytest.fixture
 def warnings_payload():
     """A mutable copy of the captured warnings response."""
     return load_fixture(FIXTURE_BY_URL["warnings"])

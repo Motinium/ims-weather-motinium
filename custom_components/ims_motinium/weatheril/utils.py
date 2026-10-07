@@ -22,6 +22,12 @@ logger = logging.getLogger(__name__)
 # connection avoids a TCP and TLS handshake per call.
 _session = requests.Session()
 
+# Endpoints whose last fetch failed. A failure is logged when it starts and
+# again when the endpoint answers, not on every poll in between: an IMS outage
+# lasts hours, and a failed poll is retried within minutes. Two threads racing
+# on the same URL cost at most a duplicate line, so this takes no lock.
+_failing_urls: set[str] = set()
+
 # The lookup tables below are fetched once and then reused for the lifetime of
 # the process. Home Assistant calls this library from executor threads, so the
 # lazy population is guarded to keep two threads from fetching at the same time
@@ -324,13 +330,21 @@ def fetch_data(url: str) -> dict:
     try:
         logger.debug("Getting data from: %s", url)
         response = _session.get(url, timeout=15)
-        return json.loads(response.text)
+        data = json.loads(response.text)
     except Exception as e:
         # Every caller degrades on an empty dict, and the coordinator is what
         # reports a genuinely failed update, so this is a warning rather than
         # an error: IMS answering one endpoint with a stub is routine.
-        logger.warning("Error getting data from %s: %s", url, e)
+        if url in _failing_urls:
+            logger.debug("Still no data from %s: %s", url, e)
+        else:
+            _failing_urls.add(url)
+            logger.warning("Error getting data from %s: %s", url, e)
         return {}
+    if url in _failing_urls:
+        _failing_urls.discard(url)
+        logger.info("Getting data from %s works again", url)
+    return data
 
 
 def get_data(current_data, url, last_fetch_time, cache_expiration_in_sec) -> dict:
