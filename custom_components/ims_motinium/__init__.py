@@ -59,29 +59,22 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
     city_id = city if is_legacy_city else city["lid"]
 
-    unique_location = f"ims-{language}-{city_id}"
-
     hass.data.setdefault(DOMAIN, {})
 
-    # If coordinator already exists for this API key, we'll use that, otherwise
-    # we have to create a new one
-    if unique_location in hass.data[DOMAIN]:
-        weather_coordinator = hass.data[DOMAIN].get(unique_location)
-        _LOGGER.info(
-            "An existing IMS weather coordinator already exists for this location. Using that one instead"
-        )
-    else:
-        weather_coordinator = WeatherUpdateCoordinator(
-            city_id,
-            language,
-            timedelta(minutes=ims_scan_int),
-            hass,
-            monitored_conditions=conditions,
-        )
-        hass.data[DOMAIN][unique_location] = weather_coordinator
-        # _LOGGER.warning('New Coordinator')
-
-    # await weather_coordinator.async_refresh()
+    # A fresh coordinator for every setup, bound to this entry. Home Assistant
+    # shuts a coordinator down when its entry unloads or fails to set up, so
+    # the per-location cache these used to be kept in handed later setups a
+    # dead one: after IMS was unreachable at setup the retries never loaded,
+    # even once IMS was back, and an entry added again in its place failed
+    # with "called when config entry state is NOT_LOADED".
+    weather_coordinator = WeatherUpdateCoordinator(
+        city_id,
+        language,
+        timedelta(minutes=ims_scan_int),
+        hass,
+        monitored_conditions=conditions,
+        config_entry=entry,
+    )
     await weather_coordinator.async_config_entry_first_refresh()
 
     hass.data[DOMAIN][entry.entry_id] = {
@@ -136,15 +129,6 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     if unload_ok:
         update_listener = entry_data[UPDATE_LISTENER]
         update_listener()
-
-        # Drop the (now shut-down) coordinator from the location cache so the next
-        # async_setup_entry creates a fresh one instead of reusing this dead one
-        # (its debouncer ignores all refreshes once shutdown has been requested).
-        weather_coordinator = entry_data[ENTRY_WEATHER_COORDINATOR]
-        unique_location = (
-            f"ims-{weather_coordinator.language}-{weather_coordinator.city}"
-        )
-        hass.data[DOMAIN].pop(unique_location, None)
 
         hass.data[DOMAIN].pop(entry.entry_id)
 

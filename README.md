@@ -20,7 +20,9 @@ independently of any other IMS integration. English only.
 
 **The reload bug is fixed.** In the original, reloading the config entry left a
 shut-down coordinator in the cache and the next setup reused it, so updates
-stopped until Home Assistant was fully restarted.
+stopped until Home Assistant was fully restarted. A setup that failed because
+IMS was unreachable did the same to every retry. There is no such cache any
+more: each setup builds its own coordinator.
 
 **Marine warnings.** IMS files them against the sea regions, never against the
 land region a coastal city sits in, so they were invisible: five active sea

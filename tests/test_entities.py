@@ -26,7 +26,6 @@ from homeassistant.components.sensor import (
 )
 from homeassistant.helpers import config_validation as cv
 from homeassistant.helpers import entity_registry as er
-from homeassistant.helpers import frame
 from homeassistant.helpers.update_coordinator import UpdateFailed
 from ims_motinium.config_flow import SENSOR_KEYS, known_conditions
 from ims_motinium.const import WIND_DIRECTIONS
@@ -221,22 +220,14 @@ async def _no_timeout(_seconds):
     yield
 
 
-def _ims_coordinator(monkeypatch, interval=HOUR):
-    """A real WeatherUpdateCoordinator on just enough of a hass to refresh.
-
-    Newer Home Assistant reports a coordinator built without a config entry
-    through its frame helper, which only exists in a running instance. The
-    report is ignored for custom integrations, so it is stubbed out here.
-    """
-    monkeypatch.setattr(
-        frame, "report_usage", lambda *args, **kwargs: None, raising=False
-    )
+def _ims_coordinator(interval=HOUR):
+    """A real WeatherUpdateCoordinator on just enough of a hass to refresh."""
     hass = types.SimpleNamespace(
         loop=asyncio.get_running_loop(),
         is_stopping=False,
         timeout=types.SimpleNamespace(async_timeout=_no_timeout),
     )
-    return WeatherUpdateCoordinator("35", "en", interval, hass)
+    return WeatherUpdateCoordinator("35", "en", interval, hass, config_entry=None)
 
 
 @pytest.mark.parametrize(
@@ -244,7 +235,7 @@ def _ims_coordinator(monkeypatch, interval=HOUR):
     [UpdateFailed("IMS current analysis unavailable"), TimeoutError()],
     ids=["no data", "timeout"],
 )
-def test_a_failed_poll_is_retried_in_minutes_not_an_hour(monkeypatch, failure):
+def test_a_failed_poll_is_retried_in_minutes_not_an_hour(failure):
     """After a failure the next poll came a whole update interval later.
 
     The interval defaults to an hour, so when IMS came back the entities
@@ -252,7 +243,7 @@ def test_a_failed_poll_is_retried_in_minutes_not_an_hour(monkeypatch, failure):
     """
 
     async def scenario():
-        coordinator = _ims_coordinator(monkeypatch)
+        coordinator = _ims_coordinator()
 
         async def fail():
             raise failure
@@ -276,12 +267,12 @@ def test_a_failed_poll_is_retried_in_minutes_not_an_hour(monkeypatch, failure):
     asyncio.run(scenario())
 
 
-def test_a_retry_never_comes_later_than_a_normal_poll(monkeypatch):
+def test_a_retry_never_comes_later_than_a_normal_poll():
     """An interval set below five minutes is kept after a failure."""
 
     async def scenario():
         two_minutes = datetime.timedelta(minutes=2)
-        coordinator = _ims_coordinator(monkeypatch, two_minutes)
+        coordinator = _ims_coordinator(two_minutes)
 
         async def fail():
             raise UpdateFailed("IMS current analysis unavailable")
