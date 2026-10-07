@@ -6,7 +6,10 @@ Assistant and are skipped when it is not installed. The forecast itself comes
 from the captured IMS responses through the ``weather`` fixture.
 """
 
+import asyncio
+import contextlib
 import copy
+import datetime
 import types
 
 import pytest
@@ -23,6 +26,8 @@ from homeassistant.components.sensor import (
 )
 from homeassistant.helpers import config_validation as cv
 from homeassistant.helpers import entity_registry as er
+from homeassistant.helpers import frame
+from homeassistant.helpers.update_coordinator import UpdateFailed
 from ims_motinium.config_flow import SENSOR_KEYS, known_conditions
 from ims_motinium.const import WIND_DIRECTIONS
 from ims_motinium.sensor import (
@@ -34,6 +39,7 @@ from ims_motinium.sensor import (
     sensor_keys,
 )
 from ims_motinium.weather import IMSWeather
+from ims_motinium.weather_update_coordinator import WeatherUpdateCoordinator
 
 # Clear sky. IMS has one code for it day and night; the night look is derived.
 CLEAR = 1250
@@ -204,3 +210,84 @@ def test_each_device_class_gets_a_unit_and_state_class_it_accepts(description):
         assert description.native_unit_of_measurement in units
     if state_classes is not None and description.state_class is not None:
         assert description.state_class in state_classes
+
+
+HOUR = datetime.timedelta(minutes=60)
+
+
+@contextlib.asynccontextmanager
+async def _no_timeout(_seconds):
+    yield
+
+
+def _ims_coordinator(monkeypatch, interval=HOUR):
+    """A real WeatherUpdateCoordinator on just enough of a hass to refresh.
+
+    Newer Home Assistant reports a coordinator built without a config entry
+    through its frame helper, which only exists in a running instance. The
+    report is ignored for custom integrations, so it is stubbed out here.
+    """
+    monkeypatch.setattr(
+        frame, "report_usage", lambda *args, **kwargs: None, raising=False
+    )
+    hass = types.SimpleNamespace(
+        loop=asyncio.get_running_loop(),
+        is_stopping=False,
+        timeout=types.SimpleNamespace(async_timeout=_no_timeout),
+    )
+    return WeatherUpdateCoordinator("35", "en", interval, hass)
+
+
+@pytest.mark.parametrize(
+    "failure",
+    [UpdateFailed("IMS current analysis unavailable"), TimeoutError()],
+    ids=["no data", "timeout"],
+)
+def test_a_failed_poll_is_retried_in_minutes_not_an_hour(monkeypatch, failure):
+    """After a failure the next poll came a whole update interval later.
+
+    The interval defaults to an hour, so when IMS came back the entities
+    stayed unavailable for up to another hour. A success restores it.
+    """
+
+    async def scenario():
+        coordinator = _ims_coordinator(monkeypatch)
+
+        async def fail():
+            raise failure
+
+        coordinator._get_ims_weather = fail
+        await coordinator.async_refresh()
+
+        assert not coordinator.last_update_success
+        assert coordinator.update_interval == datetime.timedelta(minutes=5)
+
+        async def succeed():
+            return "fresh data"
+
+        coordinator._get_ims_weather = succeed
+        await coordinator.async_refresh()
+
+        assert coordinator.last_update_success
+        assert coordinator.data == "fresh data"
+        assert coordinator.update_interval == HOUR
+
+    asyncio.run(scenario())
+
+
+def test_a_retry_never_comes_later_than_a_normal_poll(monkeypatch):
+    """An interval set below five minutes is kept after a failure."""
+
+    async def scenario():
+        two_minutes = datetime.timedelta(minutes=2)
+        coordinator = _ims_coordinator(monkeypatch, two_minutes)
+
+        async def fail():
+            raise UpdateFailed("IMS current analysis unavailable")
+
+        coordinator._get_ims_weather = fail
+        await coordinator.async_refresh()
+
+        assert coordinator.update_interval == two_minutes
+
+    asyncio.run(scenario())
