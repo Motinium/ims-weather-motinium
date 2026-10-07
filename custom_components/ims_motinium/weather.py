@@ -167,8 +167,12 @@ class IMSWeather(CoordinatorEntity[WeatherUpdateCoordinator], WeatherEntity):
     def available(self):
         """Return if weather data is available from IMSWeather."""
         data = self.weather_data
+        # super() is CoordinatorEntity's: False while the last poll failed,
+        # which is what the sensors go by. Without it the coordinator's last
+        # data kept this entity showing hours-old conditions as current.
         return (
-            data is not None
+            super().available
+            and data is not None
             and data.current_weather is not None
             and data.forecast is not None
         )
